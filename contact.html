@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Cole for OK 86</title>
+  <meta name="description" content="Contact Hannah Cole for Oklahoma House District 86." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <div class="topbar__note">
+        <span class="pill"><strong>Election Day:</strong> Nov 3, 2026</span>
+        <span class="pill"><strong>District:</strong> OK House 86</span>
+      </div>
+      <div class="topbar__social">
+        <a class="pill" href="https://www.tiktok.com/@coleforok86" target="_blank" rel="noreferrer">TikTok: @coleforok86</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="header" aria-label="Primary">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
+        <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
+        <span class="brand__text">
+          <span class="brand__name">Hannah Cole</span>
+          <span class="brand__sub">OK House District 86</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">Menu</button>
+
+      <nav id="site-nav" class="nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="meet.html">Meet Hannah</a>
+        <a href="issues.html">Issues</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="press.html" data-pending="true">Press</a>
+        <a href="get-involved.html">Get Involved</a>
+        <a href="contact.html">Contact</a>
+        <span class="nav__cta">
+          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true">Donate</a>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-title">
+    <div class="container page-title__inner">
+      <h1>Contact</h1>
+      <div class="breadcrumb">Home / Contact</div>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="h2">Send a message</h2>
+          <div class="muted upper">No consultants. Real people.</div>
+        </div>
+
+        <p class="lede">
+          Tell me what you or your community is struggling with or excelling at. What do you think your elected state rep should be doing
+          to make our rural district better?
+        </p>
+
+        <div class="grid grid--2" style="margin-top:16px;">
+          <div class="form">
+            <form class="form__inner" id="contact-form" novalidate>
+              <div class="form__row">
+                <div class="field">
+                  <label for="cname">Name</label>
+                  <input id="cname" name="name" type="text" autocomplete="name" required />
+                </div>
+                <div class="field">
+                  <label for="cemail">Email</label>
+                  <input id="cemail" name="email" type="email" autocomplete="email" required />
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="cphone">Phone (optional)</label>
+                  <input id="cphone" name="phone" type="tel" autocomplete="tel" />
+                </div>
+                <div class="field">
+                  <label for="czip">ZIP (optional)</label>
+                  <input id="czip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="cmessage">Message</label>
+                <textarea id="cmessage" name="message" required
+                  placeholder="Tell me what your community needs, what you’re proud of, or what’s being ignored."></textarea>
+              </div>
+
+              <button class="btn btn--primary" type="submit">Send</button>
+            </form>
+          </div>
+
+          <div class="card callout">
+            <div class="card__inner">
+              <div class="card__kicker">Mailing address</div>
+              <div class="card__title">P.O. Box 100</div>
+              <div class="card__text">Rose, OK 74364</div>
+
+              <hr class="hr" />
+
+              <div class="card__kicker">Prefer to volunteer?</div>
+              <div class="card__title">Join the Dirt-road Collective</div>
+              <div class="card__text">
+                If you’re ready to knock doors, drive, host, call neighbors, or help coordinate events—go to Get Involved.
+              </div>
+
+              <div style="margin-top:14px;">
+                <a class="btn btn--secondary" href="get-involved.html">Get involved</a>
+              </div>
+
+              <div class="pending" style="margin-top:18px;">
+                <p class="pending__title">Public comments — under development</p>
+                <p class="pending__text">
+                  A public comment wall is being built. For now, messages sent here go directly to the campaign.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" aria-label="Footer">
+    <div class="container footer__inner">
+      <div>
+        <div class="upper">Cole for OK 86</div>
+        <p class="muted" style="margin-top:10px; color:rgba(251,247,239,0.78);">
+          Mailing address: P.O. Box 100, Rose, OK 74364
+        </p>
+        <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
+      </div>
+      <div>
+        <div class="upper">Compliance</div>
+        <p class="muted" style="color:rgba(251,247,239,0.78); margin-top:10px;">OK Ethics Commission</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
