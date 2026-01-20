@@ -1,676 +1,510 @@
-/* ==========================================================================
-   Hannah Cole for OK 86 — Site Styles
-   Style target: classic, clean, campaign-forward (no bubbly/rounded UI)
-   Palette + typography aligned to provided brand colors & fonts.
-   ========================================================================== */
+/* ==========================================================
+   Hannah Cole for OK 86 — styles.css (Terwey-style layout)
+   - Split hero (left color panel + right photo panel)
+   - Pill nav buttons + prominent Donate
+   - Clean, modern-classic sections
+   ========================================================== */
 
-/* -----------------------------
-   0) Font loading (local files)
-   -----------------------------
-   Put your font files in:
-     /fonts/Mont-Regular.woff2
-     /fonts/Mont-Bold.woff2
-     /fonts/Nickainley.woff2
-
-   If your files are .ttf or .otf, you can still use them, but .woff2 is best.
-   You can convert fonts to woff2 with many free converters.
-*/
-@font-face {
-  font-family: "Mont";
-  src: url("fonts/Mont-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+/* ---------- Fonts (optional local) ---------- */
+@font-face{
+  font-family:"Mont";
+  src:url("fonts/Mont-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
 }
-@font-face {
-  font-family: "Mont";
-  src: url("fonts/Mont-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+@font-face{
+  font-family:"Mont";
+  src:url("fonts/Mont-Bold.woff2") format("woff2");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
 }
-@font-face {
-  font-family: "Nickainley";
-  src: url("fonts/Nickainley.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+@font-face{
+  font-family:"Nickainley";
+  src:url("fonts/Nickainley.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
 }
 
-/* -----------------------------
-   1) Design tokens
-   ----------------------------- */
+/* ---------- Tokens ---------- */
 :root{
-  /* Brand colors */
-  --rust-red: #A6372D;
-  --burnt-orange: #D97925;
-  --golden-wheat: #E6B458;
-  --warm-beige: #F2E3C9;
-  --deep-espresso: #4A3728;
-  --midnight-pine: #1B2E28;
-  --forest-moss: #4D6A47;
-  --slate-blue: #59748C;
-  --mist-blue: #A8BCC2;
+  /* Your palette */
+  --rust:#A6372D;
+  --orange:#D97925;
+  --wheat:#E6B458;
+  --beige:#F2E3C9;
+  --espresso:#4A3728;
+  --pine:#1B2E28;
+  --moss:#4D6A47;
+  --slate:#59748C;
+  --mist:#A8BCC2;
 
-  /* Neutrals (tuned for print-like campaign feel) */
-  --ink: #141414;
-  --paper: #FBF7EF;   /* slightly warmer than pure white */
-  --white: #FFFFFF;
-  --line: rgba(20,20,20,0.18);
-  --line-strong: rgba(20,20,20,0.38);
+  /* Terwey-like structure (deep + bright) */
+  --navy: var(--pine);              /* deep header/left hero */
+  --accent: var(--moss);            /* pill bg / secondary */
+  --ink:#0f1720;
+  --paper:#ffffff;
+  --cloud:#eef2f6;                  /* section bg */
+  --line: rgba(15,23,32,0.14);
 
-  /* Typography */
-  --font-sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-script: "Nickainley", "Mont", system-ui, sans-serif;
+  --max: 1180px;
+  --gutter: 22px;
 
-  --text-sm: 0.95rem;
-  --text-base: 1.05rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.65rem;
-  --text-2xl: 2.25rem;
-  --text-3xl: 3.05rem;
-
-  /* Layout */
-  --max: 1120px;
-  --gutter: 20px;
-  --section-pad: 64px;
-  --section-pad-sm: 40px;
-
-  /* UI */
-  --radius: 0px; /* intentionally sharp */
-  --shadow: 0 10px 30px rgba(0,0,0,0.08);
-  --shadow-tight: 0 6px 16px rgba(0,0,0,0.10);
-
-  /* Focus ring */
-  --focus: 2px dashed var(--burnt-orange);
+  --sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* -----------------------------
-   2) Base / Reset
-   ----------------------------- */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
+/* ---------- Base ---------- */
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
 body{
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: 1.55;
-  color: var(--ink);
-  background: var(--paper);
-  text-rendering: geometricPrecision;
+  margin:0;
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  font-size:1.04rem;
 }
-
-img{ max-width: 100%; height: auto; display: block; }
-a{ color: inherit; text-decoration: none; }
-p{ margin: 0 0 1rem; }
-
-::selection{
-  background: rgba(217,121,37,0.25);
-}
+img{ display:block; max-width:100%; height:auto; }
+a{ color:inherit; text-decoration:none; }
 
 .container{
-  width: min(var(--max), calc(100% - (var(--gutter) * 2)));
-  margin-inline: auto;
+  width:min(var(--max), calc(100% - (var(--gutter) * 2)));
+  margin-inline:auto;
 }
 
 .skip-link{
-  position: absolute;
-  left: -999px;
-  top: 10px;
-  background: var(--white);
-  border: 2px solid var(--ink);
-  padding: 10px 12px;
-  z-index: 9999;
+  position:absolute;
+  left:-999px;
+  top:10px;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  padding:10px 12px;
+  z-index:9999;
 }
-.skip-link:focus{ left: 10px; outline: none; }
+.skip-link:focus{ left:10px; }
 
-/* Accessible focus */
-:focus-visible{
-  outline: var(--focus);
-  outline-offset: 3px;
-}
-
-/* Utility */
-.upper{ text-transform: uppercase; letter-spacing: 0.08em; }
-.muted{ color: rgba(20,20,20,0.72); }
-.hr{
-  height: 1px;
-  background: var(--line);
-  border: 0;
-  margin: 28px 0;
-}
-
-/* -----------------------------
-   3) Header / Top bar / Nav
-   ----------------------------- */
+/* ---------- Kill old topbar feel (keep if you want, but make it subtle) ---------- */
 .topbar{
-  background: var(--midnight-pine);
-  color: var(--paper);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  display:none; /* Terwey-style doesn’t need it. Remove this line if you want your topbar back. */
 }
-.topbar__inner{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
-  font-size: 0.92rem;
-}
-.topbar__note{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.topbar__note strong{
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-.topbar__social{
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.pill{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 10px;
-  border: 1px solid rgba(255,255,255,0.22);
-  background: rgba(255,255,255,0.06);
-  white-space: nowrap;
-}
-.pill:hover{ background: rgba(255,255,255,0.10); }
 
+/* ==========================================================
+   HEADER / NAV (pill buttons over hero)
+   ========================================================== */
 .header{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(251,247,239,0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-}
-.header__inner{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 16px 0;
+  position:absolute;         /* key: overlay the hero like the example */
+  top:0;
+  left:0;
+  right:0;
+  z-index:50;
+  background:transparent;
+  border-bottom:none;
 }
 
+.header__inner{
+  padding:18px 0;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+/* Brand (logo at top-left, square/boxed like screenshot) */
 .brand{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 220px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  min-width:220px;
 }
 .brand__logo{
-  width: 58px;
-  height: 58px;
-  border: 2px solid var(--ink);
-  background: var(--white);
-  object-fit: contain;
+  width:150px;
+  height:auto;
+  background:#fff;
+  border:3px solid rgba(255,255,255,0.0); /* keep clean */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
 }
-.brand__text{
-  display: grid;
-  gap: 2px;
-  line-height: 1.05;
-}
-.brand__name{
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.02em;
-}
-.brand__sub{
-  font-size: 0.92rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(20,20,20,0.70);
+.brand__text{ display:none; } /* Terwey header is mostly just the logo block */
+
+/* Nav pills */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
-.nav{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
+/* normal nav links -> pills */
 .nav a{
-  padding: 10px 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  font-size: 0.86rem;
-  border-bottom: 2px solid transparent;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:34px;
+  padding:0 14px;
+  border-radius:10px;
+  background:rgba(77,106,71,0.92); /* moss */
+  color:#0b2a1c;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.75rem;
+  font-weight:700;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+  border:1px solid rgba(255,255,255,0.18);
 }
 .nav a:hover{
-  border-bottom-color: var(--burnt-orange);
+  filter:brightness(1.03);
+  transform:translateY(-1px);
 }
 .nav a[aria-current="page"]{
-  border-bottom-color: var(--rust-red);
-  font-weight: 700;
+  background:rgba(230,180,88,0.95); /* wheat highlight */
+  color:#2a1b10;
 }
 
+/* Donate button area (your existing HTML uses .nav__cta + .btn) */
 .nav__cta{
-  margin-left: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  margin-left:12px;
+  display:inline-flex;
+  align-items:center;
 }
-
-/* Mobile nav toggle placeholder (wired in script.js later) */
-.nav-toggle{
-  display: none;
-  border: 2px solid var(--ink);
-  background: var(--white);
-  padding: 10px 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* -----------------------------
-   4) Buttons
-   ----------------------------- */
 .btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border: 2px solid var(--ink);
-  background: var(--white);
-  color: var(--ink);
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  font-weight: 700;
-  font-size: 0.86rem;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: transform .08s ease, background .12s ease, box-shadow .12s ease;
-  user-select: none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 18px;
+  height:44px;
+  border-radius:10px;
+  border:0;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
+  font-size:.84rem;
+  cursor:pointer;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.18);
 }
-.btn:hover{
-  background: rgba(230,180,88,0.22);
-  box-shadow: var(--shadow-tight);
-  transform: translateY(-1px);
-}
-.btn:active{ transform: translateY(0); box-shadow: none; }
-
 .btn--primary{
-  background: var(--rust-red);
-  color: var(--paper);
-  border-color: var(--rust-red);
+  background:rgba(89,116,140,0.95); /* slate */
+  color:#061523;
 }
-.btn--primary:hover{
-  background: #8f2f27; /* slightly darker */
-}
+.btn--primary:hover{ transform:translateY(-1px); filter:brightness(1.03); }
 
-.btn--secondary{
-  background: var(--midnight-pine);
-  color: var(--paper);
-  border-color: var(--midnight-pine);
+.btn--secondary{ /* if you use it */
+  background:rgba(230,180,88,0.95);
+  color:#2a1b10;
 }
-.btn--secondary:hover{ background: #14241f; }
-
 .btn--ghost{
-  background: transparent;
-  border-color: var(--ink);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
 }
-.btn--ghost:hover{ background: rgba(20,20,20,0.06); }
 
-.btn--wide{ padding-inline: 22px; }
+/* Mobile menu toggle */
+.nav-toggle{
+  display:none;
+  height:44px;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
+}
 
-/* -----------------------------
-   5) Hero
-   ----------------------------- */
+/* ==========================================================
+   HERO — the big 50/50 split like your screenshot
+   ========================================================== */
 .hero{
-  position: relative;
-  background: linear-gradient(180deg, rgba(27,46,40,0.08), rgba(251,247,239,1));
-  border-bottom: 1px solid var(--line);
-}
-.hero__inner{
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 28px;
-  padding: 44px 0 34px;
-  align-items: center;
+  margin:0;
+  padding:0;
+  min-height: 740px;               /* gives the big above-the-fold hero */
+  display:flex;
+  align-items:stretch;
+  border-bottom:0;
+  background:var(--paper);
 }
 
-.hero__kicker{
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.82rem;
-  padding: 8px 10px;
-  border: 1px solid var(--line-strong);
-  background: rgba(255,255,255,0.55);
+/* Force the hero inner to become the split grid */
+.hero__inner{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 740px;
 }
+
+/* LEFT PANEL */
+.hero__inner > div:first-child{
+  background: var(--navy);
+  color:#fff;
+  padding: 140px 60px 70px;  /* space for header overlay */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* Right photo panel uses your existing .hero__media */
+.hero__media{
+  position:relative;
+  border:0;
+  background:#000;
+  overflow:hidden;
+}
+
+/* Fill height like the screenshot */
+.hero__media img{
+  width:100%;
+  height:100%;
+  min-height:740px;
+  object-fit:cover;
+  filter:saturate(1.02);
+}
+
+/* Subtle dark overlay on photo */
+.hero__media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.12));
+  pointer-events:none;
+}
+
+/* Hero typography: big, stacked, bold */
+.hero__kicker{
+  display:none; /* example doesn’t use the little kicker badge */
+}
+
 .hero__title{
-  margin: 14px 0 10px;
-  font-size: var(--text-3xl);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+  margin:0 0 18px;
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  line-height:1.06;
+  letter-spacing:-0.01em;
+  font-weight:800;
 }
 .hero__title strong{
-  display: inline-block;
-  border-bottom: 4px solid rgba(166,55,45,0.35);
-  padding-bottom: 2px;
+  box-shadow:none;
+  padding:0;
 }
+
 .hero__tagline{
-  font-size: var(--text-lg);
-  color: rgba(20,20,20,0.78);
-  max-width: 58ch;
+  margin:0 0 26px;
+  max-width:46ch;
+  font-size:1.15rem;
+  color:rgba(255,255,255,0.88);
 }
+
 .hero__script{
-  margin-top: 16px;
-  font-family: var(--font-script);
-  font-size: 2.05rem;
-  line-height: 1;
-  color: var(--forest-moss);
+  display:none; /* keep it clean like example; you can enable later */
 }
 
 .hero__actions{
-  margin-top: 18px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
+  margin-top:10px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
-.hero__media{
-  border: 2px solid var(--ink);
-  background: var(--white);
-  box-shadow: var(--shadow);
+/* ==========================================================
+   SIGNUP FORM IN HERO (like screenshot)
+   - Your index has a form in a later section; this makes forms look like that style.
+   ========================================================== */
+.form{
+  background:transparent;
+  border:0;
+  margin-top:22px;
 }
-.hero__media img{
-  width: 100%;
-  height: 360px;
-  object-fit: cover;
-}
-.hero__caption{
-  padding: 12px 14px;
-  border-top: 1px solid var(--line);
-  font-size: 0.92rem;
-  color: rgba(20,20,20,0.72);
+.form__inner{
+  padding:0;
 }
 
-/* -----------------------------
-   6) Sections / Headings
-   ----------------------------- */
+/* Inputs: light fields on dark panel */
+label{ display:none; }
+
+input, textarea, select{
+  width:100%;
+  height:54px;
+  padding:0 16px;
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,0.0);
+  background:#edf6ff;             /* light bluish like example */
+  color:#0b2238;
+  font-family:var(--sans);
+  font-size:1.05rem;
+  font-weight:700;
+  outline:none;
+}
+
+textarea{
+  height:auto;
+  min-height:140px;
+  padding:14px 16px;
+  font-weight:600;
+}
+
+input::placeholder, textarea::placeholder{
+  color:rgba(11,34,56,0.70);
+  font-weight:800;
+}
+
+/* Two-column grid for form rows */
+.form__row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+.field{ margin:0 0 12px; }
+
+/* Submit button: big bar */
+form button.btn,
+form button[type="submit"]{
+  width:100%;
+  height:54px;
+  border-radius:10px;
+  background:rgba(89,116,140,0.95);
+  color:#061523;
+  font-weight:900;
+  letter-spacing:.18em;
+}
+
+/* ==========================================================
+   SECTIONS BELOW HERO (light gray blocks, centered headings)
+   ========================================================== */
 .section{
-  padding: var(--section-pad) 0;
+  padding:90px 0;
+  background:var(--paper);
 }
-.section--tight{ padding: var(--section-pad-sm) 0; }
+.section:nth-of-type(even){
+  background:var(--cloud);
+}
 
+/* Centered “learn more about / priorities” feel */
 .section__head{
-  margin-bottom: 18px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  text-align:center;
+  margin-bottom:26px;
+  display:block;
 }
 .h2{
-  margin: 0;
-  font-size: var(--text-2xl);
-  line-height: 1.1;
-  letter-spacing: 0.01em;
+  margin:0;
+  font-size: clamp(2rem, 3.3vw, 3rem);
+  font-weight:900;
+  color:#0b3b69; /* slate-ish heading (like example blue) */
 }
 .h2::after{
   content:"";
   display:block;
-  width: 84px;
-  height: 3px;
-  background: var(--burnt-orange);
-  margin-top: 10px;
-}
-.h3{
-  margin: 0 0 10px;
-  font-size: var(--text-xl);
-  line-height: 1.2;
+  width:120px;
+  height:4px;
+  background:rgba(89,116,140,0.85);
+  margin:16px auto 0;
 }
 .lede{
-  margin: 10px 0 0;
-  max-width: 75ch;
-  color: rgba(20,20,20,0.75);
+  margin:18px auto 0;
+  max-width:70ch;
+  font-size:1.15rem;
+  color:rgba(15,23,32,0.78);
 }
 
-/* -----------------------------
-   7) Layout grids / Cards
-   ----------------------------- */
-.grid{
-  display: grid;
-  gap: 18px;
-}
-.grid--2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-.grid--3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
-
+/* Card styling: clean, modern, not bubbly */
 .card{
-  border: 2px solid var(--ink);
-  background: rgba(255,255,255,0.72);
-  box-shadow: none;
+  border-radius:14px;
+  border:1px solid rgba(15,23,32,0.10);
+  background:#fff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
-.card__inner{ padding: 16px; }
+.card__inner{ padding:22px; }
 .card__kicker{
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.80rem;
-  color: rgba(20,20,20,0.72);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-weight:900;
+  font-size:.78rem;
+  color:rgba(15,23,32,0.60);
 }
 .card__title{
-  margin: 8px 0 10px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  margin:8px 0 10px;
+  font-size:1.28rem;
+  font-weight:900;
 }
-.card__text{ color: rgba(20,20,20,0.78); }
+.card__text{ color:rgba(15,23,32,0.76); }
 
-.callout{
-  border: 2px solid var(--midnight-pine);
-  background: rgba(27,46,40,0.06);
-}
-.callout .card__title{ color: var(--midnight-pine); }
+.grid{ display:grid; gap:18px; }
+.grid--2{ grid-template-columns:repeat(2, minmax(0,1fr)); }
 
-.banner{
-  border: 2px solid var(--rust-red);
-  background: rgba(166,55,45,0.06);
-}
-
-/* -----------------------------
-   8) Issues list styling
-   ----------------------------- */
+/* Issues rows */
 .issue{
-  display: grid;
-  grid-template-columns: 26px 1fr;
-  gap: 12px;
-  padding: 14px 14px;
-  border-top: 1px solid var(--line);
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:12px;
+  padding:16px 0;
+  border-top:1px solid rgba(15,23,32,0.10);
 }
-.issue:first-child{ border-top: 0; }
+.issue:first-child{ border-top:0; }
 .issue__mark{
-  width: 18px;
-  height: 18px;
-  margin-top: 3px;
-  border: 2px solid var(--burnt-orange);
-  background: rgba(230,180,88,0.25);
+  width:16px; height:16px;
+  border-radius:50%;
+  background:rgba(77,106,71,0.95);
+  margin-top:4px;
 }
-.issue__title{
-  margin: 0 0 6px;
-  font-weight: 700;
-}
-.issue__desc{
-  margin: 0;
-  color: rgba(20,20,20,0.76);
-}
+.issue__title{ margin:0 0 6px; font-weight:900; }
+.issue__desc{ margin:0; color:rgba(15,23,32,0.76); }
 
-/* -----------------------------
-   9) Forms (signup, contact)
-   ----------------------------- */
-.form{
-  border: 2px solid var(--ink);
-  background: rgba(255,255,255,0.70);
-}
-.form__inner{ padding: 18px; }
-
-label{
-  display: block;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  font-size: 0.82rem;
-  margin-bottom: 6px;
-}
-input, textarea, select{
-  width: 100%;
-  border: 2px solid var(--ink);
-  background: var(--white);
-  padding: 12px 12px;
-  font: inherit;
-  border-radius: var(--radius);
-}
-textarea{ min-height: 140px; resize: vertical; }
-.field{ margin-bottom: 14px; }
-
-.form__row{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-.help{
-  font-size: 0.92rem;
-  color: rgba(20,20,20,0.70);
-  margin-top: 8px;
-}
-
-/* -----------------------------
-   10) Lists (News, Events)
-   ----------------------------- */
-.list{
-  border: 2px solid var(--ink);
-  background: rgba(255,255,255,0.70);
-}
-.list__item{
-  padding: 14px 16px;
-  border-top: 1px solid var(--line);
-  display: grid;
-  gap: 6px;
-}
-.list__item:first-child{ border-top: 0; }
-.list__meta{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 0.90rem;
-  color: rgba(20,20,20,0.70);
-}
-.list__title{
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-.list__title a{
-  border-bottom: 2px solid transparent;
-}
-.list__title a:hover{ border-bottom-color: var(--burnt-orange); }
-
-/* -----------------------------
-   11) Under-development placeholder
-   ----------------------------- */
+/* Pending blocks */
 .pending{
-  border: 2px dashed var(--line-strong);
-  background: rgba(168,188,194,0.12);
-  padding: 22px 18px;
+  border-radius:14px;
+  border:2px dashed rgba(15,23,32,0.22);
+  background:rgba(168,188,194,0.18);
+  padding:22px 18px;
 }
-.pending__title{
-  margin: 0 0 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.95rem;
-}
-.pending__text{ margin: 0; color: rgba(20,20,20,0.75); }
 
-/* -----------------------------
-   12) Footer / Legal
-   ----------------------------- */
+/* Footer */
 .footer{
-  margin-top: 40px;
-  border-top: 1px solid var(--line);
-  background: var(--midnight-pine);
-  color: var(--paper);
+  background:#0b1420;
+  color:#fff;
+  padding:40px 0;
 }
 .footer__inner{
-  padding: 34px 0;
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 18px;
-  align-items: start;
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:18px;
 }
-.footer a{ color: var(--paper); border-bottom: 1px solid rgba(255,255,255,0.22); }
-.footer a:hover{ border-bottom-color: rgba(255,255,255,0.6); }
-
+.footer a{ color:#fff; opacity:.92; }
 .disclaimer{
-  margin-top: 14px;
-  border: 2px solid rgba(255,255,255,0.30);
-  padding: 12px 12px;
-  font-size: 0.92rem;
-  letter-spacing: 0.02em;
-}
-.disclaimer strong{
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
+  margin-top:14px;
+  display:inline-block;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.06);
 }
 
-/* -----------------------------
-   13) Page-specific helpers
-   ----------------------------- */
-.page-title{
-  padding: 30px 0 22px;
-  border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(230,180,88,0.12), rgba(251,247,239,1));
-}
-.page-title__inner{
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.page-title h1{
-  margin: 0;
-  font-size: 2.35rem;
-  line-height: 1.1;
-}
-.breadcrumb{
-  font-size: 0.92rem;
-  color: rgba(20,20,20,0.72);
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-}
-
-/* -----------------------------
-   14) Responsive
-   ----------------------------- */
+/* ==========================================================
+   Responsive
+   ========================================================== */
 @media (max-width: 980px){
-  .hero__inner{ grid-template-columns: 1fr; }
-  .hero__media img{ height: 320px; }
-  .footer__inner{ grid-template-columns: 1fr; }
-  .grid--3{ grid-template-columns: 1fr; }
+  .header{ position:relative; background:var(--navy); }
+  .brand__logo{ width:130px; }
+  .hero{ min-height:auto; }
+  .hero__inner{
+    grid-template-columns:1fr;
+    min-height:auto;
+  }
+  .hero__inner > div:first-child{
+    padding:34px 22px 26px;
+  }
+  .hero__media img{
+    min-height:420px;
+    height:420px;
+  }
+  .footer__inner{ grid-template-columns:1fr; }
 }
 
 @media (max-width: 760px){
-  .header__inner{ align-items: center; }
-  .nav{ display: none; }
-  .nav-toggle{ display: inline-flex; }
-  .brand{ min-width: unset; }
-  .hero__title{ font-size: 2.4rem; }
-  .form__row{ grid-template-columns: 1fr; }
-  .grid--2{ grid-template-columns: 1fr; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  html { scroll-behavior: auto; }
-  .btn{ transition: none; }
+  .nav{ display:none; }
+  .nav-toggle{ display:inline-flex; }
+  .header__inner{ align-items:center; }
+  .form__row{ grid-template-columns:1fr; }
+  .grid--2{ grid-template-columns:1fr; }
 }
