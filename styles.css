@@ -507,4 +507,7 @@ form button[type="submit"]{
   .header__inner{ align-items:center; }
   .form__row{ grid-template-columns:1fr; }
   .grid--2{ grid-template-columns:1fr; }
+   
+.brand__logo { background:#fff; padding:10px; border-radius:12px; }
+
 }
