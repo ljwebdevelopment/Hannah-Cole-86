@@ -13,26 +13,12 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Topbar -->
-  <div class="topbar" role="banner">
-    <div class="container topbar__inner">
-      <div class="topbar__note">
-        <span class="pill"><strong>Election Day:</strong> Nov 3, 2026</span>
-        <span class="pill"><strong>District:</strong> OK House 86</span>
-        <span class="pill"><strong>Tagline:</strong> Values over party.</span>
-      </div>
-      <div class="topbar__social">
-        <a class="pill" href="https://www.tiktok.com/@coleforok86" target="_blank" rel="noreferrer">TikTok: @coleforok86</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header / Nav -->
+  <!-- Header / Nav (overlays hero; Terwey-style) -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-        <!-- Recommended: rename your logo file to logo.png -->
         <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
+        <!-- Hidden by CSS in Terwey-style; safe to keep for screen readers -->
         <span class="brand__text">
           <span class="brand__name">Hannah Cole</span>
           <span class="brand__sub">OK House District 86</span>
@@ -42,14 +28,13 @@
       <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">Menu</button>
 
       <nav id="site-nav" class="nav" aria-label="Site">
-        <a href="index.html">Home</a>
-        <a href="meet.html">Meet Hannah</a>
+        <a href="meet.html">About</a>
         <a href="issues.html">Issues</a>
         <a href="events.html">Events</a>
+        <a href="get-involved.html">Volunteer</a>
+        <a href="contact.html">Contact</a>
         <a href="news.html">News</a>
         <a href="press.html" data-pending="true">Press</a>
-        <a href="get-involved.html">Get Involved</a>
-        <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
           <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true">Donate</a>
@@ -59,119 +44,125 @@
   </header>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- Hero (FULL WIDTH split; do NOT wrap in .container) -->
     <section class="hero" aria-label="Hero">
-      <div class="container hero__inner">
+      <div class="hero__inner">
+        <!-- LEFT PANEL -->
         <div>
-          <span class="hero__kicker">Grassroots Democrat • Northeast Oklahoma</span>
           <h1 class="hero__title">
-            <strong>Cole for OK 86</strong>
+            Grassroots powered<br />
+            People focused<br />
+            Candidate for OK House 86
           </h1>
+
           <p class="hero__tagline">
             I’m running for Oklahoma House District 86 because rural communities deserve a representative who shows up,
             listens, and protects what makes this place worth calling home.
           </p>
-          <p class="hero__script">Values over party.</p>
 
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="get-involved.html">Join the Dirt-road Collective</a>
-            <a class="btn btn--ghost" href="meet.html">Read my story</a>
-            <a class="btn btn--secondary" href="contact.html">Contact the campaign</a>
-          </div>
-
-          <hr class="hr" />
-
-          <div class="grid grid--2">
-            <div class="card callout">
-              <div class="card__inner">
-                <div class="card__kicker">What we’re building</div>
-                <div class="card__title">A campaign rooted in community</div>
-                <div class="card__text">
-                  This won’t be glamorous. It will be hard work—door knocking, showing up, and earning trust face-to-face.
+          <!-- Signup form in hero (matches Terwey layout) -->
+          <div class="form" aria-label="Email & text signup">
+            <form class="form__inner" id="signup-form" novalidate>
+              <div class="form__row">
+                <div class="field">
+                  <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First Name" required />
+                </div>
+                <div class="field">
+                  <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last Name" required />
                 </div>
               </div>
-            </div>
 
-            <div class="card banner">
-              <div class="card__inner">
-                <div class="card__kicker">Get updates</div>
-                <div class="card__title">Email & text signup</div>
-                <div class="card__text">
-                  Stay in the loop on events, volunteer opportunities, and campaign news.
-                  Use the form below—no spam, just the essentials.
+              <div class="form__row">
+                <div class="field">
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="Email" required />
+                </div>
+                <div class="field">
+                  <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Phone" required />
                 </div>
               </div>
-            </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" />
+                </div>
+                <div class="field">
+                  <button class="btn btn--primary" type="submit">Submit</button>
+                </div>
+              </div>
+            </form>
           </div>
+
+          <!-- Optional: small helper line like the example -->
+          <p style="margin-top:14px; color:rgba(255,255,255,0.88); font-weight:700;">
+            Join the <span style="color:rgba(230,180,88,0.95);">Dirt-road Collective</span> to get updates on events and ways to help.
+          </p>
         </div>
 
-        <div class="hero__media">
-          <!-- You provided: DSC02194 - Hannah Cole.png and DSC02224 - Hannah Cole.png
-               If you keep spaces, use URL-encoding as shown below. -->
+        <!-- RIGHT PANEL (photo) -->
+        <div class="hero__media" aria-label="Candidate photo">
           <img src="DSC02194%20-%20Hannah%20Cole.png" alt="Hannah Cole headshot" />
-          <div class="hero__caption">
-            Oklahoma House District 86 • Northeast Oklahoma
-          </div>
+          <!-- remove caption bar; it fights the “photo panel” style -->
         </div>
       </div>
     </section>
 
-    <!-- Signup -->
-    <section class="section section--tight" aria-label="Signup">
+    <!-- Section: intro statement (light gray like example) -->
+    <section class="section" aria-label="Why I’m running">
       <div class="container">
         <div class="section__head">
-          <h2 class="h2">Stay connected</h2>
-          <div class="muted upper">Join the Dirt-road Collective</div>
+          <h2 class="h2">Congress should look like us.</h2>
         </div>
+
         <p class="lede">
-          If you want to help, learn more, or stay informed, sign up here. You can unsubscribe anytime.
+          I’m an average American. I work hard for what I have—just like the folks of District 86.
+          I don’t have all the answers, but I do have values: human decency, common sense, and justice in our government.
         </p>
 
-        <div class="form" style="margin-top:16px;">
-          <form class="form__inner" id="volunteer-form" novalidate>
-            <div class="form__row">
-              <div class="field">
-                <label for="fullName">Name</label>
-                <input id="fullName" name="name" type="text" autocomplete="name" required />
-              </div>
-              <div class="field">
-                <label for="phone">Phone</label>
-                <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+        <div style="height:18px;"></div>
+
+        <div class="grid grid--2">
+          <div class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Values over party</div>
+              <div class="card__title">Show up. Listen. Do the work.</div>
+              <div class="card__text">
+                This campaign will be rooted in the wisdom from our past, and it will grow with mindful strength and
+                cooperation for our future. Door knocking and face-to-face community work will be the key to success.
               </div>
             </div>
+          </div>
 
-            <div class="form__row">
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" autocomplete="email" required />
+          <div class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Real help needed</div>
+              <div class="card__title">Volunteering can look like many things</div>
+              <div class="card__text">
+                Can you drive someone to knock doors? Are you good at gathering folks? Could you host a “get to know the
+                candidate” party? Any help is appreciated—tell us what you can do.
               </div>
-              <div class="field">
-                <label for="zip">ZIP</label>
-                <input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="volunteerHow">How would you like to help?</label>
-              <textarea id="volunteerHow" name="how" placeholder="Volunteering can look like many things. Would you want to donate your time and drive someone to knock doors? Are you good at gathering folks? Maybe you could host a ‘get to know the candidate’ party. Any help will be appreciated. Please let me know what you're able to volunteer for." required></textarea>
-              <div class="help">
-                By submitting, you’re asking the campaign to contact you about volunteer opportunities and updates.
+              <div style="margin-top:14px;">
+                <a class="btn btn--primary" href="get-involved.html">Volunteer</a>
               </div>
             </div>
-
-            <button class="btn btn--primary" type="submit">Submit</button>
-          </form>
+          </div>
         </div>
+
       </div>
     </section>
 
-    <!-- Quick Issues Preview -->
+    <!-- Issues Preview (clean, centered like example sections) -->
     <section class="section" aria-label="Issues preview">
       <div class="container">
         <div class="section__head">
-          <h2 class="h2">What I’m focused on</h2>
-          <a class="btn btn--ghost" href="issues.html">Full issues page</a>
+          <h2 class="h2">Hannah’s priorities</h2>
         </div>
+
+        <p class="lede">
+          I’ll publish the full issues platform here. For now, these are the priorities I’m hearing most across rural
+          Northeast Oklahoma.
+        </p>
+
+        <div style="height:22px;"></div>
 
         <div class="card">
           <div class="card__inner">
@@ -179,14 +170,14 @@
               <div class="issue__mark" aria-hidden="true"></div>
               <div>
                 <p class="issue__title">Rural infrastructure & quality of life</p>
-                <p class="issue__desc">Roads, emergency access, clean water, and practical solutions that actually reach rural communities.</p>
+                <p class="issue__desc">Roads, emergency access, clean water, and practical solutions that reach rural communities.</p>
               </div>
             </div>
             <div class="issue">
               <div class="issue__mark" aria-hidden="true"></div>
               <div>
                 <p class="issue__title">Healthcare that meets people where they are</p>
-                <p class="issue__desc">I’ve been a geriatric nurse for over a decade. I’m running to improve access and outcomes—especially in rural areas.</p>
+                <p class="issue__desc">As a geriatric nurse, I’m running to improve access and outcomes—especially in rural areas.</p>
               </div>
             </div>
             <div class="issue">
@@ -196,6 +187,10 @@
                 <p class="issue__desc">Safeguarding the landscapes, wildlife, and ways of life that make Northeast Oklahoma a gem.</p>
               </div>
             </div>
+
+            <div style="margin-top:18px;">
+              <a class="btn btn--primary" href="issues.html">View more</a>
+            </div>
           </div>
         </div>
 
@@ -203,11 +198,10 @@
     </section>
 
     <!-- Comment Placeholder -->
-    <section class="section section--tight" aria-label="Community input">
+    <section class="section" aria-label="Community input">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">Tell me what you’re seeing</h2>
-          <div class="muted upper">Community input</div>
         </div>
 
         <p class="lede">
@@ -215,7 +209,9 @@
           should be doing to make our rural district better?
         </p>
 
-        <div class="pending" style="margin-top:16px;">
+        <div style="height:18px;"></div>
+
+        <div class="pending">
           <p class="pending__title">Comment section — under development</p>
           <p class="pending__text">
             This feature is being built. For now, please send your message on the Contact page.
@@ -230,8 +226,8 @@
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div class="upper" style="letter-spacing:.10em;">Cole for OK 86</div>
-        <p class="muted" style="margin-top:10px; color:rgba(251,247,239,0.78);">
+        <div class="upper" style="letter-spacing:.10em; font-weight:900;">Cole for OK 86</div>
+        <p style="margin-top:10px; opacity:.85;">
           Mailing address: P.O. Box 100, Rose, OK 74364
         </p>
 
@@ -241,13 +237,14 @@
       </div>
 
       <div>
-        <div class="upper" style="letter-spacing:.10em;">Get involved</div>
-        <p style="margin-top:10px;">
+        <div class="upper" style="letter-spacing:.10em; font-weight:900;">Get involved</div>
+        <p style="margin-top:10px; line-height:1.9;">
           <a href="get-involved.html">Volunteer</a><br />
           <a href="events.html">Events</a><br />
-          <a href="contact.html">Contact</a>
+          <a href="contact.html">Contact</a><br />
+          <a href="news.html">News</a>
         </p>
-        <p class="muted" style="color:rgba(251,247,239,0.78); margin-top:10px;">
+        <p style="opacity:.85; margin-top:10px;">
           Compliance: OK Ethics Commission
         </p>
       </div>
