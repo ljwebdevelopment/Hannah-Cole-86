@@ -19,7 +19,11 @@
         <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
       </a>
 
-      <nav class="nav" aria-label="Site">
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
+        Menu
+      </button>
+
+      <nav id="site-nav" class="nav" aria-label="Site">
         <a href="index.html">Home</a>
         <a href="meet.html">Meet Hannah</a>
         <a href="issues.html">Issues</a>
@@ -32,39 +36,40 @@
   </header>
 
   <main id="main">
-    <section class="section" aria-label="Donate under development">
-      <div class="container" style="text-align:center;">
+    <section
+      class="section"
+      aria-label="Donate under development"
+      style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding-top:120px;
+      "
+    >
+      <div style="text-align:center;">
         <img
           src="logo.png"
           alt="Cole for OK 86 logo"
           style="
-            max-width:260px;
-            margin:0 auto 24px;
+            max-width:280px;
+            margin:0 auto 22px;
           "
         />
 
-        <h1 class="h2" style="margin-bottom:12px;">
-          Still under development
-        </h1>
-
-        <p class="lede" style="max-width:56ch; margin-inline:auto;">
-          Our secure donation platform is being finalized.
-          Please check back soon—grassroots support will be available here shortly.
+        <p
+          style="
+            font-family:var(--sans);
+            font-size:1.05rem;
+            font-weight:700;
+            letter-spacing:.08em;
+            text-transform:uppercase;
+            color:rgba(15,23,32,0.72);
+            margin:0;
+          "
+        >
+          This section is still under development. Please check back soon.
         </p>
-
-        <div class="pending" style="margin-top:28px; max-width:520px; margin-inline:auto;">
-          <p style="margin:0; font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
-            Donations not yet available
-          </p>
-          <p style="margin:10px 0 0; color:rgba(15,23,32,0.76);">
-            This page will be updated as soon as the platform is live and compliant
-            with Oklahoma Ethics Commission requirements.
-          </p>
-        </div>
-
-        <div style="margin-top:28px;">
-          <a class="btn btn--secondary" href="get-involved.html">Get involved instead</a>
-        </div>
       </div>
     </section>
   </main>
@@ -89,4 +94,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
