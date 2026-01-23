@@ -1,319 +1,521 @@
-/* =========================
-   Root + Reset
-========================= */
+/* ==========================================================
+   Hannah Cole for OK 86 — styles.css (Terwey-style layout)
+   - Split hero (left color panel + right photo panel)
+   - Pill nav buttons + prominent Donate
+   - Clean, modern-classic sections
+   ========================================================== */
 
-:root {
-  --blue-dark: #0b3c7d;
-  --blue: #0d4fa3;
-  --blue-light: #1f6fe0;
-  --green: #5bb463;
-  --green-dark: #3f8f4a;
-  --white: #ffffff;
-  --off-white: #f4f6f8;
-  --text-dark: #0b1f33;
-  --gold: #e6b458;
+/* ---------- Fonts (optional local) ---------- */
+@font-face{
+  font-family:"Mont";
+  src:url("fonts/Mont-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Mont";
+  src:url("fonts/Mont-Bold.woff2") format("woff2");
+  font-weight:700;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Nickainley";
+  src:url("fonts/Nickainley.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* ---------- Tokens ---------- */
+:root{
+  /* Campaign palette */
+  --rust:#A6372D;      /* Rust Red */
+  --orange:#D97925;    /* Burnt Orange */
+  --wheat:#E6B458;     /* Golden Wheat */
+  --beige:#F2E3C9;     /* Warm Beige */
+  --espresso:#4A3728;  /* Deep Espresso */
+  --pine:#1B2E28;      /* Midnight Pine */
+  --moss:#4D6A47;      /* Forest Moss */
+  --slate:#59748C;     /* Slate Blue */
+  --mist:#A8BCC2;      /* Mist Blue */
+
+  /* Structure */
+  --ink:#0f1720;
+  --paper:#ffffff;
+  --cloud:#f1efe9;               /* warmer, homey “cloud” */
+  --line: rgba(15,23,32,0.14);
+
+  --max: 1180px;
+  --gutter: 22px;
+
+  --sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* COMPONENT THEME MAPPING (change these to recolor everything) */
+  --hero-left: var(--pine);      /* deep left hero panel */
+  --hero-text: #ffffff;
+
+  --pill-bg: rgba(166,55,45,0.94);    /* rust */
+  --pill-text: #fffaf3;
+  --pill-border: rgba(255,255,255,0.18);
+  --pill-shadow: rgba(0,0,0,0.12);
+
+  --pill-active-bg: rgba(230,180,88,0.96); /* wheat */
+  --pill-active-text: #2a1b10;
+
+  --cta-bg: rgba(217,121,37,0.96);    /* burnt orange donate */
+  --cta-text: #1c120b;
+
+  --h2-color: #2b3a47;                /* muted, classic headline */
+  --h2-rule: rgba(166,55,45,0.86);    /* rust underline */
+
+  --issue-dot: rgba(77,106,71,0.96);  /* moss */
+  --form-field-bg: #edf6ff;           /* keep Terwey-like field */
+  --form-field-text: #0b2238;
+  --form-submit-bg: rgba(217,121,37,0.96);
+  --form-submit-text: #1c120b;
+
+  --footer-bg: #0b1420;               /* keep strong contrast */
+  --footer-text: #ffffff;
 }
 
-html {
-  font-size: 16px;
+/* ---------- Base ---------- */
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  font-size:1.04rem;
+}
+img{ display:block; max-width:100%; height:auto; }
+a{ color:inherit; text-decoration:none; }
+
+.container{
+  width:min(var(--max), calc(100% - (var(--gutter) * 2)));
+  margin-inline:auto;
 }
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text-dark);
-  background: var(--white);
-  line-height: 1.5;
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:10px;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  padding:10px 12px;
+  z-index:9999;
+}
+.skip-link:focus{ left:10px; }
+
+/* ---------- Kill old topbar feel (keep if you want, but make it subtle) ---------- */
+.topbar{
+  display:none; /* Terwey-style doesn’t need it. Remove this line if you want your topbar back. */
 }
 
-/* =========================
-   Accessibility
-========================= */
-
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+/* ==========================================================
+   HEADER / NAV (pill buttons over hero)
+   ========================================================== */
+.header{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:50;
+  background:transparent;
+  border-bottom:none;
 }
 
-.skip-link:focus {
-  position: fixed;
-  left: 20px;
-  top: 20px;
-  width: auto;
-  height: auto;
-  padding: 10px 14px;
-  background: var(--blue-dark);
-  color: #fff;
-  z-index: 9999;
-  font-weight: 700;
+.header__inner{
+  padding:18px 0;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
 }
 
-/* =========================
-   Layout Helpers
-========================= */
+/* Brand */
+.brand{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  min-width:220px;
+}
+.brand__logo{
+  width:150px;
+  height:auto;
+  background:#fff;
+  border:3px solid rgba(255,255,255,0.0);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+.brand__text{ display:none; }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+/* Nav pills */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
-/* =========================
-   Header / Nav
-========================= */
-
-.header {
-  background: var(--green);
-  border-bottom: 6px solid var(--blue-dark);
+.nav a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:34px;
+  padding:0 14px;
+  border-radius:10px;
+  background:var(--pill-bg);
+  color:var(--pill-text);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.75rem;
+  font-weight:700;
+  box-shadow: 0 2px 0 var(--pill-shadow);
+  border:1px solid var(--pill-border);
+}
+.nav a:hover{
+  filter:brightness(1.03);
+  transform:translateY(-1px);
+}
+.nav a[aria-current="page"]{
+  background:var(--pill-active-bg);
+  color:var(--pill-active-text);
 }
 
-.header__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 92px;
+/* Donate button area */
+.nav__cta{
+  margin-left:12px;
+  display:inline-flex;
+  align-items:center;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 18px;
+  height:44px;
+  border-radius:10px;
+  border:0;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
+  font-size:.84rem;
+  cursor:pointer;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+}
+.btn--primary{
+  background:var(--cta-bg);
+  color:var(--cta-text);
+}
+.btn--primary:hover{ transform:translateY(-1px); filter:brightness(1.03); }
+
+.btn--secondary{
+  background:var(--pill-active-bg);
+  color:var(--pill-active-text);
+}
+.btn--ghost{
+  background:rgba(255,255,255,0.12);
+  color:#fff;
 }
 
-.brand__logo {
-  height: 60px;
-  width: auto;
-  display: block;
+/* Mobile menu toggle */
+.nav-toggle{
+  display:none;
+  height:44px;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
 }
 
-.nav-toggle {
-  display: none;
-  background: none;
-  border: 2px solid var(--blue-dark);
-  padding: 8px 12px;
-  font-weight: 800;
-  color: var(--blue-dark);
+/* ==========================================================
+   HERO — big 50/50 split
+   ========================================================== */
+.hero{
+  margin:0;
+  padding:0;
+  min-height: 740px;
+  display:flex;
+  align-items:stretch;
+  border-bottom:0;
+  background:var(--paper);
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.nav a {
-  text-decoration: none;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  color: var(--blue-dark);
-}
-
-.nav a:hover {
-  text-decoration: underline;
-}
-
-.nav__cta {
-  margin-left: 18px;
-}
-
-/* =========================
-   Buttons
-========================= */
-
-.btn {
-  display: inline-block;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 14px 22px;
-  border: 3px solid var(--blue-dark);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn--primary {
-  background: var(--blue-dark);
-  color: var(--white);
-}
-
-.btn--primary:hover {
-  background: var(--blue);
-}
-
-.btn--wide {
-  padding-left: 28px;
-  padding-right: 28px;
-}
-
-/* =========================
-   Hero
-========================= */
-
-.hero {
-  background: var(--green);
-  padding: 64px 0;
-}
-
-.hero__inner {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.hero__title {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  line-height: 1.15;
-  font-weight: 900;
-  color: var(--blue-dark);
-  margin: 0 0 20px;
-}
-
-.hero__tagline {
-  font-size: 1.1rem;
-  font-weight: 600;
-  max-width: 560px;
-  color: #08325f;
-  margin-bottom: 26px;
-}
-
-.hero__media img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border: 8px solid var(--white);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-}
-
-/* =========================
-   Signup Form
-========================= */
-
-.form {
-  background: transparent;
-  max-width: 520px;
-}
-
-.form__inner {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.form__row {
-  display: grid;
+.hero__inner{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  display:grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  min-height: 740px;
 }
 
-.field input {
-  width: 100%;
-  padding: 14px 14px;
-  border: 3px solid var(--blue-dark);
-  font-size: 0.95rem;
-  font-weight: 700;
+/* LEFT PANEL */
+.hero__inner > div:first-child{
+  background: var(--hero-left);
+  color:var(--hero-text);
+  padding: 140px 60px 70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
-.field input::placeholder {
-  color: #445;
+.hero__media{
+  position:relative;
+  border:0;
+  background:#000;
+  overflow:hidden;
 }
 
-.field button {
-  width: 100%;
+.hero__media img{
+  width:100%;
+  height:100%;
+  min-height:740px;
+  object-fit:cover;
+  filter:saturate(1.02);
 }
 
-/* =========================
-   Sections
-========================= */
-
-.section {
-  padding: 80px 0;
+.hero__media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.12));
+  pointer-events:none;
 }
 
-.section__head {
-  margin-bottom: 18px;
+.hero__kicker{ display:none; }
+
+.hero__title{
+  margin:0 0 18px;
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  line-height:1.06;
+  letter-spacing:-0.01em;
+  font-weight:800;
+}
+.hero__title strong{
+  box-shadow:none;
+  padding:0;
 }
 
-.h2 {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--blue-dark);
-  margin: 0;
+.hero__tagline{
+  margin:0 0 26px;
+  max-width:46ch;
+  font-size:1.15rem;
+  color:rgba(255,255,255,0.88);
 }
 
-.lede {
-  font-size: 1.05rem;
-  max-width: 700px;
+.hero__script{ display:none; }
+
+.hero__actions{
+  margin-top:10px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
-/* =========================
-   Footer
-========================= */
+/* ==========================================================
+   FORMS (Terwey-like fields)
+   ========================================================== */
+.form{
+  background:transparent;
+  border:0;
+  margin-top:22px;
+}
+.form__inner{ padding:0; }
 
-.footer {
-  background: var(--blue-dark);
-  color: var(--white);
-  padding: 56px 0;
+/* Inputs */
+label{ display:none; }
+
+input, textarea, select{
+  width:100%;
+  height:54px;
+  padding:0 16px;
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,0.0);
+  background:var(--form-field-bg);
+  color:var(--form-field-text);
+  font-family:var(--sans);
+  font-size:1.05rem;
+  font-weight:700;
+  outline:none;
 }
 
-.footer__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+textarea{
+  height:auto;
+  min-height:140px;
+  padding:14px 16px;
+  font-weight:600;
 }
 
-.footer a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 700;
+input::placeholder, textarea::placeholder{
+  color:rgba(11,34,56,0.70);
+  font-weight:800;
 }
 
-.footer a:hover {
-  text-decoration: underline;
+.form__row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+.field{ margin:0 0 12px; }
+
+form button.btn,
+form button[type="submit"]{
+  width:100%;
+  height:54px;
+  border-radius:10px;
+  background:var(--form-submit-bg);
+  color:var(--form-submit-text);
+  font-weight:900;
+  letter-spacing:.18em;
 }
 
-.disclaimer {
-  margin-top: 16px;
-  font-size: 0.85rem;
-  opacity: 0.9;
+/* ==========================================================
+   SECTIONS BELOW HERO
+   ========================================================== */
+.section{
+  padding:90px 0;
+  background:var(--paper);
+}
+.section:nth-of-type(even){
+  background:var(--cloud);
 }
 
-/* =========================
+.section__head{
+  text-align:center;
+  margin-bottom:26px;
+  display:block;
+}
+.h2{
+  margin:0;
+  font-size: clamp(2rem, 3.3vw, 3rem);
+  font-weight:900;
+  color:var(--h2-color);
+}
+.h2::after{
+  content:"";
+  display:block;
+  width:120px;
+  height:4px;
+  background:var(--h2-rule);
+  margin:16px auto 0;
+}
+.lede{
+  margin:18px auto 0;
+  max-width:70ch;
+  font-size:1.15rem;
+  color:rgba(15,23,32,0.78);
+}
+
+/* Cards */
+.card{
+  border-radius:14px;
+  border:1px solid rgba(15,23,32,0.10);
+  background:#fff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+.card__inner{ padding:22px; }
+.card__kicker{
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-weight:900;
+  font-size:.78rem;
+  color:rgba(15,23,32,0.60);
+}
+.card__title{
+  margin:8px 0 10px;
+  font-size:1.28rem;
+  font-weight:900;
+}
+.card__text{ color:rgba(15,23,32,0.76); }
+
+.grid{ display:grid; gap:18px; }
+.grid--2{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+
+/* Issues rows */
+.issue{
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:12px;
+  padding:16px 0;
+  border-top:1px solid rgba(15,23,32,0.10);
+}
+.issue:first-child{ border-top:0; }
+.issue__mark{
+  width:16px; height:16px;
+  border-radius:50%;
+  background:var(--issue-dot);
+  margin-top:4px;
+}
+.issue__title{ margin:0 0 6px; font-weight:900; }
+.issue__desc{ margin:0; color:rgba(15,23,32,0.76); }
+
+/* Pending blocks */
+.pending{
+  border-radius:14px;
+  border:2px dashed rgba(15,23,32,0.22);
+  background:rgba(242,227,201,0.55); /* warm beige tint */
+  padding:22px 18px;
+}
+
+/* Footer */
+.footer{
+  background:var(--footer-bg);
+  color:var(--footer-text);
+  padding:40px 0;
+}
+.footer__inner{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:18px;
+}
+.footer a{ color:#fff; opacity:.92; }
+.disclaimer{
+  margin-top:14px;
+  display:inline-block;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.06);
+}
+
+/* ==========================================================
    Responsive
-========================= */
-
-@media (max-width: 900px) {
-  .hero__inner {
-    grid-template-columns: 1fr;
+   ========================================================== */
+@media (max-width: 980px){
+  .header{ position:relative; background:var(--hero-left); }
+  .brand__logo{ width:130px; }
+  .hero{ min-height:auto; }
+  .hero__inner{
+    grid-template-columns:1fr;
+    min-height:auto;
   }
-
-  .hero__media {
-    order: -1;
+  .hero__inner > div:first-child{
+    padding:34px 22px 26px;
   }
-
-  .nav {
-    display: none;
+  .hero__media img{
+    min-height:420px;
+    height:420px;
   }
+  .footer__inner{ grid-template-columns:1fr; }
+}
 
-  .nav-toggle {
-    display: inline-block;
-  }
+@media (max-width: 760px){
+  .nav{ display:none; }
+  .nav-toggle{ display:inline-flex; }
+  .header__inner{ align-items:center; }
+  .form__row{ grid-template-columns:1fr; }
+  .grid--2{ grid-template-columns:1fr; }
 
-  .footer__inner {
-    grid-template-columns: 1fr;
-  }
-
-  .form__row {
-    grid-template-columns: 1fr;
-  }
+  .brand__logo { background:#fff; padding:10px; border-radius:12px; }
 }
