@@ -13,11 +13,22 @@
   <meta property="og:title" content="Events | Cole for OK 86" />
   <meta property="og:description" content="Town halls, fundraisers, and community stops across District 86." />
   <meta property="og:type" content="website" />
+
+  <!-- Per-page logo fix -->
+  <style>
+    .brand__logo{
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    }
+  </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- CANONICAL HEADER -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
@@ -34,14 +45,11 @@
         <a href="issues.html">Issues</a>
         <a href="events.html" aria-current="page">Events</a>
         <a href="news.html">News</a>
-        <a href="press.html" data-pending="true" aria-label="Press (page pending)">Press</a>
         <a href="get-involved.html">Get Involved</a>
         <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true" aria-label="Donate (page pending)">
-            Donate
-          </a>
+          <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
         </span>
       </nav>
     </div>
@@ -49,11 +57,11 @@
 
   <main id="main">
     <!-- PAGE INTRO -->
-    <section class="section" aria-label="Events intro" style="padding:110px 0 56px;">
+    <section class="section" aria-label="Events intro" style="padding:120px 0 64px;">
       <div class="container">
         <div class="section__head">
           <h1 class="h2" style="margin:0;">Events</h1>
-          <p class="lede" style="margin-top:14px;">
+          <p class="lede" style="margin-top:16px; max-width:720px;">
             I believe representation starts face-to-face. Below you’ll find upcoming town halls,
             fundraisers, and community stops across District 86.
           </p>
@@ -61,27 +69,34 @@
       </div>
     </section>
 
-    <!-- EVENTS LIST -->
+    <!-- EVENTS LIST / EMPTY STATE -->
     <section class="section" aria-label="Upcoming events">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">Where to meet me</h2>
-          <p class="lede">
+          <p class="lede" style="max-width:720px;">
             This page will be updated regularly as events are scheduled.
             If you’re interested in hosting a gathering, I’d love to hear from you.
           </p>
         </div>
 
-        <!-- Pending / empty state -->
-        <div class="pending" style="margin-top:18px;">
+        <div
+          class="pending"
+          style="
+            margin-top:24px;
+            padding:28px;
+            border-radius:14px;
+            background:rgba(15,23,32,0.04);
+          "
+        >
           <p style="margin:0 0 8px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
             Events — coming soon
           </p>
-          <p style="margin:0; color:rgba(15,23,32,0.76);">
+          <p style="margin:0; color:rgba(15,23,32,0.76); max-width:640px;">
             No events are posted yet. Check back soon, or reach out if you’d like to host
             a town hall, fundraiser, or neighborhood meet-up.
           </p>
-          <div style="margin-top:14px;">
+          <div style="margin-top:16px;">
             <a class="btn btn--secondary" href="contact.html">Propose an event</a>
           </div>
         </div>
@@ -115,7 +130,9 @@
                 and make sure folks feel welcome when they show up.
               </p>
               <div style="margin-top:14px;">
-                <a class="btn btn--primary" href="get-involved.html">Join the Dirt-road Collective</a>
+                <a class="btn btn--primary" href="get-involved.html">
+                  Join the Dirt-road Collective
+                </a>
               </div>
             </div>
           </article>
@@ -127,16 +144,24 @@
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
+          Cole for OK 86
+        </div>
         <p style="margin-top:10px; opacity:.85;">
           Mailing address: P.O. Box 100, Rose, OK 74364
         </p>
-        <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
+        <div class="disclaimer">
+          <strong>Paid for by</strong> Cole for OK 86
+        </div>
       </div>
 
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Compliance</div>
-        <p style="opacity:.85; margin-top:10px;">OK Ethics Commission</p>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
+          Compliance
+        </div>
+        <p style="opacity:.85; margin-top:10px;">
+          OK Ethics Commission
+        </p>
       </div>
     </div>
   </footer>
