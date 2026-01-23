@@ -52,9 +52,12 @@
 
   --sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-  /* COMPONENT THEME MAPPING (change these to recolor everything) */
+  /* COMPONENT THEME MAPPING */
   --hero-left: var(--pine);      /* deep left hero panel */
   --hero-text: #ffffff;
+
+  /* Alias used in a couple places (bug fix) */
+  --navy: var(--hero-left);
 
   --pill-bg: rgba(166,55,45,0.94);    /* rust */
   --pill-text: #fffaf3;
@@ -64,19 +67,19 @@
   --pill-active-bg: rgba(230,180,88,0.96); /* wheat */
   --pill-active-text: #2a1b10;
 
-  --cta-bg: rgba(217,121,37,0.96);    /* burnt orange donate */
+  --cta-bg: rgba(217,121,37,0.96);    /* burnt orange (default primary) */
   --cta-text: #1c120b;
 
   --h2-color: #2b3a47;                /* muted, classic headline */
   --h2-rule: rgba(166,55,45,0.86);    /* rust underline */
 
   --issue-dot: rgba(77,106,71,0.96);  /* moss */
-  --form-field-bg: #edf6ff;           /* keep Terwey-like field */
+  --form-field-bg: #edf6ff;           /* Terwey-like field */
   --form-field-text: #0b2238;
   --form-submit-bg: rgba(217,121,37,0.96);
   --form-submit-text: #1c120b;
 
-  --footer-bg: #0b1420;               /* keep strong contrast */
+  --footer-bg: #0b1420;
   --footer-text: #ffffff;
 }
 
@@ -110,9 +113,9 @@ a{ color:inherit; text-decoration:none; }
 }
 .skip-link:focus{ left:10px; }
 
-/* ---------- Kill old topbar feel (keep if you want, but make it subtle) ---------- */
+/* ---------- Topbar ---------- */
 .topbar{
-  display:none; /* Terwey-style doesn’t need it. Remove this line if you want your topbar back. */
+  display:none;
 }
 
 /* ==========================================================
@@ -143,11 +146,16 @@ a{ color:inherit; text-decoration:none; }
   gap:14px;
   min-width:220px;
 }
+
+/* Logo “white box” bug fix:
+   If your logo file has a white rectangle baked in, CSS cannot remove that.
+   But we can stop the box from covering content by removing forced white bg
+   and making the container transparent. */
 .brand__logo{
   width:150px;
   height:auto;
-  background:#fff;
-  border:3px solid rgba(255,255,255,0.0);
+  background:transparent;
+  border:0;
   box-shadow: 0 6px 18px rgba(0,0,0,0.10);
 }
 .brand__text{ display:none; }
@@ -176,6 +184,7 @@ a{ color:inherit; text-decoration:none; }
   font-weight:700;
   box-shadow: 0 2px 0 var(--pill-shadow);
   border:1px solid var(--pill-border);
+  transition: transform .12s ease, filter .12s ease;
 }
 .nav a:hover{
   filter:brightness(1.03);
@@ -192,6 +201,7 @@ a{ color:inherit; text-decoration:none; }
   display:inline-flex;
   align-items:center;
 }
+
 .btn{
   display:inline-flex;
   align-items:center;
@@ -206,31 +216,28 @@ a{ color:inherit; text-decoration:none; }
   font-size:.84rem;
   cursor:pointer;
   box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
 }
 .btn--primary{
   background:var(--cta-bg);
   color:var(--cta-text);
 }
-
 .btn--primary:hover{ transform:translateY(-1px); filter:brightness(1.03); }
 
 /* ==============================
-   Donate button emphasis
+   Donate button emphasis (darker)
    ============================== */
-
-.nav__cta .btn--primary {
-  background: #1B2E28; /* Midnight Pine */
+.nav__cta .btn--primary{
+  background: var(--pine);
   color: #ffffff;
   border: 2px solid rgba(255,255,255,0.18);
   box-shadow: 0 4px 0 rgba(0,0,0,0.28);
 }
-
-.nav__cta .btn--primary:hover {
+.nav__cta .btn--primary:hover{
   transform: translateY(-1px);
   filter: brightness(1.06);
 }
-
-.nav__cta .btn--primary:active {
+.nav__cta .btn--primary:active{
   transform: translateY(0);
   box-shadow: 0 2px 0 rgba(0,0,0,0.35);
 }
@@ -244,7 +251,7 @@ a{ color:inherit; text-decoration:none; }
   color:#fff;
 }
 
-/* Mobile menu toggle */
+/* Mobile menu toggle (base) */
 .nav-toggle{
   display:none;
   height:44px;
@@ -291,6 +298,7 @@ a{ color:inherit; text-decoration:none; }
   justify-content:center;
 }
 
+/* Right photo panel */
 .hero__media{
   position:relative;
   border:0;
@@ -306,6 +314,7 @@ a{ color:inherit; text-decoration:none; }
   filter:saturate(1.02);
 }
 
+/* Desktop photo overlay */
 .hero__media::after{
   content:"";
   position:absolute;
@@ -323,10 +332,7 @@ a{ color:inherit; text-decoration:none; }
   letter-spacing:-0.01em;
   font-weight:800;
 }
-.hero__title strong{
-  box-shadow:none;
-  padding:0;
-}
+.hero__title strong{ box-shadow:none; padding:0; }
 
 .hero__tagline{
   margin:0 0 26px;
@@ -345,7 +351,7 @@ a{ color:inherit; text-decoration:none; }
 }
 
 /* ==========================================================
-   FORMS (Terwey-like fields)
+   FORMS
    ========================================================== */
 .form{
   background:transparent;
@@ -353,8 +359,6 @@ a{ color:inherit; text-decoration:none; }
   margin-top:22px;
 }
 .form__inner{ padding:0; }
-
-/* Inputs */
 label{ display:none; }
 
 input, textarea, select{
@@ -403,7 +407,7 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   SECTIONS BELOW HERO
+   SECTIONS
    ========================================================== */
 .section{
   padding:90px 0;
@@ -486,7 +490,7 @@ form button[type="submit"]{
 .pending{
   border-radius:14px;
   border:2px dashed rgba(15,23,32,0.22);
-  background:rgba(242,227,201,0.55); /* warm beige tint */
+  background:rgba(242,227,201,0.55);
   padding:22px 18px;
 }
 
@@ -516,57 +520,49 @@ form button[type="submit"]{
    ========================================================== */
 @media (max-width: 980px){
 
-  .header{ position:relative; background:var(--navy); }
+  /* Header becomes a normal bar above content on mobile/tablet */
+  .header{
+    position:relative;
+    background:var(--hero-left);
+  }
+
   .brand__logo{ width:130px; }
 
-  .hero{ min-height:auto; }
+  /* Stack hero */
+  .hero{
+    min-height:auto;
+    background:var(--hero-left); /* ensures a clean blend */
+  }
 
   .hero__inner{
     grid-template-columns:1fr;
     min-height:auto;
   }
 
-  .hero__inner > div:first-child{
-    padding:34px 22px 26px;
-  }
-
-  .hero__media img{
-    min-height:420px;
-    height:420px;
-  }
-
-  .footer__inner{ grid-template-columns:1fr; }
-
-  /* ============================
-     PASTE STARTS HERE
-     ============================ */
-
-  .hero{
-    background: var(--navy);
-  }
-
+  /* IMPORTANT:
+     Put PHOTO first on mobile without hacks (no negative margins). */
   .hero__media{
-    grid-row: 1;
-    position: relative;
+    order:0;
   }
 
   .hero__inner > div:first-child{
-    grid-row: 2;
-    background: var(--navy);
-    margin-top: -34px;
-    padding-top: 48px;
+    order:1;
+    padding:28px 22px 34px;
+    background:var(--hero-left);
   }
 
-  .hero__media::after{
-    background: none;
-  }
-
+  /* Mobile photo sizing: stable, not huge */
   .hero__media img{
-    height: 520px;
-    min-height: 520px;
-    width: 100%;
-    object-fit: cover;
-    display: block;
+    height: 56vh;
+    min-height: 360px;
+    max-height: 560px;
+    width:100%;
+    object-fit:cover;
+  }
+
+  /* Replace desktop overlay with a bottom fade into green */
+  .hero__media::after{
+    background:none;
   }
 
   .hero__media::before{
@@ -575,18 +571,93 @@ form button[type="submit"]{
     left:0;
     right:0;
     bottom:0;
-    height:140px;
+    height: 140px;
     background: linear-gradient(
       to bottom,
       rgba(27,46,40,0) 0%,
-      rgba(27,46,40,0.25) 35%,
-      rgba(27,46,40,0.65) 70%,
+      rgba(27,46,40,0.30) 40%,
+      rgba(27,46,40,0.72) 75%,
       rgba(27,46,40,1) 100%
     );
     pointer-events:none;
   }
 
-  /* ============================
-     PASTE ENDS HERE
-     ============================ */
+  .footer__inner{ grid-template-columns:1fr; }
+}
+
+@media (max-width: 760px){
+
+  /* Hide desktop pills; show mobile toggle */
+  .nav{ display:none; }
+  .nav-toggle{ display:inline-flex; }
+
+  .header__inner{ align-items:center; }
+
+  .form__row{ grid-template-columns:1fr; }
+  .grid--2{ grid-template-columns:1fr; }
+
+  /* Hamburger icon (3 lines) — uses your existing <button class="nav-toggle">Menu</button> */
+  .nav-toggle{
+    position: relative;
+    width: 48px;
+    min-width: 48px;
+    height: 44px;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.12);
+    cursor: pointer;
+
+    /* Hide "Menu" text visually but keep it accessible */
+    color: transparent;
+    user-select: none;
+    overflow: hidden;
+  }
+
+  .nav-toggle::before,
+  .nav-toggle::after{
+    content:"";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    opacity: 0.95;
+    transition: transform .12s ease, top .12s ease, box-shadow .12s ease;
+  }
+
+  /* top line + middle line via box-shadow */
+  .nav-toggle::before{
+    top: 14px;
+    box-shadow: 0 7px 0 #ffffff;
+  }
+
+  /* bottom line */
+  .nav-toggle::after{
+    top: 28px;
+  }
+
+  .nav-toggle:focus-visible{
+    outline: 3px solid rgba(230,180,88,0.85);
+    outline-offset: 3px;
+  }
+
+  /* Optional: show X when open (your JS sets aria-expanded) */
+  .nav-toggle[aria-expanded="true"]::before{
+    top: 21px;
+    box-shadow:none;
+    transform: rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"]::after{
+    top: 21px;
+    transform: rotate(-45deg);
+  }
+
+  /* Small logo polish */
+  .brand__logo{
+    background:transparent;
+    padding:0;
+    border-radius:0;
+  }
 }
