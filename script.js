@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Hannah Cole for OK 86 — script.js
-   - Classic campaign site interactions (no popups)
-   - Mobile nav toggle
-   - Active nav link highlighting
-   - Simple form helpers (no backend): volunteer + contact + comments placeholders
-   - “Pending / under development” buttons safety
+   Hannah Cole for OK 86 — script.js (Mobile-first, no popups)
+   - Accessible hamburger menu (overlay + focus trap + scroll lock)
+   - Consistent nav behavior across pages
+   - Active link highlighting (fallback if aria-current not set)
+   - Simple form helpers (no backend): volunteer + contact
+   - No alerts / no modal popups
    ========================================================================== */
 
 (function () {
@@ -14,139 +14,332 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+  const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
   function safeJsonParse(str, fallback) {
     try { return JSON.parse(str); } catch { return fallback; }
   }
 
-  function setAriaExpanded(btn, expanded) {
-    if (!btn) return;
-    btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+  function injectBaseStylesOnce() {
+    if (document.getElementById("cole-js-styles")) return;
+
+    const style = document.createElement("style");
+    style.id = "cole-js-styles";
+    style.textContent = `
+      /* ===== JS-injected styles: mobile nav + status UI ===== */
+
+      /* Lock scroll when nav open */
+      body.nav-open { overflow: hidden; }
+
+      /* Mobile overlay */
+      .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        z-index: 60;
+        display: none;
+      }
+      .nav-overlay[data-open="true"] { display: block; }
+
+      /* Mobile drawer */
+      .nav-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(86vw, 360px);
+        background: var(--navy, #0b1420);
+        color: #fff;
+        z-index: 70;
+        transform: translateX(102%);
+        transition: transform 220ms ease;
+        padding: 18px 16px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: -18px 0 44px rgba(0,0,0,0.22);
+        overscroll-behavior: contain;
+      }
+      .nav-drawer[data-open="true"] { transform: translateX(0); }
+
+      .nav-drawer__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .nav-drawer__close {
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.10);
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: .14em;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .nav-drawer a {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.14);
+        text-transform: uppercase;
+        letter-spacing: .14em;
+        font-size: .80rem;
+        font-weight: 800;
+      }
+      .nav-drawer a[aria-current="page"]{
+        background: rgba(230,180,88,0.95);
+        color: #2a1b10;
+        border-color: rgba(0,0,0,0);
+      }
+
+      .nav-drawer .nav-drawer__cta a {
+        justify-content: center;
+        height: 50px;
+        background: rgba(89,116,140,0.95);
+        color: #061523;
+        border-color: rgba(255,255,255,0.0);
+      }
+
+      /* In-page form status message */
+      .form-status {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 2px solid rgba(15,23,32,0.18);
+        background: rgba(238,242,246,0.75);
+        font-weight: 700;
+        color: rgba(15,23,32,0.80);
+      }
+      .form-status--ok { border-color: rgba(77,106,71,0.95); }
+      .form-status--err { border-color: rgba(166,55,45,0.95); }
+
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce){
+        .nav-drawer { transition: none; }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
-  // ---------- Mobile nav (requires markup in HTML) ----------
-  // Expected (recommended) HTML hooks:
-  //  - button.nav-toggle (aria-controls="site-nav")
-  //  - nav#site-nav.nav
-  // This JS gracefully does nothing if not present.
-  const navToggle = $(".nav-toggle");
-  const siteNav = $("#site-nav");
+  // ---------- Active nav highlighting ----------
+  // Fallback only: if you already set aria-current in HTML, it will keep it.
+  function setActiveNavLink() {
+    const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    $$("nav a[href]").forEach((a) => {
+      const href = (a.getAttribute("href") || "").toLowerCase().trim();
+      if (!href || href.startsWith("#") || href.startsWith("http")) return;
+      const normalized = href.split("?")[0].split("#")[0];
 
-  function openNav() {
-    if (!siteNav) return;
-    siteNav.style.display = "flex";
-    siteNav.style.flexDirection = "column";
-    siteNav.style.alignItems = "flex-start";
-    siteNav.style.gap = "6px";
-    siteNav.style.padding = "10px 0 0";
-    setAriaExpanded(navToggle, true);
-    document.body.dataset.navOpen = "true";
+      // Only set aria-current if none is set anywhere in this nav (avoid fighting your HTML)
+      const nav = a.closest("nav");
+      const alreadyHasCurrent = nav && nav.querySelector('[aria-current="page"]');
+      if (alreadyHasCurrent) return;
+
+      if (normalized === currentPath) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
   }
 
-  function closeNav() {
-    if (!siteNav) return;
-    siteNav.style.display = "";
-    setAriaExpanded(navToggle, false);
-    delete document.body.dataset.navOpen;
+  // ---------- Smooth scroll for in-page anchors ----------
+  function bindSmoothAnchors() {
+    $$('a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = document.getElementById(id.slice(1));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", id);
+      });
+    });
   }
 
-  function toggleNav() {
-    const open = document.body.dataset.navOpen === "true";
-    open ? closeNav() : openNav();
-  }
+  // ---------- Accessible mobile nav (hamburger) ----------
+  function setupMobileNav() {
+    injectBaseStylesOnce();
 
-  if (navToggle && siteNav) {
-    navToggle.addEventListener("click", toggleNav);
+    const toggleBtn = $(".nav-toggle");
+    const desktopNav = $("#site-nav"); // your existing nav
 
-    // Close nav when resizing up to desktop
+    if (!toggleBtn || !desktopNav) return;
+
+    // Ensure toggle has correct ARIA
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.setAttribute("type", "button");
+
+    // Build overlay + drawer once
+    let overlay = $(".nav-overlay");
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.className = "nav-overlay";
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.appendChild(overlay);
+    }
+
+    let drawer = $(".nav-drawer");
+    if (!drawer) {
+      drawer = document.createElement("nav");
+      drawer.className = "nav-drawer";
+      drawer.setAttribute("aria-label", "Mobile");
+      drawer.setAttribute("data-open", "false");
+
+      // Clone links from desktop nav (keeps single source of truth)
+      const links = $$("a", desktopNav).map((a) => a.cloneNode(true));
+
+      // Drawer top row: title + close
+      const top = document.createElement("div");
+      top.className = "nav-drawer__top";
+
+      const title = document.createElement("div");
+      title.style.fontWeight = "900";
+      title.style.letterSpacing = ".10em";
+      title.style.textTransform = "uppercase";
+      title.textContent = "Menu";
+
+      const closeBtn = document.createElement("button");
+      closeBtn.className = "nav-drawer__close";
+      closeBtn.type = "button";
+      closeBtn.textContent = "Close";
+
+      top.appendChild(title);
+      top.appendChild(closeBtn);
+
+      drawer.appendChild(top);
+
+      // Add links; keep Donate as CTA if it exists
+      links.forEach((a) => {
+        // Remove any data-pending interception behavior (we do not block navigation)
+        a.removeAttribute("data-pending");
+
+        const href = (a.getAttribute("href") || "").trim();
+
+        // Detect donate button by href
+        const isDonate = href.toLowerCase().includes("donate.html");
+        if (isDonate) {
+          const ctaWrap = document.createElement("div");
+          ctaWrap.className = "nav-drawer__cta";
+          ctaWrap.style.marginTop = "8px";
+          ctaWrap.appendChild(a);
+          drawer.appendChild(ctaWrap);
+        } else {
+          drawer.appendChild(a);
+        }
+      });
+
+      document.body.appendChild(drawer);
+
+      // Close handlers
+      closeBtn.addEventListener("click", () => closeDrawer());
+      overlay.addEventListener("click", () => closeDrawer());
+
+      // Close when clicking a link
+      drawer.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (!a) return;
+        closeDrawer();
+      });
+    }
+
+    // Focus trap
+    let lastFocused = null;
+
+    function getFocusable(root) {
+      const sel = [
+        "a[href]",
+        "button:not([disabled])",
+        "input:not([disabled])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        '[tabindex]:not([tabindex="-1"])'
+      ].join(",");
+      return $$(sel, root).filter((el) => el.offsetParent !== null);
+    }
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        closeDrawer();
+        return;
+      }
+
+      // Trap tab inside drawer
+      if (e.key !== "Tab") return;
+      const focusables = getFocusable(drawer);
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function openDrawer() {
+      if (!isMobile()) return;
+
+      lastFocused = document.activeElement;
+
+      overlay.setAttribute("data-open", "true");
+      drawer.setAttribute("data-open", "true");
+      toggleBtn.setAttribute("aria-expanded", "true");
+      document.body.classList.add("nav-open");
+
+      // Move focus into drawer
+      const focusables = getFocusable(drawer);
+      (focusables[0] || drawer).focus?.();
+
+      document.addEventListener("keydown", onKeyDown);
+    }
+
+    function closeDrawer() {
+      overlay.setAttribute("data-open", "false");
+      drawer.setAttribute("data-open", "false");
+      toggleBtn.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open");
+
+      document.removeEventListener("keydown", onKeyDown);
+
+      // Restore focus
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    }
+
+    // Toggle button
+    toggleBtn.addEventListener("click", () => {
+      const open = drawer.getAttribute("data-open") === "true";
+      open ? closeDrawer() : openDrawer();
+    });
+
+    // When resizing to desktop, ensure drawer is closed
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 760) closeNav();
-    });
-
-    // Close nav after clicking a link (mobile)
-    siteNav.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (!a) return;
-      if (window.innerWidth <= 760) closeNav();
-    });
-
-    // Close nav on Escape
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && document.body.dataset.navOpen === "true") {
-        closeNav();
-        navToggle.focus();
+      if (!isMobile()) {
+        overlay.setAttribute("data-open", "false");
+        drawer.setAttribute("data-open", "false");
+        toggleBtn.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+        document.removeEventListener("keydown", onKeyDown);
       }
     });
   }
 
-  // ---------- Active nav highlighting ----------
-  // Works for multipage sites by matching current filename.
-  // Expected: <nav> links point to pages like "issues.html".
-  const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-
-  $$("nav a[href]").forEach((a) => {
-    const href = (a.getAttribute("href") || "").toLowerCase().trim();
-    if (!href || href.startsWith("#") || href.startsWith("http")) return;
-
-    const normalizedHref = href.split("?")[0].split("#")[0];
-    if (normalizedHref === currentPath) {
-      a.setAttribute("aria-current", "page");
-    } else {
-      a.removeAttribute("aria-current");
-    }
-  });
-
-  // ---------- Smooth scroll for in-page anchors ----------
-  // Keeps classic feel; no fancy scrolling libraries.
-  $$('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const id = a.getAttribute("href");
-      if (!id || id === "#") return;
-
-      const target = document.getElementById(id.slice(1));
-      if (!target) return;
-
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      history.replaceState(null, "", id);
-    });
-  });
-
-  // ---------- “Pending / Under development” intercept ----------
-  // Add data-pending="true" to links/buttons you want to show as not ready.
-  // Example: <a class="btn" href="donate.html" data-pending="true">Donate</a>
-  function showPendingNotice(msg) {
-    // Avoid popups; use a page-embedded notice if present, else a gentle alert.
-    const box = $("#pending-notice");
-    if (box) {
-      box.textContent = msg;
-      box.hidden = false;
-      box.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
-    }
-    // Fallback: basic alert (not a modal/popup tab—just browser alert).
-    // If you prefer none, remove this line; it will then silently do nothing.
-    alert(msg);
-  }
-
-  $$("[data-pending='true']").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPendingNotice("This section is still under development. Please check back soon.");
-    });
-  });
-
   // ---------- Simple form handling (no backend) ----------
-  // Forms we may have:
-  //  - Volunteer form: #volunteer-form
-  //  - Contact form: #contact-form
-  //  - Comment form: #comment-form (currently under development)
-  //
-  // Behavior:
-  //  - Validate required fields (HTML5 validation)
-  //  - Store submissions in localStorage for QA/testing
-  //  - Show a “Thanks” message in-page (no popups)
-  //
-  const STORAGE_KEY = "coleforok86_submissions_v1";
+  // Stores submissions locally for testing, and shows in-page status.
+  const STORAGE_KEY = "coleforok86_submissions_v2";
 
   function loadSubmissions() {
     return safeJsonParse(localStorage.getItem(STORAGE_KEY), []);
@@ -159,21 +352,18 @@
   }
 
   function setFormStatus(form, message, kind) {
-    // kind: "ok" | "err"
     if (!form) return;
     let node = form.querySelector(".form-status");
     if (!node) {
       node = document.createElement("div");
       node.className = "form-status";
-      node.style.marginTop = "12px";
-      node.style.padding = "12px";
-      node.style.border = "2px solid #141414";
-      node.style.background = "rgba(255,255,255,0.75)";
-      node.style.fontSize = "0.98rem";
+      node.setAttribute("role", "status");
+      node.setAttribute("aria-live", "polite");
       form.appendChild(node);
     }
     node.textContent = message;
-    node.style.borderColor = kind === "ok" ? "#4D6A47" : "#A6372D";
+    node.classList.remove("form-status--ok", "form-status--err");
+    node.classList.add(kind === "ok" ? "form-status--ok" : "form-status--err");
   }
 
   function handleForm(form, typeLabel) {
@@ -182,7 +372,6 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // Let browser run built-in validation
       if (!form.checkValidity()) {
         form.reportValidity();
         setFormStatus(form, "Please review the highlighted fields and try again.", "err");
@@ -198,71 +387,31 @@
       saveSubmission({
         type: typeLabel,
         createdAt: new Date().toISOString(),
-        page: currentPath,
+        page: (location.pathname.split("/").pop() || "index.html"),
         payload
       });
 
-      // Reset (keeps classic feel; no confetti)
       form.reset();
 
-      // Success message (in-page)
-      if (typeLabel === "comment") {
-        setFormStatus(
-          form,
-          "Thank you. Comment submission is currently under development, but your message was saved locally for testing.",
-          "ok"
-        );
-      } else if (typeLabel === "volunteer") {
-        setFormStatus(
-          form,
-          "Thank you for stepping up. We will follow up soon. If this is urgent, please use the Contact page.",
-          "ok"
-        );
+      if (typeLabel === "volunteer") {
+        setFormStatus(form, "Thank you for stepping up. A team member will follow up soon.", "ok");
+      } else if (typeLabel === "contact") {
+        setFormStatus(form, "Message received. We will respond as soon as possible.", "ok");
       } else {
-        setFormStatus(
-          form,
-          "Message received. We will respond as soon as possible.",
-          "ok"
-        );
+        setFormStatus(form, "Received.", "ok");
       }
     });
   }
 
-  handleForm($("#volunteer-form"), "volunteer");
-  handleForm($("#contact-form"), "contact");
-  handleForm($("#comment-form"), "comment");
+  // ---------- Init ----------
+  document.addEventListener("DOMContentLoaded", () => {
+    setActiveNavLink();
+    bindSmoothAnchors();
+    setupMobileNav();
 
-  // ---------- Optional: render recent local comments (dev only) ----------
-  // If you add a container with id="comment-list", this will render saved comments.
-  // This is *not* a real public comment section; it is a placeholder for development.
-  const commentList = $("#comment-list");
-  if (commentList) {
-    const all = loadSubmissions();
-    const comments = all.filter((x) => x && x.type === "comment").slice(0, 8);
-
-    if (comments.length === 0) {
-      commentList.innerHTML = "<div class='muted'>No comments saved yet.</div>";
-    } else {
-      const html = comments
-        .map((c) => {
-          const p = c.payload || {};
-          const name = (p.name || "Anonymous").replace(/</g, "&lt;");
-          const msg = (p.message || "").replace(/</g, "&lt;");
-          const when = c.createdAt ? new Date(c.createdAt).toLocaleString() : "";
-          return `
-            <div class="list__item">
-              <div class="list__meta">
-                <span><strong>${name}</strong></span>
-                <span>${when}</span>
-              </div>
-              <div>${msg || "<span class='muted'>(No message)</span>"}</div>
-            </div>
-          `;
-        })
-        .join("");
-
-      commentList.innerHTML = `<div class="list">${html}</div>`;
-    }
-  }
+    // Forms
+    handleForm($("#volunteer-form"), "volunteer");
+    handleForm($("#contact-form"), "contact");
+  });
 
 })();
