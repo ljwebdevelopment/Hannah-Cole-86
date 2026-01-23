@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,6 +9,13 @@
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
+
+  <!-- Social share -->
+  <meta property="og:title" content="Hannah Cole for OK House 86" />
+  <meta property="og:description" content="Join the Dirt-road Collective. Volunteer, get updates, and stay involved." />
+  <meta property="og:image" content="DSC02194%20-%20Hannah%20Cole.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body>
@@ -19,93 +27,170 @@
         <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
       </a>
 
-      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">Menu</button>
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
+        Menu
+      </button>
 
       <nav id="site-nav" class="nav" aria-label="Site">
-        <a href="meet.html">About</a>
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="meet.html">Meet Hannah</a>
         <a href="issues.html">Issues</a>
         <a href="events.html">Events</a>
-        <a href="get-involved.html">Volunteer</a>
-        <a href="contact.html">Contact</a>
         <a href="news.html">News</a>
+        <a href="get-involved.html">Get Involved</a>
+        <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true">Donate</a>
+          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true" aria-label="Donate (page pending)">
+            Donate
+          </a>
         </span>
       </nav>
     </div>
   </header>
 
   <main id="main">
+    <!-- HERO -->
     <section class="hero" aria-label="Hero">
       <div class="hero__inner">
+        <!-- LEFT PANEL -->
         <div>
           <h1 class="hero__title">
-            Grassroots powered<br />
-            People focused<br />
-            Candidate for OK House 86
+            Cole for OK 86<br />
+            <span style="font-weight:700; opacity:.92;">Values over party.</span>
           </h1>
 
           <p class="hero__tagline">
             I’m Hannah Cole. I’m running for Oklahoma House District 86 to protect our rural way of life,
-            expand practical access to care, and make sure our communities are heard.
+            strengthen practical access to care, and make sure our communities are heard at the Capitol.
           </p>
 
+          <div class="hero__actions" aria-label="Primary calls to action">
+            <a class="btn btn--secondary" href="get-involved.html">Join the Dirt-road Collective</a>
+            <a class="btn btn--ghost" href="meet.html">Meet Hannah</a>
+          </div>
+
+          <!-- SIGNUP -->
           <div class="form" aria-label="Signup">
             <form class="form__inner" id="signup-form" novalidate>
               <div class="form__row">
                 <div class="field">
-                  <input type="text" name="firstName" autocomplete="given-name" placeholder="First Name" required />
+                  <input type="text" name="firstName" autocomplete="given-name" placeholder="First Name" required aria-label="First name" />
                 </div>
                 <div class="field">
-                  <input type="text" name="lastName" autocomplete="family-name" placeholder="Last Name" required />
-                </div>
-              </div>
-
-              <div class="form__row">
-                <div class="field">
-                  <input type="email" name="email" autocomplete="email" placeholder="Email" required />
-                </div>
-                <div class="field">
-                  <input type="tel" name="phone" autocomplete="tel" placeholder="Phone" required />
+                  <input type="text" name="lastName" autocomplete="family-name" placeholder="Last Name" required aria-label="Last name" />
                 </div>
               </div>
 
               <div class="form__row">
                 <div class="field">
-                  <input type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" />
+                  <input type="email" name="email" autocomplete="email" placeholder="Email" required aria-label="Email address" />
+                </div>
+                <div class="field">
+                  <input type="tel" name="phone" autocomplete="tel" placeholder="Phone" required aria-label="Phone number" />
+                </div>
+              </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <input type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" aria-label="ZIP code" />
                 </div>
                 <div class="field">
                   <button class="btn btn--primary" type="submit">Submit</button>
                 </div>
               </div>
+
+              <p style="margin:12px 0 0; color:rgba(255,255,255,0.82); font-weight:700; font-size:.98rem;">
+                No spam. Just campaign updates, events, and ways to help.
+              </p>
             </form>
           </div>
-
-          <p style="margin-top:14px; color:rgba(255,255,255,0.86); font-weight:700;">
-            Join the <span style="color:rgba(230,180,88,0.95);">Dirt-road Collective</span>.
-          </p>
         </div>
 
+        <!-- RIGHT PHOTO PANEL -->
         <div class="hero__media" aria-label="Candidate photo">
           <img src="DSC02194%20-%20Hannah%20Cole.png" alt="Hannah Cole headshot" />
         </div>
       </div>
     </section>
 
-    <section class="section" aria-label="Next steps">
+    <!-- INVOLVEMENT -->
+    <section class="section" aria-label="You can be involved">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">You can be involved</h2>
+          <p class="lede">
+            Volunteering can look like many things—driving someone to knock doors, hosting a “get to know the candidate” party,
+            helping organize neighbors, or showing up at events. Any help is appreciated. Tell us what you can do.
+          </p>
         </div>
 
-        <p class="lede">
-          Volunteering can look like many things—driving someone to knock doors, hosting a “get to know the candidate” party,
-          helping organize neighbors, or showing up at events. Any help is appreciated.
-        </p>
+        <div class="grid grid--2" aria-label="Ways to help">
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Grassroots fuel</div>
+              <h3 class="card__title">Volunteer time</h3>
+              <p class="card__text">
+                Door knocking wins rural races. If you can knock, drive, host, call, text, or help gather folks,
+                we can put your strengths to work.
+              </p>
+              <div style="margin-top:14px;">
+                <a class="btn btn--primary" href="get-involved.html">Volunteer</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Stay informed</div>
+              <h3 class="card__title">Attend events</h3>
+              <p class="card__text">
+                Town halls, meet-and-greets, and fundraisers—come say hello, bring a neighbor, and ask what you want
+                your representative to fight for.
+              </p>
+              <div style="margin-top:14px;">
+                <a class="btn btn--secondary" href="events.html">See events</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK LINKS / PRIORITIES PREVIEW -->
+    <section class="section" aria-label="Priorities preview">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="h2">What I’m fighting for</h2>
+          <p class="lede">
+            District 86 deserves practical leadership rooted in human decency, common sense, and justice—focused on rural realities.
+          </p>
+        </div>
+
+        <div class="grid grid--2">
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Rural strength</div>
+              <h3 class="card__title">Protect our land and way of life</h3>
+              <p class="card__text">
+                Keep Northeast Oklahoma livable—support conservation, responsible stewardship, and policies that respect rural communities.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Care that works</div>
+              <h3 class="card__title">Practical access to care</h3>
+              <p class="card__text">
+                Expand real access—especially in rural areas—so families can get help without unreasonable travel, delays, or cost barriers.
+              </p>
+            </div>
+          </article>
+        </div>
 
         <div style="margin-top:18px;">
-          <a class="btn btn--primary" href="get-involved.html">Volunteer</a>
+          <a class="btn btn--primary" href="issues.html">Read the issues</a>
         </div>
       </div>
     </section>
@@ -116,13 +201,17 @@
       <div>
         <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
         <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
+        </p>
         <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
       </div>
 
       <div>
         <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Links</div>
         <p style="margin-top:10px; line-height:1.9;">
-          <a href="get-involved.html">Volunteer</a><br />
+          <a href="meet.html">Meet Hannah</a><br />
+          <a href="get-involved.html">Get involved</a><br />
           <a href="events.html">Events</a><br />
           <a href="contact.html">Contact</a>
         </p>
@@ -134,3 +223,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+```
