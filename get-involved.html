@@ -5,35 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Get Involved | Cole for OK 86</title>
   <meta name="description" content="Volunteer with Hannah Cole for Oklahoma House District 86. Join the Dirt-road Collective." />
+
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="logo.png" />
+
+  <!-- Social share -->
+  <meta property="og:title" content="Get Involved | Cole for OK 86" />
+  <meta property="og:description" content="Join the Dirt-road Collective. Volunteer your time, skills, or your place to gather neighbors." />
+  <meta property="og:type" content="website" />
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="topbar">
-    <div class="container topbar__inner">
-      <div class="topbar__note">
-        <span class="pill"><strong>Election Day:</strong> Nov 3, 2026</span>
-        <span class="pill"><strong>District:</strong> OK House 86</span>
-      </div>
-      <div class="topbar__social">
-        <a class="pill" href="https://www.tiktok.com/@coleforok86" target="_blank" rel="noreferrer">TikTok: @coleforok86</a>
-      </div>
-    </div>
-  </div>
-
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
         <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
-        <span class="brand__text">
-          <span class="brand__name">Hannah Cole</span>
-          <span class="brand__sub">OK House District 86</span>
-        </span>
       </a>
 
-      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">Menu</button>
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
+        Menu
+      </button>
 
       <nav id="site-nav" class="nav" aria-label="Site">
         <a href="index.html">Home</a>
@@ -41,128 +34,144 @@
         <a href="issues.html">Issues</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
-        <a href="press.html" data-pending="true">Press</a>
-        <a href="get-involved.html">Get Involved</a>
+        <a href="press.html" data-pending="true" aria-label="Press (page pending)">Press</a>
+        <a href="get-involved.html" aria-current="page">Get Involved</a>
         <a href="contact.html">Contact</a>
+
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true">Donate</a>
+          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true" aria-label="Donate (page pending)">
+            Donate
+          </a>
         </span>
       </nav>
     </div>
   </header>
 
-  <div class="page-title">
-    <div class="container page-title__inner">
-      <h1>Get Involved</h1>
-      <div class="breadcrumb">Home / Get Involved</div>
-    </div>
-  </div>
-
   <main id="main">
-    <section class="section">
+    <!-- HEADER BAND -->
+    <section class="section" aria-label="Page intro" style="padding:110px 0 56px;">
       <div class="container">
         <div class="section__head">
-          <h2 class="h2">Join the Dirt-road Collective</h2>
-          <div class="muted upper">Grassroots means people</div>
+          <h1 class="h2" style="margin:0;">Get involved</h1>
+          <p class="lede" style="margin-top:14px;">
+            Join the <strong>Dirt-road Collective</strong>. This campaign is built the old-fashioned way—by showing up,
+            listening, and doing the work. Door knocking will be the key to success, but there are many ways to help.
+          </p>
         </div>
 
-        <p class="lede">
-          This campaign will be built the old-fashioned way—by showing up, listening, and doing the work.
-          Door knocking will be the key to success. If you can give time, skills, or a place to gather neighbors, we need you.
-        </p>
-
-        <div class="grid grid--2" style="margin-top:16px;">
-          <div class="card callout">
+        <div class="grid grid--2" style="margin-top:18px;">
+          <article class="card">
             <div class="card__inner">
-              <div class="card__kicker">Volunteer roles</div>
-              <div class="card__title">However you can help—counts</div>
-              <div class="card__text">
+              <div class="card__kicker">Grassroots means people</div>
+              <h2 class="card__title">However you can help—counts</h2>
+              <p class="card__text">
                 Volunteering can look like many things. Would you want to donate your time and drive someone to knock doors?
                 Are you good at gathering folks? Maybe you could host a “get to know the candidate” party.
                 Any help will be appreciated.
-              </div>
+              </p>
             </div>
-          </div>
+          </article>
 
-          <div class="card banner">
+          <article class="card">
             <div class="card__inner">
               <div class="card__kicker">Field work</div>
-              <div class="card__title">Door knocking + community presence</div>
-              <div class="card__text">
+              <h2 class="card__title">Door knocking + community presence</h2>
+              <p class="card__text">
                 Rural communities thrive when knowing your neighbors and lending a helping hand is commonplace.
-                We’re going to do this face-to-face.
-              </div>
+                We’re going to do this face-to-face—neighborhood by neighborhood, town by town.
+              </p>
             </div>
-          </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- VOLUNTEER FORM -->
+    <section class="section" aria-label="Volunteer signup">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="h2">Volunteer signup</h2>
+          <p class="lede">
+            Tell us how you’d like to help. This form is the fastest way for the team to follow up.
+          </p>
         </div>
 
-        <div class="form" style="margin-top:18px;">
+        <div class="form">
           <form class="form__inner" id="volunteer-form" novalidate>
             <div class="form__row">
               <div class="field">
-                <label for="vname">Name</label>
-                <input id="vname" name="name" type="text" autocomplete="name" required />
+                <input id="vname" name="name" type="text" autocomplete="name" placeholder="Full Name" required aria-label="Full name" />
               </div>
               <div class="field">
-                <label for="vphone">Phone</label>
-                <input id="vphone" name="phone" type="tel" autocomplete="tel" required />
+                <input id="vphone" name="phone" type="tel" autocomplete="tel" placeholder="Phone" required aria-label="Phone number" />
               </div>
             </div>
 
             <div class="form__row">
               <div class="field">
-                <label for="vemail">Email</label>
-                <input id="vemail" name="email" type="email" autocomplete="email" required />
+                <input id="vemail" name="email" type="email" autocomplete="email" placeholder="Email" required aria-label="Email address" />
               </div>
               <div class="field">
-                <label for="vzip">ZIP</label>
-                <input id="vzip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" />
+                <input id="vzip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" aria-label="ZIP code" />
               </div>
             </div>
 
             <div class="field">
-              <label for="vhow">What can you help with?</label>
-              <textarea id="vhow" name="how" required
+              <textarea id="vhow" name="how" required aria-label="How can you help?"
                 placeholder="Volunteering can look like many things. Would you want to donate your time and drive someone to knock doors? Are you good at gathering folks? Maybe you could host a 'get to know the candidate' party. Any help will be appreciated. Please let me know what you're able to volunteer for."></textarea>
             </div>
 
             <button class="btn btn--primary" type="submit">Submit</button>
+
+            <p style="margin:12px 0 0; color:rgba(15,23,32,0.72); font-weight:700;">
+              Note: Submissions are not public. A team member will follow up.
+            </p>
           </form>
         </div>
-
       </div>
     </section>
 
-    <section class="section section--tight">
+    <!-- COMMUNITY INPUT / COMMENTS PENDING -->
+    <section class="section" aria-label="Community input">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">Community input</h2>
-          <div class="muted upper">What should your state rep be doing?</div>
+          <p class="lede">
+            Tell me what your community is struggling with or excelling at. What should your elected state rep be doing to make
+            our rural district better?
+          </p>
         </div>
 
-        <div class="pending" style="margin-top:10px;">
-          <p class="pending__title">Comments — under development</p>
-          <p class="pending__text">
-            We’re building a public comment feature. For now, use the Contact page to send your message directly to the campaign.
+        <div class="pending">
+          <p style="margin:0 0 8px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
+            Comments — under development
           </p>
+          <p style="margin:0; color:rgba(15,23,32,0.76);">
+            We’re building a public comment feature. For now, please send your message through the Contact page
+            so it goes directly to the campaign.
+          </p>
+          <div style="margin-top:14px;">
+            <a class="btn btn--secondary" href="contact.html">Go to Contact</a>
+          </div>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div class="upper">Cole for OK 86</div>
-        <p class="muted" style="margin-top:10px; color:rgba(251,247,239,0.78);">
-          Mailing address: P.O. Box 100, Rose, OK 74364
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
+        <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
         </p>
         <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
       </div>
+
       <div>
-        <div class="upper">Compliance</div>
-        <p class="muted" style="color:rgba(251,247,239,0.78); margin-top:10px;">OK Ethics Commission</p>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Compliance</div>
+        <p style="opacity:.85; margin-top:10px;">OK Ethics Commission</p>
       </div>
     </div>
   </footer>
@@ -170,3 +179,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
