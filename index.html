@@ -15,11 +15,23 @@
   <meta property="og:image" content="DSC02194%20-%20Hannah%20Cole.png" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fix: prevent logo from rendering with a white box/padding -->
+  <style>
+    .brand__logo{
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      /* keep the clean lift without blocking the hero */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
+    }
+  </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- CANONICAL HEADER (match all pages) -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
@@ -40,9 +52,7 @@
         <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true" aria-label="Donate (page pending)">
-            Donate
-          </a>
+          <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
         </span>
       </nav>
     </div>
@@ -156,64 +166,62 @@
       </div>
     </section>
 
-    <!-- QUICK LINKS / PRIORITIES PREVIEW -->
-<section class="section" aria-label="Priorities preview">
-  <div class="container">
-    <div class="section__head">
-      <h2 class="h2">What I’m fighting for</h2>
-      <p class="lede">
-        District 86 deserves practical leadership rooted in human decency, common sense, and justice—
-        focused on rural realities.
-      </p>
-    </div>
+    <!-- PRIORITIES PREVIEW -->
+    <section class="section" aria-label="Priorities preview">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="h2">What I’m fighting for</h2>
+          <p class="lede">
+            District 86 deserves practical leadership rooted in human decency, common sense, and justice—
+            focused on rural realities.
+          </p>
+        </div>
 
-    <div class="grid grid--2" style="align-items:center;">
-      
-      <!-- LEFT: DISTRICT IMAGE -->
-      <div>
-        <img
-          src="District86.png"
-          alt="Map of Oklahoma House District 86"
-          style="
-            width:100%;
-            border-radius:14px;
-            box-shadow:0 14px 34px rgba(0,0,0,0.14);
-          "
-        />
-      </div>
-
-      <!-- RIGHT: PRIORITIES -->
-      <div class="grid">
-        <article class="card">
-          <div class="card__inner">
-            <div class="card__kicker">Rural strength</div>
-            <h3 class="card__title">Protect our land and way of life</h3>
-            <p class="card__text">
-              Keep Northeast Oklahoma livable—support conservation, responsible stewardship,
-              and policies that respect rural communities and working families.
-            </p>
+        <div class="grid grid--2" style="align-items:center;">
+          <!-- LEFT: DISTRICT IMAGE -->
+          <div>
+            <img
+              src="District86.png"
+              alt="Map of Oklahoma House District 86"
+              style="
+                width:100%;
+                border-radius:14px;
+                box-shadow:0 14px 34px rgba(0,0,0,0.14);
+              "
+            />
           </div>
-        </article>
 
-        <article class="card">
-          <div class="card__inner">
-            <div class="card__kicker">Care that works</div>
-            <h3 class="card__title">Practical access to care</h3>
-            <p class="card__text">
-              Expand real access—especially in rural areas—so families can get care without
-              unreasonable travel, delays, or financial strain.
-            </p>
+          <!-- RIGHT: PRIORITIES -->
+          <div class="grid">
+            <article class="card">
+              <div class="card__inner">
+                <div class="card__kicker">Rural strength</div>
+                <h3 class="card__title">Protect our land and way of life</h3>
+                <p class="card__text">
+                  Keep Northeast Oklahoma livable—support conservation, responsible stewardship,
+                  and policies that respect rural communities and working families.
+                </p>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card__inner">
+                <div class="card__kicker">Care that works</div>
+                <h3 class="card__title">Practical access to care</h3>
+                <p class="card__text">
+                  Expand real access—especially in rural areas—so families can get care without
+                  unreasonable travel, delays, or financial strain.
+                </p>
+              </div>
+            </article>
           </div>
-        </article>
+        </div>
+
+        <div style="margin-top:24px;">
+          <a class="btn btn--primary" href="issues.html">Read the issues</a>
+        </div>
       </div>
-
-    </div>
-
-    <div style="margin-top:24px;">
-      <a class="btn btn--primary" href="issues.html">Read the issues</a>
-    </div>
-  </div>
-</section>
+    </section>
   </main>
 
   <footer class="footer" aria-label="Footer">
@@ -243,4 +251,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-```
