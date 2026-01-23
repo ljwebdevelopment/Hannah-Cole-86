@@ -13,11 +13,22 @@
   <meta property="og:title" content="Get Involved | Cole for OK 86" />
   <meta property="og:description" content="Join the Dirt-road Collective. Volunteer your time, skills, or your place to gather neighbors." />
   <meta property="og:type" content="website" />
+
+  <!-- Page-level fix: prevent the logo from showing a white box/padding -->
+  <style>
+    .brand__logo{
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important; /* keep the clean Terwey-style lift */
+    }
+  </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- CANONICAL HEADER (match Home) -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
@@ -34,21 +45,18 @@
         <a href="issues.html">Issues</a>
         <a href="events.html">Events</a>
         <a href="news.html">News</a>
-        <a href="press.html" data-pending="true" aria-label="Press (page pending)">Press</a>
         <a href="get-involved.html" aria-current="page">Get Involved</a>
         <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html" data-pending="true" aria-label="Donate (page pending)">
-            Donate
-          </a>
+          <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
         </span>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- HEADER BAND -->
+    <!-- INTRO -->
     <section class="section" aria-label="Page intro" style="padding:110px 0 56px;">
       <div class="container">
         <div class="section__head">
@@ -131,31 +139,7 @@
       </div>
     </section>
 
-    <!-- COMMUNITY INPUT / COMMENTS PENDING -->
-    <section class="section" aria-label="Community input">
-      <div class="container">
-        <div class="section__head">
-          <h2 class="h2">Community input</h2>
-          <p class="lede">
-            Tell me what your community is struggling with or excelling at. What should your elected state rep be doing to make
-            our rural district better?
-          </p>
-        </div>
-
-        <div class="pending">
-          <p style="margin:0 0 8px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
-            Comments — under development
-          </p>
-          <p style="margin:0; color:rgba(15,23,32,0.76);">
-            We’re building a public comment feature. For now, please send your message through the Contact page
-            so it goes directly to the campaign.
-          </p>
-          <div style="margin-top:14px;">
-            <a class="btn btn--secondary" href="contact.html">Go to Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Comments section removed: will be its own standalone page -->
   </main>
 
   <footer class="footer" aria-label="Footer">
@@ -179,4 +163,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
