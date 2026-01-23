@@ -4,17 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>News | Cole for OK 86</title>
-  <meta name="description" content="Campaign news and updates for Hannah Cole for Oklahoma House District 86." />
+  <meta name="description" content="Campaign news and updates for Hannah Cole for Oklahoma House District 86. Page under development." />
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
 
-  <!-- Social share -->
-  <meta property="og:title" content="News | Cole for OK 86" />
-  <meta property="og:description" content="Campaign news and updates — coming soon." />
-  <meta property="og:type" content="website" />
-
-  <!-- Per-page logo fix (keep doing this) -->
+  <!-- keep doing the per-page logo fix -->
   <style>
     .brand__logo{
       background: transparent !important;
@@ -22,35 +17,12 @@
       border-radius: 0 !important;
       box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
     }
-
-    .pending-center{
-      min-height:70vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:40px 20px;
-    }
-
-    .pending-center img{
-      max-width:260px;
-      margin-bottom:26px;
-    }
-
-    .pending-center p{
-      max-width:560px;
-      font-size:1.15rem;
-      font-weight:700;
-      color:rgba(15,23,32,0.78);
-    }
   </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- CANONICAL HEADER -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
@@ -69,54 +41,66 @@
         <a href="news.html" aria-current="page">News</a>
         <a href="get-involved.html">Get Involved</a>
         <a href="contact.html">Contact</a>
-
-        <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
-        </span>
+        <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="pending-center" aria-label="News under development">
-      <img src="logo.png" alt="Cole for OK 86 logo" />
+    <section
+      class="section"
+      aria-label="News under development"
+      style="
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding-top:120px;
+      "
+    >
+      <div style="text-align:center;">
+        <img
+          src="logo.png"
+          alt="Cole for OK 86 logo"
+          style="
+            max-width:280px;
+            margin:0 auto 22px;
+          "
+        />
 
-      <p>
-        This section is still under development.<br />
-        Please check back soon for campaign updates, announcements, and news from the trail.
-      </p>
+        <p
+          style="
+            font-family:var(--sans);
+            font-size:1.05rem;
+            font-weight:700;
+            letter-spacing:.08em;
+            text-transform:uppercase;
+            color:rgba(15,23,32,0.72);
+            margin:0;
+          "
+        >
+          This section is still under development. Please check back soon.
+        </p>
+      </div>
     </section>
   </main>
 
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
-          Cole for OK 86
-        </div>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
         <p style="margin-top:10px; opacity:.85;">
           Mailing address: P.O. Box 100, Rose, OK 74364
         </p>
-        <div class="disclaimer">
-          <strong>Paid for by</strong> Cole for OK 86
-        </div>
+        <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
       </div>
 
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
-          Compliance
-        </div>
-        <p style="opacity:.85; margin-top:10px;">
-          OK Ethics Commission
-        </p>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Compliance</div>
+        <p style="opacity:.85; margin-top:10px;">OK Ethics Commission</p>
       </div>
     </div>
   </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
-
 
   <script src="script.js"></script>
 </body>
