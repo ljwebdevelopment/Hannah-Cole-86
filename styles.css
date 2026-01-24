@@ -735,3 +735,39 @@ form button[type="submit"]{
     color: rgba(255,255,255,0.90);
   }
 }
+/* ==========================================================
+   MEET PAGE — MOBILE PHOTO FIRST
+   Puts Hannah’s image at the top on mobile
+   ========================================================== */
+
+@media (max-width: 760px){
+
+  /* Stack grid naturally */
+  .grid.grid--2{
+    grid-template-columns: 1fr;
+  }
+
+  /* Reorder cards: photo first, story second */
+  .grid.grid--2 > aside.card{
+    order: -1;
+  }
+
+  /* Make photo feel hero-like */
+  .grid.grid--2 > aside.card img{
+    height: 56vh;
+    min-height: 320px;
+    max-height: 520px;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+
+  /* Reduce top spacing so image sits immediately under header */
+  main .section[aria-label="Meet Hannah intro"]{
+    padding-bottom: 32px !important;
+  }
+
+  /* Tighten gap between photo and story */
+  .grid.grid--2{
+    gap: 16px;
+  }
+}
