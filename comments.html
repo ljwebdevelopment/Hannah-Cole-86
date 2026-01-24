@@ -21,7 +21,7 @@
   </style>
 </head>
 
-<body>
+<body class="page-comments">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- CANONICAL HEADER -->
@@ -53,19 +53,15 @@
   </header>
 
   <!-- MAIN CONTENT -->
-  <main id="main">
-
-    <!-- PROMPT BAND -->
-    <section class="comment-prompt" aria-label="Comment prompt">
-      <div class="container comment-prompt__inner">
-        <h2>Community Question</h2>
-        <p>Paste comment prompt here</p>
-      </div>
-    </section>
-
-    <!-- COMMENTS -->
+  <main id="main" class="page-top">
     <section class="section section--light" aria-label="Community comments">
       <div class="container comments-wrap">
+
+        <!-- PROMPT BOX (in the body, not behind the header) -->
+        <div class="prompt-card" role="note" aria-label="Comment prompt">
+          <div class="prompt-card__label">Community Question</div>
+          <div class="prompt-card__text">Paste comment prompt here</div>
+        </div>
 
         <header class="comments-head">
           <h1>Community Voices</h1>
@@ -85,7 +81,6 @@
 
       </div>
     </section>
-
   </main>
 
   <!-- FOOTER -->
