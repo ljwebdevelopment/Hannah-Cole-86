@@ -12,12 +12,11 @@
 
   <!-- PAGE-ONLY STYLES -->
   <style>
+    /* Header scrolls normally on this page (NOT sticky) */
     body.page-comments .header{
-      position: sticky;
-      top: 0;
+      position: static;
       background: var(--paper);
       border-bottom: 1px solid var(--line);
-      z-index: 999;
     }
     body.page-comments .header__inner{
       padding: 14px 0;
@@ -93,6 +92,7 @@
       gap: 10px;
       margin-bottom: 6px;
       align-items: baseline;
+      flex-wrap: wrap;
     }
     .prompt-name{
       font-weight: 900;
@@ -110,6 +110,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       font-size: 0.72rem;
+      white-space: nowrap;
     }
 
     .prompt-text{
@@ -124,6 +125,7 @@
       padding-top: 14px;
       border-top: 1px solid rgba(255,255,255,0.22);
       font-size: 0.95rem;
+      opacity: 0.95;
     }
 
     .comments-area{
@@ -131,50 +133,95 @@
       margin: 0 auto;
     }
 
-    /* HTMLCommentBox styling (replaces .commentbox) */
+    /* HTMLCommentBox: buttons = prompt dark red (rust) */
     body.page-comments #HCB_comment_box button,
     body.page-comments #HCB_comment_box input[type="submit"],
+    body.page-comments #HCB_comment_box input[type="button"],
     body.page-comments #HCB_comment_box .btn{
-      background: var(--pine) !important;
+      background: var(--rust) !important;
       color: #fff !important;
+      border: 1px solid rgba(255,255,255,0.18) !important;
       border-radius: 10px !important;
-      font-weight: 800 !important;
-      letter-spacing: .14em !important;
-      text-transform: uppercase !important;
-      border: 2px solid rgba(255,255,255,0.18) !important;
       box-shadow: 0 4px 0 rgba(0,0,0,0.28) !important;
+      font-weight: 800 !important;
+      letter-spacing: .10em !important;
+      text-transform: uppercase !important;
     }
 
+    body.page-comments #HCB_comment_box button:hover,
+    body.page-comments #HCB_comment_box input[type="submit"]:hover,
+    body.page-comments #HCB_comment_box input[type="button"]:hover{
+      filter: brightness(1.06) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    body.page-comments #HCB_comment_box button:active,
+    body.page-comments #HCB_comment_box input[type="submit"]:active,
+    body.page-comments #HCB_comment_box input[type="button"]:active{
+      transform: translateY(0) !important;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
+    }
+
+    /* Keep links inside the widget consistent */
     body.page-comments #HCB_comment_box a{
       color: var(--rust) !important;
     }
 
+    /* Hide HTMLCommentBox promo + account/subscription UI (incl. "not using yet?") */
+    body.page-comments #HCB_comment_box > a,
+    body.page-comments #HCB_comment_box a[href*="htmlcommentbox.com"],
+    body.page-comments #HCB_comment_box .hcb-link,
+    body.page-comments #HCB_comment_box .hcb-footer,
+    body.page-comments #HCB_comment_box .hcb-comment-footer,
+    body.page-comments #HCB_comment_box .hcb-comment-footer a,
+    body.page-comments #HCB_comment_box .hcb-user-settings,
+    body.page-comments #HCB_comment_box .hcb-email,
+    body.page-comments #HCB_comment_box .hcb-subscribe,
+    body.page-comments #HCB_comment_box .hcb-login,
+    body.page-comments #HCB_comment_box .hcb-logout,
+    body.page-comments #HCB_comment_box .hcb-account,
+    body.page-comments #HCB_comment_box #hcb_settings,
+    body.page-comments #HCB_comment_box #hcb_subscribe{
+      display: none !important;
+    }
+
+    /* Mobile prompt: stack cleanly, no overlaps, full width */
     @media (max-width: 760px){
+      .prompt-card{
+        padding: 16px !important;
+        border-radius: 14px;
+      }
+
       .prompt-row{
-        grid-template-columns: 58px 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
       }
+
       .prompt-avatar{
-        width: 58px;
-        height: 58px;
+        width: 64px !important;
+        height: 64px !important;
+        margin: 0 auto !important;
       }
+
+      .prompt-meta{
+        justify-content: center;
+        text-align: center;
+      }
+
+      .prompt-text{
+        font-size: 1.02rem;
+        line-height: 1.6;
+        max-width: none !important;
+      }
+
+      .prompt-foot{
+        font-size: 0.95rem;
+      }
+
       body.page-comments main{
         padding-top: 18px;
       }
     }
-    /* Hide HTML Comment Box footer, promo, and account links */
-body.page-comments #HCB_comment_box a[href*="htmlcommentbox.com"],
-body.page-comments #HCB_comment_box .hcb-link,
-body.page-comments #HCB_comment_box .hcb-footer,
-body.page-comments #HCB_comment_box .hcb-comment-footer,
-body.page-comments #HCB_comment_box .hcb-comment-footer a,
-body.page-comments #HCB_comment_box .hcb-user-settings,
-body.page-comments #HCB_comment_box .hcb-email,
-body.page-comments #HCB_comment_box .hcb-subscribe,
-body.page-comments #HCB_comment_box .hcb-login,
-body.page-comments #HCB_comment_box .hcb-logout,
-body.page-comments #HCB_comment_box .hcb-account{
-  display: none !important;
-}
   </style>
 </head>
 
