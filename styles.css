@@ -834,3 +834,45 @@ form button[type="submit"]{
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+/* =========================
+   FORCE CommentBox colors
+   ========================= */
+
+/* Remove CommentBox green */
+.commentbox,
+.commentbox * {
+  --cb-primary: #b24a33 !important;   /* BURNT ORANGE */
+  --cb-accent: #b24a33 !important;
+}
+
+/* Buttons (Sign In / Submit) */
+.commentbox button,
+.commentbox .cb-btn,
+.commentbox .cb-btn-primary {
+  background: #b24a33 !important;
+  border-color: #b24a33 !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Button hover */
+.commentbox button:hover,
+.commentbox .cb-btn:hover {
+  background: #9e3f2a !important;
+  border-color: #9e3f2a !important;
+}
+
+/* Links inside comments */
+.commentbox a {
+  color: #b24a33 !important;
+}
+
+/* Focus rings / accents */
+.commentbox textarea:focus,
+.commentbox input:focus {
+  outline: 2px solid #b24a33 !important;
+  outline-offset: 2px;
+}
