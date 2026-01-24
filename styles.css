@@ -742,3 +742,61 @@ form button[type="submit"]{
   }
 }
 
+/* ==========================================================
+   HOME PAGE — MOBILE HERO IMAGE REPLACEMENT
+   Uses DSC02194 - Hannah Cole1.png
+   Mobile only, home page only
+   ========================================================== */
+
+@media (max-width: 760px){
+
+  /* Remove green header overlay ONLY on home */
+  body.home .header{
+    background: transparent;
+    position: absolute;
+  }
+
+  /* Replace hero with image background */
+  body.home .hero{
+    background: none;
+  }
+
+  body.home .hero__media{
+    display: none; /* hide desktop photo panel */
+  }
+
+  body.home .hero__inner{
+    display: block;
+    position: relative;
+    min-height: 72vh;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(27,46,40,0.05) 0%,
+        rgba(27,46,40,0.25) 55%,
+        rgba(27,46,40,0.85) 85%,
+        rgba(27,46,40,1) 100%
+      ),
+      url("DSC02194 - Hannah Cole1.png") center top / cover no-repeat;
+  }
+
+  /* Move text BELOW image fade */
+  body.home .hero__inner > div:first-child{
+    background: transparent;
+    padding: 58vh 22px 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Shrink logo further so it never covers her face */
+  body.home .brand__logo{
+    width: 84px;
+    max-width: 84px;
+  }
+
+  /* Make sure nav stays readable */
+  body.home .nav-toggle{
+    background: rgba(27,46,40,0.55);
+    backdrop-filter: blur(6px);
+  }
+}
