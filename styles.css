@@ -735,11 +735,11 @@ form button[type="submit"]{
     color: rgba(255,255,255,0.90);
   }
 }
+
 /* ==========================================================
    MEET PAGE — MOBILE PHOTO FIRST
    Puts Hannah’s image at the top on mobile
    ========================================================== */
-
 @media (max-width: 760px){
 
   /* Stack grid naturally */
@@ -772,125 +772,34 @@ form button[type="submit"]{
   }
 }
 
-/* =========================
-   Comments Page Style
-   ========================= */
-
-/* Prompt banner */
-.comment-prompt {
-  background: var(--accent, #f0c36d); /* fallback yellow */
-  padding: 80px 0 70px;
-}
-
-.comment-prompt__inner {
-  max-width: 860px;
-}
-
-.comment-prompt h2 {
-  margin: 0 0 12px;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 900;
-}
-
-.comment-prompt p {
-  max-width: 65ch;
-  font-size: 1.05rem;
-  line-height: 1.65;
-  opacity: 0.9;
-}
-
-/* Optional burnt-orange version */
-.comment-prompt.burnt {
-  background: #c65a3a;
-  color: #fff;
-}
-
-/* Match Events page spacing */
-.section--light {
-  background: #f5f2eb;
-  padding: 90px 0 110px;
-}
-
-/* Comments container tightening */
-.section--light .container {
-  max-width: 860px;
-}
-
-/* CommentBox visual harmony */
-.commentbox {
+/* ==========================================================
+   COMMENTS PAGE (ONLY): CommentBox theme override
+   - Keeps the rest of the site unchanged
+   - Kills the default green button styles from CommentBox
+   ========================================================== */
+body.page-comments .commentbox{
   margin-top: 28px;
 }
 
-.commentbox textarea,
-.commentbox input {
-  border-radius: 0 !important;
-  border: 1px solid rgba(0,0,0,0.25);
-  background: #fff;
+body.page-comments .commentbox textarea,
+body.page-comments .commentbox input{
+  border-radius: 10px !important;
+  border: 1px solid rgba(15,23,32,0.20) !important;
+  background: #fff !important;
+  color: var(--ink) !important;
+  font-family: var(--sans) !important;
 }
 
-.commentbox button {
-  border-radius: 0 !important;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-/* =========================
-   FORCE CommentBox colors
-   ========================= */
-
-/* Remove CommentBox green */
-.commentbox,
-.commentbox * {
-  --cb-primary: #b24a33 !important;   /* BURNT ORANGE */
-  --cb-accent: #b24a33 !important;
-}
-
-/* Buttons (Sign In / Submit) */
-.commentbox button,
-.commentbox .cb-btn,
-.commentbox .cb-btn-primary {
-  background: #b24a33 !important;
-  border-color: #b24a33 !important;
-  color: #fff !important;
-  border-radius: 0 !important;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Button hover */
-.commentbox button:hover,
-.commentbox .cb-btn:hover {
-  background: #9e3f2a !important;
-  border-color: #9e3f2a !important;
-}
-
-/* Links inside comments */
-.commentbox a {
-  color: #b24a33 !important;
-}
-
-/* Focus rings / accents */
-.commentbox textarea:focus,
-.commentbox input:focus {
-  outline: 2px solid #b24a33 !important;
-  outline-offset: 2px;
-}
-
-/* ==========================================================
-   *** ONLY CHANGE REQUESTED: FORCE CommentBox GREEN BUTTON OFF ***
-   Append-only override (stronger selectors) — does not affect site
-   ========================================================== */
-
-.commentbox button,
-.commentbox [type="button"],
-.commentbox [type="submit"],
-.commentbox [role="button"],
-.commentbox a[role="button"],
-.commentbox [class*="btn"],
-.commentbox [class*="Btn"],
-.commentbox [class*="button"],
-.commentbox [class*="Button"]{
+/* Strong catch-all for CommentBox buttons/CTAs */
+body.page-comments .commentbox button,
+body.page-comments .commentbox [type="button"],
+body.page-comments .commentbox [type="submit"],
+body.page-comments .commentbox [role="button"],
+body.page-comments .commentbox a[role="button"],
+body.page-comments .commentbox [class*="btn"],
+body.page-comments .commentbox [class*="Btn"],
+body.page-comments .commentbox [class*="button"],
+body.page-comments .commentbox [class*="Button"]{
   background: var(--pine) !important;
   color: #ffffff !important;
   border: 2px solid rgba(255,255,255,0.18) !important;
@@ -899,86 +808,31 @@ form button[type="submit"]{
   font-weight: 800 !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease !important;
 }
 
-.commentbox button:hover,
-.commentbox [role="button"]:hover,
-.commentbox a[role="button"]:hover{
+body.page-comments .commentbox button:hover,
+body.page-comments .commentbox [role="button"]:hover,
+body.page-comments .commentbox a[role="button"]:hover{
   filter: brightness(1.06) !important;
   transform: translateY(-1px) !important;
 }
 
-.commentbox button:active,
-.commentbox [role="button"]:active,
-.commentbox a[role="button"]:active{
+body.page-comments .commentbox button:active,
+body.page-comments .commentbox [role="button"]:active,
+body.page-comments .commentbox a[role="button"]:active{
   transform: translateY(0) !important;
   box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
 }
 
-/* ==========================================================
-   COMMENTS PAGE — FIX PROMPT SPACING + CENTERING
-   (append at VERY BOTTOM of styles.css)
-   ========================================================== */
-
-/* 1) Push the prompt down so it clears your absolute header/logo area */
-.comment-prompt{
-  padding-top: 170px !important;   /* was 80px — this is the “break” you want */
-  padding-bottom: 44px !important; /* creates breathing room before the heading */
-  text-align: center;
+/* Links inside comments: keep on-brand */
+body.page-comments .commentbox a{
+  color: var(--rust) !important;
 }
 
-/* Center the prompt block content */
-.comment-prompt__inner{
-  margin-inline: auto;
-  text-align: center;
-}
-
-/* Make the prompt title + text sit nicely centered */
-.comment-prompt h2{
-  margin: 0 0 10px !important;
-}
-
-.comment-prompt p{
-  margin: 0 auto !important;
-}
-
-/* 2) Add a clear break between prompt and Community Voices section */
-.section.section--light{
-  padding-top: 64px !important;    /* ensures “Community Voices” never crowds prompt */
-}
-
-/* 3) Center everything inside the comments header */
-.comments-head{
-  text-align: center;
-  margin-top: 0;
-}
-
-.comments-head h1{
-  margin-top: 0 !important;
-}
-
-/* Center lede text width */
-.comments-head .lede{
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 70ch;
-}
-
-/* Center disclaimer pill */
-.comments-head .disclaimer{
-  margin-left: auto !important;
-  margin-right: auto !important;
-  display: inline-block;
-}
-
-/* ==========================================================
-   (OPTIONAL) If any green button is still showing in CommentBox
-   this forces it to match your theme.
-   ========================================================== */
-.commentbox button,
-.commentbox .cb-btn,
-.commentbox .cb-btn-primary{
-  background: var(--pine) !important;
-  border-color: var(--pine) !important;
-  color: #fff !important;
+/* Focus states */
+body.page-comments .commentbox textarea:focus,
+body.page-comments .commentbox input:focus{
+  outline: 3px solid rgba(230,180,88,0.85) !important;
+  outline-offset: 3px !important;
 }
