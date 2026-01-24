@@ -914,3 +914,71 @@ form button[type="submit"]{
   transform: translateY(0) !important;
   box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
 }
+
+/* ==========================================================
+   COMMENTS PAGE — FIX PROMPT SPACING + CENTERING
+   (append at VERY BOTTOM of styles.css)
+   ========================================================== */
+
+/* 1) Push the prompt down so it clears your absolute header/logo area */
+.comment-prompt{
+  padding-top: 170px !important;   /* was 80px — this is the “break” you want */
+  padding-bottom: 44px !important; /* creates breathing room before the heading */
+  text-align: center;
+}
+
+/* Center the prompt block content */
+.comment-prompt__inner{
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Make the prompt title + text sit nicely centered */
+.comment-prompt h2{
+  margin: 0 0 10px !important;
+}
+
+.comment-prompt p{
+  margin: 0 auto !important;
+}
+
+/* 2) Add a clear break between prompt and Community Voices section */
+.section.section--light{
+  padding-top: 64px !important;    /* ensures “Community Voices” never crowds prompt */
+}
+
+/* 3) Center everything inside the comments header */
+.comments-head{
+  text-align: center;
+  margin-top: 0;
+}
+
+.comments-head h1{
+  margin-top: 0 !important;
+}
+
+/* Center lede text width */
+.comments-head .lede{
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 70ch;
+}
+
+/* Center disclaimer pill */
+.comments-head .disclaimer{
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: inline-block;
+}
+
+/* ==========================================================
+   (OPTIONAL) If any green button is still showing in CommentBox
+   this forces it to match your theme.
+   ========================================================== */
+.commentbox button,
+.commentbox .cb-btn,
+.commentbox .cb-btn-primary{
+  background: var(--pine) !important;
+  border-color: var(--pine) !important;
+  color: #fff !important;
+}
