@@ -716,3 +716,29 @@ form button[type="submit"]{
     padding-top: 205px;
   }
 }
+/* ==========================================================
+   MOBILE LOGO SAFETY FIX
+   Shrinks logo so it never covers faces or content
+   ========================================================== */
+
+@media (max-width: 760px){
+
+  /* Lock logo size on small screens */
+  .brand__logo{
+    width: 92px;        /* smaller than before */
+    max-width: 92px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  /* Ensure header never overlaps content height-wise */
+  .header__inner{
+    min-height: 56px;
+  }
+
+  /* Keep logo firmly on the left */
+  .brand{
+    align-items: center;
+  }
+}
+
