@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Community Comments | Cole for OK 86</title>
-  <meta name="description" content="Community comments for Hannah Cole for Oklahoma House District 86. Page under development." />
+
+  <title>Community Voices | Cole for OK 86</title>
+  <meta name="description" content="Community comments and feedback for Hannah Cole for Oklahoma House District 86. Comments are moderated." />
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
@@ -25,73 +26,58 @@
 
   <!-- CANONICAL HEADER -->
   <header class="header" aria-label="Primary">
-  <div class="container header__inner">
-    <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-      <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
-    </a>
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
+        <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
+      </a>
 
-    <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
-      Menu
-    </button>
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
+        Menu
+      </button>
 
-    <nav id="site-nav" class="nav" aria-label="Site">
-      <a href="index.html">Home</a>
-      <a href="meet.html">Meet Hannah</a>
-      <a href="issues.html">Issues</a>
-      <a href="events.html">Events</a>
-      <a href="news.html">News</a>
-      <a href="comments.html" aria-current="page">Comments</a>
-      <a href="get-involved.html">Get Involved</a>
-      <a href="contact.html">Contact</a>
+      <nav id="site-nav" class="nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="meet.html">Meet Hannah</a>
+        <a href="issues.html">Issues</a>
+        <a href="events.html">Events</a>
+        <a href="news.html">News</a>
+        <a href="comments.html" aria-current="page">Comments</a>
+        <a href="get-involved.html">Get Involved</a>
+        <a href="contact.html">Contact</a>
 
-      <span class="nav__cta">
-        <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
-      </span>
-    </nav>
-  </div>
-</header>
+        <span class="nav__cta">
+          <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
+        </span>
+      </nav>
+    </div>
+  </header>
 
-
+  <!-- MAIN CONTENT -->
   <main id="main">
-    <section
-      class="section"
-      aria-label="Community comments under development"
-      style="
-        min-height:100vh;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding-top:120px;
-      "
-    >
-      <div style="text-align:center;">
-        <img
-          src="logo.png"
-          alt="Cole for OK 86 logo"
-          style="
-            max-width:280px;
-            margin:0 auto 22px;
-          "
-        />
+    <section class="section" aria-label="Community comments">
+      <div class="container" style="padding-top:120px; max-width:900px;">
 
-        <p
-          style="
-            font-family:var(--sans);
-            font-size:1.05rem;
-            font-weight:700;
-            letter-spacing:.08em;
-            text-transform:uppercase;
-            color:rgba(15,23,32,0.72);
-            margin:0;
-            max-width:640px;
-          "
-        >
-          This section is still under development. Please check back soon.
-        </p>
+        <header style="margin-bottom:22px;">
+          <h1 style="margin:0;">Community Voices</h1>
+
+          <p class="lede" style="margin-top:10px; max-width:70ch;">
+            Share your questions, feedback, and support for Hannah’s campaign.
+            Comments are moderated to keep this space respectful and spam-free.
+          </p>
+
+          <div class="disclaimer" style="margin-top:14px;">
+            Please do not include private information (phone numbers, addresses, etc.).
+          </div>
+        </header>
+
+        <!-- COMMENTBOX MOUNT -->
+        <div class="commentbox"></div>
+
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
@@ -117,6 +103,13 @@
     </div>
   </footer>
 
+  <!-- COMMENTBOX SCRIPT -->
+  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+  <script>
+    commentBox("5707376409706496-proj");
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
+
