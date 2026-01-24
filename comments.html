@@ -167,7 +167,7 @@
       color: var(--rust) !important;
     }
 
-    /* Hide HTMLCommentBox promo + account/subscription UI (incl. "not using yet?") */
+    /* Hide HTMLCommentBox promo + settings links (but KEEP Email Me Replies) */
     body.page-comments #HCB_comment_box > a,
     body.page-comments #HCB_comment_box a[href*="htmlcommentbox.com"],
     body.page-comments #HCB_comment_box .hcb-link,
@@ -175,13 +175,10 @@
     body.page-comments #HCB_comment_box .hcb-comment-footer,
     body.page-comments #HCB_comment_box .hcb-comment-footer a,
     body.page-comments #HCB_comment_box .hcb-user-settings,
-    body.page-comments #HCB_comment_box .hcb-email,
-    body.page-comments #HCB_comment_box .hcb-subscribe,
     body.page-comments #HCB_comment_box .hcb-login,
     body.page-comments #HCB_comment_box .hcb-logout,
     body.page-comments #HCB_comment_box .hcb-account,
-    body.page-comments #HCB_comment_box #hcb_settings,
-    body.page-comments #HCB_comment_box #hcb_subscribe{
+    body.page-comments #HCB_comment_box #hcb_settings{
       display: none !important;
     }
 
@@ -328,6 +325,54 @@
             "&mod=%241%24wq1rdBcg%247w0t82KnGBCZaGMP2sm60%2F"+
             "&opts=16798&num=10";
       document.head.appendChild(s);
+    })();
+  </script>
+
+  <!-- CLEAN UP "Not using yet?" (KEEP Email Me Replies) -->
+  <script>
+    (function () {
+      const killPhrases = [
+        "Not using",
+        "not using",
+        "Remove link",
+        "remove link",
+        "accountSettings",
+        "Account Settings"
+      ];
+
+      function scrub(node) {
+        if (!node) return;
+
+        // Remove any link pointing to htmlcommentbox.com (promo)
+        node.querySelectorAll('a[href*="htmlcommentbox.com"]').forEach(a => {
+          (a.closest('div, p, small, span') || a).remove();
+        });
+
+        // Remove elements containing unwanted promo text (but not Email Me Replies)
+        node.querySelectorAll('div, p, small, span, a').forEach(el => {
+          const txt = (el.textContent || "").trim();
+          if (txt && killPhrases.some(p => txt.includes(p))) {
+            (el.closest('div, p, small, span') || el).remove();
+          }
+        });
+
+        // Remove stray text nodes like "Not using yet?"
+        Array.from(node.childNodes).forEach(ch => {
+          if (ch.nodeType === Node.TEXT_NODE) {
+            const t = (ch.textContent || "").trim();
+            if (t && killPhrases.some(p => t.includes(p))) {
+              ch.remove();
+            }
+          }
+        });
+      }
+
+      let tries = 0;
+      const timer = setInterval(() => {
+        const box = document.getElementById("HCB_comment_box");
+        if (box) scrub(box);
+        if (++tries > 20) clearInterval(timer);
+      }, 250);
     })();
   </script>
 
