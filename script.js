@@ -31,12 +31,16 @@
       /* Lock scroll when nav open */
       body.nav-open { overflow: hidden; }
 
+      /* IMPORTANT:
+         Your CSS sets the mobile header to z-index ~999.
+         Overlay/drawer must be ABOVE it so taps work correctly. */
+
       /* Mobile overlay */
       .nav-overlay {
         position: fixed;
         inset: 0;
         background: rgba(0,0,0,0.55);
-        z-index: 60;
+        z-index: 1200;
         display: none;
       }
       .nav-overlay[data-open="true"] { display: block; }
@@ -50,7 +54,7 @@
         width: min(86vw, 360px);
         background: var(--navy, #0b1420);
         color: #fff;
-        z-index: 70;
+        z-index: 1300;
         transform: translateX(102%);
         transition: transform 220ms ease;
         padding: 18px 16px 22px;
@@ -59,6 +63,7 @@
         gap: 10px;
         box-shadow: -18px 0 44px rgba(0,0,0,0.22);
         overscroll-behavior: contain;
+        outline: none;
       }
       .nav-drawer[data-open="true"] { transform: translateX(0); }
 
@@ -195,6 +200,9 @@
       drawer.setAttribute("aria-label", "Mobile");
       drawer.setAttribute("data-open", "false");
 
+      // FIX: ensure drawer can receive focus reliably for focus-trap
+      drawer.tabIndex = -1;
+
       // Clone links from desktop nav (keeps single source of truth)
       const links = $$("a", desktopNav).map((a) => a.cloneNode(true));
 
@@ -220,7 +228,6 @@
 
       // Add links; keep Donate as CTA if it exists
       links.forEach((a) => {
-        // Remove any data-pending interception behavior (we do not block navigation)
         a.removeAttribute("data-pending");
 
         const href = (a.getAttribute("href") || "").trim();
@@ -302,7 +309,7 @@
 
       // Move focus into drawer
       const focusables = getFocusable(drawer);
-      (focusables[0] || drawer).focus?.();
+      (focusables[0] || drawer).focus();
 
       document.addEventListener("keydown", onKeyDown);
     }
