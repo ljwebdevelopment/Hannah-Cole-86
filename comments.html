@@ -313,68 +313,57 @@
     window.hcb_user.PAGE = "cole-for-ok-86-comments";
   </script>
 
-  <!-- HTMLCommentBox -->
-  <link rel="stylesheet" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-  <script type="text/javascript" id="hcb">
-    (function(){
-      var s=document.createElement("script"),
-          l=hcb_user.PAGE,
-          h="https://www.htmlcommentbox.com";
-      s.type="text/javascript";
-      s.src=h+"/jread?page="+encodeURIComponent(l)+
-            "&mod=%241%24wq1rdBcg%247w0t82KnGBCZaGMP2sm60%2F"+
-            "&opts=16798&num=10";
-      document.head.appendChild(s);
-    })();
-  </script>
+ <!-- HTMLCommentBox -->
+<link rel="stylesheet" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+<script type="text/javascript" id="hcb">
+  (function(){
+    var s=document.createElement("script"),
+        l=hcb_user.PAGE,
+        h="https://www.htmlcommentbox.com";
+    s.type="text/javascript";
+    s.src=h+"/jread?page="+encodeURIComponent(l)+
+          "&mod=%241%24wq1rdBcg%247w0t82KnGBCZaGMP2sm60%2F"+
+          "&opts=16798&num=10";
+    document.head.appendChild(s);
+  })();
+</script>
 
-  <!-- CLEAN UP "Not using yet?" (KEEP Email Me Replies) -->
-  <script>
-    (function () {
-      const killPhrases = [
-        "Not using",
-        "not using",
-        "Remove link",
-        "remove link",
-        "accountSettings",
-        "Account Settings"
-      ];
+<!-- SAFE CLEANUP: remove promo text, keep comments + email replies -->
+<script>
+  (function () {
+    function cleanHCB() {
+      const box = document.getElementById("HCB_comment_box");
+      if (!box) return;
 
-      function scrub(node) {
-        if (!node) return;
+      // Remove promo anchors only
+      box.querySelectorAll('a[href*="htmlcommentbox.com"]').forEach(a => a.remove());
 
-        // Remove any link pointing to htmlcommentbox.com (promo)
-        node.querySelectorAll('a[href*="htmlcommentbox.com"]').forEach(a => {
-          (a.closest('div, p, small, span') || a).remove();
-        });
+      // Remove exact "Remove link" elements
+      box.querySelectorAll('a, span, small, div').forEach(el => {
+        const t = (el.textContent || "").replace(/\s+/g, " ").trim();
+        if (t === "Remove link") el.remove();
+      });
 
-        // Remove elements containing unwanted promo text (but not Email Me Replies)
-        node.querySelectorAll('div, p, small, span, a').forEach(el => {
-          const txt = (el.textContent || "").trim();
-          if (txt && killPhrases.some(p => txt.includes(p))) {
-            (el.closest('div, p, small, span') || el).remove();
-          }
-        });
-
-        // Remove stray text nodes like "Not using yet?"
-        Array.from(node.childNodes).forEach(ch => {
-          if (ch.nodeType === Node.TEXT_NODE) {
-            const t = (ch.textContent || "").trim();
-            if (t && killPhrases.some(p => t.includes(p))) {
-              ch.remove();
-            }
-          }
-        });
+      // Remove stray text nodes like "Not using yet?"
+      const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null);
+      const remove = [];
+      while (walker.nextNode()) {
+        const t = (walker.currentNode.nodeValue || "").toLowerCase();
+        if (t.includes("not using") && t.includes("yet")) {
+          remove.push(walker.currentNode);
+        }
       }
+      remove.forEach(n => n.remove());
+    }
 
-      let tries = 0;
-      const timer = setInterval(() => {
-        const box = document.getElementById("HCB_comment_box");
-        if (box) scrub(box);
-        if (++tries > 20) clearInterval(timer);
-      }, 250);
-    })();
-  </script>
+    let tries = 0;
+    const timer = setInterval(() => {
+      cleanHCB();
+      if (++tries >= 30) clearInterval(timer);
+    }, 250);
+  })();
+</script>
+
 
   <script src="script.js"></script>
 </body>
