@@ -836,3 +836,44 @@ body.page-comments .commentbox input:focus{
   outline: 3px solid rgba(230,180,88,0.85) !important;
   outline-offset: 3px !important;
 }
+
+/* ==========================================================
+   COMMENTBOX — FORCE THEME (NUKE GREEN) — FINAL OVERRIDE
+   ========================================================== */
+
+/* Make sure these only apply on the comments page */
+body.page-comments .commentbox *{
+  accent-color: var(--pine) !important;
+}
+
+/* Most CommentBox buttons are either <button> or <a> styled like buttons */
+body.page-comments .commentbox button,
+body.page-comments .commentbox a,
+body.page-comments .commentbox input[type="submit"],
+body.page-comments .commentbox [role="button"]{
+  background-color: var(--pine) !important;
+  border-color: var(--pine) !important;
+  color: #fff !important;
+}
+
+/* Catch class-based buttons that CommentBox generates */
+body.page-comments .commentbox [class*="btn"],
+body.page-comments .commentbox [class*="Btn"],
+body.page-comments .commentbox [class*="button"],
+body.page-comments .commentbox [class*="Button"]{
+  background-color: var(--pine) !important;
+  border-color: var(--pine) !important;
+  color: #fff !important;
+}
+
+/* Kill any green SVG/icon fills in buttons */
+body.page-comments .commentbox button svg,
+body.page-comments .commentbox [role="button"] svg{
+  fill: #fff !important;
+  color: #fff !important;
+}
+
+/* Links inside comments (keep these rust instead of green/blue) */
+body.page-comments .commentbox a:not([role="button"]){
+  color: var(--rust) !important;
+}
