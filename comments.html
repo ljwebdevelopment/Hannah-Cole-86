@@ -10,13 +10,195 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
 
-  <!-- Per-page logo fix -->
+  <!-- PAGE-ONLY STYLES (keeps your site unchanged elsewhere) -->
   <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
+    /* Make header WHITE on this page only */
+    body.page-comments .header{
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      z-index: 999;
+    }
+    body.page-comments .header__inner{
+      padding: 14px 0;
+      align-items: center;
+    }
+    body.page-comments .nav-toggle{
+      color: var(--ink);
+      border-color: rgba(15,23,32,0.22);
+      background: rgba(255,255,255,0.92);
+    }
+
+    /* Page layout */
+    body.page-comments main{
+      padding-top: 28px; /* no more fighting the logo/header */
+    }
+
+    /* Comments title */
+    .comments-title{
+      margin: 0;
+      font-size: clamp(2.1rem, 3.2vw, 3rem);
+      font-weight: 900;
+      color: var(--h2-color);
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .comments-title::after{
+      content:"";
+      display:block;
+      width:120px;
+      height:4px;
+      background: var(--h2-rule);
+      margin: 16px auto 0;
+    }
+
+    /* Prompt card container */
+    .prompt-wrap{
+      margin-top: 28px;
+      margin-bottom: 44px;
+    }
+
+    /* Prompt card (burnt orange by default) */
+    .prompt-card{
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--rust); /* burnt orange/rust */
+      color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 22px 22px;
+    }
+
+    /* Switch prompt to yellow/wheat by changing background:
+       background: var(--wheat); color: var(--ink);
+       border: 1px solid rgba(15,23,32,0.16);
+    */
+
+    .prompt-row{
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .prompt-avatar{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.85);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+      background: rgba(255,255,255,0.12);
+    }
+    .prompt-avatar img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 20%;
+    }
+
+    .prompt-meta{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .prompt-name{
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .prompt-badge{
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.24);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    .prompt-text{
+      margin: 0;
+      font-size: 1.07rem;
+      line-height: 1.65;
+      max-width: 72ch;
+      opacity: 0.98;
+    }
+
+    .prompt-foot{
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.22);
+      font-size: 0.95rem;
+      opacity: 0.92;
+    }
+
+    /* Comments section */
+    .comments-area{
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* CommentBox: kill green buttons (page-only) */
+    body.page-comments .commentbox button,
+    body.page-comments .commentbox [type="button"],
+    body.page-comments .commentbox [type="submit"],
+    body.page-comments .commentbox [role="button"],
+    body.page-comments .commentbox a[role="button"],
+    body.page-comments .commentbox [class*="btn"],
+    body.page-comments .commentbox [class*="Btn"],
+    body.page-comments .commentbox [class*="button"],
+    body.page-comments .commentbox [class*="Button"]{
+      background: var(--pine) !important; /* matches your Donate */
+      color: #ffffff !important;
+      border: 2px solid rgba(255,255,255,0.18) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.28) !important;
+      font-weight: 800 !important;
+      letter-spacing: .14em !important;
+      text-transform: uppercase !important;
+    }
+
+    body.page-comments .commentbox button:hover,
+    body.page-comments .commentbox [role="button"]:hover,
+    body.page-comments .commentbox a[role="button"]:hover{
+      filter: brightness(1.06) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    body.page-comments .commentbox button:active,
+    body.page-comments .commentbox [role="button"]:active,
+    body.page-comments .commentbox a[role="button"]:active{
+      transform: translateY(0) !important;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
+    }
+
+    /* Make any remaining green accents (like "best") use rust */
+    body.page-comments .commentbox a,
+    body.page-comments .commentbox [class*="sort"],
+    body.page-comments .commentbox [class*="Sort"]{
+      color: var(--rust) !important;
+    }
+
+    /* Mobile: keep prompt pretty */
+    @media (max-width: 760px){
+      .prompt-row{
+        grid-template-columns: 58px 1fr;
+      }
+      .prompt-avatar{
+        width: 58px;
+        height: 58px;
+      }
+      body.page-comments main{
+        padding-top: 18px;
+      }
     }
   </style>
 </head>
@@ -24,7 +206,7 @@
 <body class="page-comments">
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- CANONICAL HEADER -->
+  <!-- HEADER (white on this page only via page-only styles above) -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
@@ -52,60 +234,52 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main id="main">
+    <section class="section" aria-label="Comments page">
+      <div class="container">
 
-  <!-- PAGE TITLE (matches rest of site) -->
-  <section class="section section--light">
-    <div class="container">
+        <!-- Top title ONLY -->
+        <h1 class="comments-title">Comments</h1>
 
-      <header class="section__head">
-        <h2 class="h2">Comments</h2>
-      </header>
+        <!-- Prompt box -->
+        <div class="prompt-wrap">
+          <div class="prompt-card" role="note" aria-label="Campaign prompt">
+            <div class="prompt-row">
 
-    </div>
-  </section>
+              <!-- Hannah photo (circle) -->
+              <!-- Replace hannah.jpg with your actual filename, e.g. hannah.png -->
+              <div class="prompt-avatar" aria-hidden="true">
+                <img src="hannah.jpg" alt="Hannah Cole" />
+              </div>
 
-  <!-- BIG BREAK (this is your “20 page breaks” moment) -->
-  <section class="section section--light">
-    <div class="container">
+              <div>
+                <div class="prompt-meta">
+                  <div class="prompt-name">Hannah Cole</div>
+                  <div class="prompt-badge">Campaign Prompt</div>
+                </div>
 
-      <!-- COMMUNITY QUESTION PROMPT -->
-      <div class="prompt-card">
-        <div class="prompt-card__label">Community Question</div>
-        <div class="prompt-card__text">
-          Paste comment prompt here
+                <p class="prompt-text">
+                  Paste comment prompt here.
+                </p>
+
+                <div class="prompt-foot">
+                  Please keep comments respectful. Do not post private information (phone numbers, addresses, etc.).
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
+
+        <!-- Comments -->
+        <div class="comments-area">
+          <div class="commentbox"></div>
+        </div>
+
       </div>
-
-    </div>
-  </section>
-
-  <!-- COMMENTS -->
-  <section class="section section--light" aria-label="Community comments">
-    <div class="container comments-wrap">
-
-      <header class="section__head">
-        <h2 class="h2">Community Voices</h2>
-
-        <p class="lede">
-          Share your questions, feedback, and support for Hannah’s campaign.
-          Comments are moderated to keep this space respectful and spam-free.
-        </p>
-
-        <div class="disclaimer">
-          Please do not include private information (phone numbers, addresses, etc.).
-        </div>
-      </header>
-
-      <!-- COMMENTBOX -->
-      <div class="commentbox"></div>
-
-    </div>
-  </section>
-
-</main>
-
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer" aria-label="Footer">
@@ -133,7 +307,7 @@
     </div>
   </footer>
 
-  <!-- COMMENTBOX SCRIPT -->
+  <!-- COMMENTBOX -->
   <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
   <script>
     commentBox("5707376409706496-proj");
