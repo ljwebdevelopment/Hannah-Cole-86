@@ -661,3 +661,22 @@ form button[type="submit"]{
     border-radius:0;
   }
 }
+/* ==========================================================
+   Desktop hero/logo overlap fix
+   ========================================================== */
+
+@media (min-width: 981px){
+  .brand__logo{
+    width: 132px;
+  }
+
+  .hero__inner > div:first-child{
+    padding-top: 190px;
+  }
+}
+
+@media (min-width: 1280px){
+  .hero__inner > div:first-child{
+    padding-top: 205px;
+  }
+}
