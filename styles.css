@@ -1,11 +1,11 @@
 /* ==========================================================
-   Hannah Cole for OK 86 — styles.css (Terwey-style layout)
+   Hannah Cole for OK 86 — styles.css 
    - Split hero (left color panel + right photo panel)
    - Pill nav buttons + prominent Donate
    - Clean, modern-classic sections
    ========================================================== */
 
-/* ---------- Fonts (optional local) ---------- */
+/* ---------- Fonts ---------- */
 @font-face{
   font-family:"Mont";
   src:url("fonts/Mont-Regular.woff2") format("woff2");
