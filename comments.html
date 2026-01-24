@@ -161,6 +161,20 @@
         padding-top: 18px;
       }
     }
+    /* Hide HTML Comment Box footer, promo, and account links */
+body.page-comments #HCB_comment_box a[href*="htmlcommentbox.com"],
+body.page-comments #HCB_comment_box .hcb-link,
+body.page-comments #HCB_comment_box .hcb-footer,
+body.page-comments #HCB_comment_box .hcb-comment-footer,
+body.page-comments #HCB_comment_box .hcb-comment-footer a,
+body.page-comments #HCB_comment_box .hcb-user-settings,
+body.page-comments #HCB_comment_box .hcb-email,
+body.page-comments #HCB_comment_box .hcb-subscribe,
+body.page-comments #HCB_comment_box .hcb-login,
+body.page-comments #HCB_comment_box .hcb-logout,
+body.page-comments #HCB_comment_box .hcb-account{
+  display: none !important;
+}
   </style>
 </head>
 
