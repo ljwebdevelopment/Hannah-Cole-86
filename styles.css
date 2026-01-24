@@ -876,3 +876,41 @@ form button[type="submit"]{
   outline: 2px solid #b24a33 !important;
   outline-offset: 2px;
 }
+
+/* ==========================================================
+   *** ONLY CHANGE REQUESTED: FORCE CommentBox GREEN BUTTON OFF ***
+   Append-only override (stronger selectors) — does not affect site
+   ========================================================== */
+
+.commentbox button,
+.commentbox [type="button"],
+.commentbox [type="submit"],
+.commentbox [role="button"],
+.commentbox a[role="button"],
+.commentbox [class*="btn"],
+.commentbox [class*="Btn"],
+.commentbox [class*="button"],
+.commentbox [class*="Button"]{
+  background: var(--pine) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255,255,255,0.18) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.28) !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+
+.commentbox button:hover,
+.commentbox [role="button"]:hover,
+.commentbox a[role="button"]:hover{
+  filter: brightness(1.06) !important;
+  transform: translateY(-1px) !important;
+}
+
+.commentbox button:active,
+.commentbox [role="button"]:active,
+.commentbox a[role="button"]:active{
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
+}
