@@ -1,8 +1,8 @@
 /* ==========================================================
-   Hannah Cole for OK 86 — styles.css 
+   Hannah Cole for OK 86 — styles.css (CLEANED + DE-CONFLICTED)
    - Split hero (left color panel + right photo panel)
    - Pill nav buttons + prominent Donate
-   - Clean, modern-classic sections
+   - Mobile: fixed header + photo-first hero (no layout fights)
    ========================================================== */
 
 /* ---------- Fonts ---------- */
@@ -31,20 +31,20 @@
 /* ---------- Tokens ---------- */
 :root{
   /* Campaign palette */
-  --rust:#A6372D;      /* Rust Red */
-  --orange:#D97925;    /* Burnt Orange */
-  --wheat:#E6B458;     /* Golden Wheat */
-  --beige:#F2E3C9;     /* Warm Beige */
-  --espresso:#4A3728;  /* Deep Espresso */
-  --pine:#1B2E28;      /* Midnight Pine */
-  --moss:#4D6A47;      /* Forest Moss */
-  --slate:#59748C;     /* Slate Blue */
-  --mist:#A8BCC2;      /* Mist Blue */
+  --rust:#A6372D;
+  --orange:#D97925;
+  --wheat:#E6B458;
+  --beige:#F2E3C9;
+  --espresso:#4A3728;
+  --pine:#1B2E28;
+  --moss:#4D6A47;
+  --slate:#59748C;
+  --mist:#A8BCC2;
 
   /* Structure */
   --ink:#0f1720;
   --paper:#ffffff;
-  --cloud:#f1efe9;               /* warmer, homey “cloud” */
+  --cloud:#f1efe9;
   --line: rgba(15,23,32,0.14);
 
   --max: 1180px;
@@ -53,34 +53,40 @@
   --sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
   /* COMPONENT THEME MAPPING */
-  --hero-left: var(--pine);      /* deep left hero panel */
+  --hero-left: var(--pine);
   --hero-text: #ffffff;
 
-  /* Alias used in a couple places (bug fix) */
+  /* Alias */
   --navy: var(--hero-left);
 
-  --pill-bg: rgba(166,55,45,0.94);    /* rust */
+  --pill-bg: rgba(166,55,45,0.94);
   --pill-text: #fffaf3;
   --pill-border: rgba(255,255,255,0.18);
   --pill-shadow: rgba(0,0,0,0.12);
 
-  --pill-active-bg: rgba(230,180,88,0.96); /* wheat */
+  --pill-active-bg: rgba(230,180,88,0.96);
   --pill-active-text: #2a1b10;
 
-  --cta-bg: rgba(217,121,37,0.96);    /* burnt orange (default primary) */
+  --cta-bg: rgba(217,121,37,0.96);
   --cta-text: #1c120b;
 
-  --h2-color: #2b3a47;                /* muted, classic headline */
-  --h2-rule: rgba(166,55,45,0.86);    /* rust underline */
+  --h2-color: #2b3a47;
+  --h2-rule: rgba(166,55,45,0.86);
 
-  --issue-dot: rgba(77,106,71,0.96);  /* moss */
-  --form-field-bg: #edf6ff;           /* Terwey-like field */
+  --issue-dot: rgba(77,106,71,0.96);
+
+  /* Terwey-like field */
+  --form-field-bg: #edf6ff;
   --form-field-text: #0b2238;
+
   --form-submit-bg: rgba(217,121,37,0.96);
   --form-submit-text: #1c120b;
 
   --footer-bg: #0b1420;
   --footer-text: #ffffff;
+
+  /* Mobile fixed header height (single source of truth) */
+  --header-h: 70px;
 }
 
 /* ---------- Base ---------- */
@@ -113,10 +119,8 @@ a{ color:inherit; text-decoration:none; }
 }
 .skip-link:focus{ left:10px; }
 
-/* ---------- Topbar ---------- */
-.topbar{
-  display:none;
-}
+/* (Topbar currently unused) */
+.topbar{ display:none; }
 
 /* ==========================================================
    HEADER / NAV (pill buttons over hero)
@@ -147,12 +151,8 @@ a{ color:inherit; text-decoration:none; }
   min-width:220px;
 }
 
-/* Logo “white box” bug fix:
-   If your logo file has a white rectangle baked in, CSS cannot remove that.
-   But we can stop the box from covering content by removing forced white bg
-   and making the container transparent. */
 .brand__logo{
-  width:150px;
+  width:132px;
   height:auto;
   background:transparent;
   border:0;
@@ -224,9 +224,6 @@ a{ color:inherit; text-decoration:none; }
 }
 .btn--primary:hover{ transform:translateY(-1px); filter:brightness(1.03); }
 
-/* ==============================
-   Donate button emphasis (darker)
-   ============================== */
 .nav__cta .btn--primary{
   background: var(--pine);
   color: #ffffff;
@@ -292,7 +289,7 @@ a{ color:inherit; text-decoration:none; }
 .hero__inner > div:first-child{
   background: var(--hero-left);
   color:var(--hero-text);
-  padding: 140px 60px 70px;
+  padding: 190px 60px 70px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -359,6 +356,8 @@ a{ color:inherit; text-decoration:none; }
   margin-top:22px;
 }
 .form__inner{ padding:0; }
+
+/* (You’re using placeholders as labels; keep labels visually hidden) */
 label{ display:none; }
 
 input, textarea, select{
@@ -516,11 +515,10 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   Responsive — MOBILE HERO FADE FIX (ONLY MOBILE)
+   Responsive — TABLET AND DOWN
    ========================================================== */
 @media (max-width: 980px){
 
-  /* Header overlays the photo so fades look seamless */
   .header{
     position:absolute;
     top:0; left:0; right:0;
@@ -538,19 +536,15 @@ form button[type="submit"]{
     align-items:center;
   }
 
-  /* Make logo smaller on mobile so it doesn't cover her face */
   .brand__logo{
     width:110px;
-    background:transparent;
-    border:0;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
   }
 
-  /* Stack hero */
+  /* Stack hero (photo first) */
   .hero{
     min-height:auto;
     background: var(--hero-left);
-    padding-top: 78px; /* space for header overlay */
+    padding-top: 78px;
   }
 
   .hero__inner{
@@ -558,7 +552,6 @@ form button[type="submit"]{
     min-height:auto;
   }
 
-  /* PHOTO FIRST on mobile */
   .hero__media{
     order:0;
     position:relative;
@@ -566,7 +559,6 @@ form button[type="submit"]{
     background:#000;
   }
 
-  /* Crop safely so her face isn't under the logo area */
   .hero__media img{
     width:100%;
     height: 62vh;
@@ -576,12 +568,10 @@ form button[type="submit"]{
     object-position: 60% 22%;
   }
 
-  /* Remove desktop overlay on mobile */
+  /* Mobile/tablet top+bottom fades into green */
   .hero__media::after{
-    background:none !important;
+    background:none;
   }
-
-  /* TOP + BOTTOM fades into green */
   .hero__media::before{
     content:"";
     position:absolute;
@@ -589,7 +579,6 @@ form button[type="submit"]{
     pointer-events:none;
     z-index:2;
     background:
-      /* Top fade: green -> transparent */
       linear-gradient(
         to bottom,
         rgba(27,46,40,1) 0%,
@@ -597,7 +586,6 @@ form button[type="submit"]{
         rgba(27,46,40,0.35) 22%,
         rgba(27,46,40,0) 36%
       ),
-      /* Bottom fade: transparent -> green */
       linear-gradient(
         to top,
         rgba(27,46,40,1) 0%,
@@ -607,7 +595,6 @@ form button[type="submit"]{
       );
   }
 
-  /* Text panel after photo */
   .hero__inner > div:first-child{
     order:1;
     padding: 22px 22px 34px;
@@ -618,28 +605,46 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   Responsive — NAV + HAMBURGER (ONLY SMALL MOBILE)
+   Responsive — SMALL MOBILE (single, consistent ruleset)
    ========================================================== */
 @media (max-width: 760px){
 
-  /* Hide desktop pills; show mobile toggle */
-  .nav{ display:none; }
-  .nav-toggle{ display:inline-flex; }
+  /* Fixed header so it never creates blank space */
+  .header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:999;
+    background:transparent;
+  }
 
   .header__inner{
+    padding:10px 0;
+    min-height: var(--header-h);
     align-items:center;
     justify-content:space-between;
   }
 
+  /* Hide desktop pills; show hamburger */
+  .nav{ display:none; }
+  .nav-toggle{ display:inline-flex; }
+
   .brand{
-    display:flex;
+    min-width:0;
+    gap:10px;
     align-items:center;
   }
 
-  .form__row{ grid-template-columns:1fr; }
-  .grid--2{ grid-template-columns:1fr; }
+  .brand__logo{
+    width:78px;
+    max-width:78px;
+    height:auto;
+    flex-shrink:0;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  }
 
-  /* Hamburger icon (3 lines) — uses your existing <button class="nav-toggle">Menu</button> */
+  /* Hamburger icon (3 lines) */
   .nav-toggle{
     position: relative;
     width: 48px;
@@ -648,7 +653,8 @@ form button[type="submit"]{
     padding: 0;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.18);
-    background: rgba(255,255,255,0.12);
+    background: rgba(27,46,40,0.55); /* better contrast over photo */
+    backdrop-filter: blur(6px);
     cursor: pointer;
 
     /* Hide "Menu" text visually but keep it accessible */
@@ -670,13 +676,11 @@ form button[type="submit"]{
     transition: transform .12s ease, top .12s ease, box-shadow .12s ease;
   }
 
-  /* top line + middle line via box-shadow */
   .nav-toggle::before{
     top: 14px;
     box-shadow: 0 7px 0 #ffffff;
   }
 
-  /* bottom line */
   .nav-toggle::after{
     top: 28px;
   }
@@ -686,7 +690,6 @@ form button[type="submit"]{
     outline-offset: 3px;
   }
 
-  /* Optional: show X when open (your JS sets aria-expanded) */
   .nav-toggle[aria-expanded="true"]::before{
     top: 21px;
     box-shadow:none;
@@ -696,216 +699,39 @@ form button[type="submit"]{
     top: 21px;
     transform: rotate(-45deg);
   }
-}
 
-/* ==========================================================
-   Desktop hero/logo overlap fix
-   (prevents headline sitting under the logo on desktop)
-   ========================================================== */
-@media (min-width: 981px){
-  .brand__logo{
-    width: 132px;
-  }
-  .hero__inner > div:first-child{
-    padding-top: 190px;
-  }
-}
-
-@media (min-width: 1280px){
-  .hero__inner > div:first-child{
-    padding-top: 205px;
-  }
-}
-/* ==========================================================
-   MOBILE LOGO SAFETY FIX
-   Shrinks logo so it never covers faces or content
-   ========================================================== */
-
-@media (max-width: 760px){
-
-  /* Lock logo size on small screens */
-  .brand__logo{
-    width: 92px;        /* smaller than before */
-    max-width: 92px;
-    height: auto;
-    flex-shrink: 0;
+  /* Hero: pad under fixed header so the photo starts immediately */
+  .hero{
+    padding-top: var(--header-h);
+    background: var(--hero-left);
   }
 
-  /* Ensure header never overlaps content height-wise */
-  .header__inner{
-    min-height: 56px;
-  }
-
-  /* Keep logo firmly on the left */
-  .brand{
-    align-items: center;
-  }
-}
-
-/* ==========================================================
-   HOME PAGE — MOBILE HERO IMAGE (FIXED SIZE + NO WHITE SPACE)
-   ========================================================== */
-
-@media (max-width: 760px){
-
-  /* Kill any reserved header space */
-  body.home .header{
-    position: absolute;
-    top: 0;
-    background: transparent;
-  }
-
-  body.home main{
-    margin-top: 0;
-  }
-
-  /* Hide desktop hero image panel */
-  body.home .hero__media{
-    display: none;
-  }
-
-  /* Mobile hero container */
-  body.home .hero{
-    background: none;
-  }
-
-  body.home .hero__inner{
-    display: block;
-    position: relative;
-    height: 62vh;          /* CONTROLLED height */
-    min-height: 420px;
+  /* Photo crop (safe for faces) */
+  .hero__media img{
+    height: 56vh;
+    min-height: 340px;
     max-height: 560px;
+    object-position: 55% 18%;
+  }
+
+  /* Simplify fade so the form area looks intentional (no muddy overlay) */
+  .hero__media::before{
     background:
       linear-gradient(
-        to bottom,
-        rgba(27,46,40,0.00) 0%,
-        rgba(27,46,40,0.25) 45%,
-        rgba(27,46,40,0.65) 70%,
-        rgba(27,46,40,40) 100%
-      ),
-      url("DSC02194 - Hannah Cole1.png") center 20% / cover no-repeat;
+        to top,
+        rgba(27,46,40,1) 0%,
+        rgba(27,46,40,0.72) 22%,
+        rgba(27,46,40,0.25) 40%,
+        rgba(27,46,40,0) 56%
+      );
   }
 
-  /* Text panel BELOW the face */
-  body.home .hero__inner > div:first-child{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: transparent;
-    padding: 22px 22px 30px;
-    z-index: 2;
-  }
+  /* Tighter layout below */
+  .form__row{ grid-template-columns:1fr; }
+  .grid--2{ grid-template-columns:1fr; }
 
-  /* Extra-small logo so it never overlaps face */
-  body.home .brand__logo{
-    width: 78px;
-    max-width: 78px;
-  }
-
-  /* Improve menu contrast */
-  body.home .nav-toggle{
-    background: rgba(27,46,40,0.55);
-    backdrop-filter: blur(6px);
-  }
-}
-
-/* ==========================================================
-   MOBILE FIX: header not huge, logo not covering photo,
-   hero image starts at top, clean overlay header
-   Paste at VERY BOTTOM of styles.css
-   ========================================================== */
-
-@media (max-width: 760px){
-
-  /* Make header overlay instead of consuming page height */
-  .header{
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: transparent !important;
-  }
-
-  /* Compact header row */
-  .header__inner{
-    padding: 10px 0 !important;
-    align-items: center !important;
-  }
-
-  /* Shrink brand block so it doesn’t force layout width */
-  .brand{
-    min-width: 0 !important;
-    gap: 10px !important;
-    align-items: center !important;
-  }
-
-  /* Smaller logo so it won't cover Hannah’s face */
-  .brand__logo{
-    width: 70px !important;
-    max-width: 70px !important;
-    height: auto !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18) !important;
-  }
-
-  /* Hamburger stays compact */
-  .nav-toggle{
-    width: 48px !important;
-    min-width: 48px !important;
-    height: 44px !important;
-  }
-
-  /* Remove any nav spacing from layout completely */
-  .nav{
-    display: none !important;
-  }
-
-  /* Give the hero room under the fixed header (no white gap) */
-  .hero{
-    padding-top: 70px !important; /* matches fixed header height */
-    background: var(--hero-left) !important;
-  }
-
-  /* Ensure photo is the first thing and sits at the top */
-  .hero__media{
-    order: 0 !important;
-  }
-
-  .hero__media img{
-    height: 52vh !important;
-    min-height: 320px !important;
-    max-height: 520px !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    object-position: 50% 20% !important; /* keeps face higher/safer */
-  }
-
-  /* Clean fade from photo into green (bottom fade) */
-  .hero__media::after{
-    background: none !important;
-  }
-  .hero__media::before{
-    content:"" !important;
-    position:absolute !important;
-    left:0 !important;
-    right:0 !important;
-    bottom:0 !important;
-    height: 160px !important;
-    background: linear-gradient(
-      to bottom,
-      rgba(27,46,40,0) 0%,
-      rgba(27,46,40,0.25) 35%,
-      rgba(27,46,40,0.65) 70%,
-      rgba(27,46,40,1) 100%
-    ) !important;
-    pointer-events:none !important;
-  }
-
-  /* Left panel comes after image and blends (no weird header block) */
-  .hero__inner > div:first-child{
-    order: 1 !important;
-    padding: 22px 22px 34px !important;
-    background: var(--hero-left) !important;
+  /* Improve readability of the “No spam…” line over dark green */
+  .hero__tagline{
+    color: rgba(255,255,255,0.90);
   }
 }
