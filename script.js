@@ -3,8 +3,7 @@
    - Accessible hamburger menu (overlay + focus trap + scroll lock)
    - Consistent nav behavior across pages
    - Active link highlighting (fallback if aria-current not set)
-   - Simple form helpers (local-only): volunteer
-   - Signup + Contact forms send to Google Sheets (Apps Script Web App)
+   - Signup + Contact + Volunteer forms send to Google Sheets (Apps Script Web App)
    - No alerts / no modal popups
    ========================================================================== */
 
@@ -12,7 +11,6 @@
   "use strict";
 
   // ---------- Google Sheets endpoint ----------
-  // (Same endpoint can accept multiple form "type" values in your Apps Script)
   const SIGNUP_ENDPOINT =
     "https://script.google.com/macros/s/AKfycbxgAcbkJ6ZXSZcYJN2NSvw8dXPzfHlNR5p3oFkwbQMfywlTH9q7TaznqMhdgA9HIYE/exec";
 
@@ -22,30 +20,14 @@
 
   const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
 
-  function safeJsonParse(str, fallback) {
-    try {
-      return JSON.parse(str);
-    } catch {
-      return fallback;
-    }
-  }
-
   function injectBaseStylesOnce() {
     if (document.getElementById("cole-js-styles")) return;
 
     const style = document.createElement("style");
     style.id = "cole-js-styles";
     style.textContent = `
-      /* ===== JS-injected styles: mobile nav + status UI ===== */
-
-      /* Lock scroll when nav open */
       body.nav-open { overflow: hidden; }
 
-      /* IMPORTANT:
-         Your CSS sets the mobile header to z-index ~999.
-         Overlay/drawer must be ABOVE it so taps work correctly. */
-
-      /* Mobile overlay */
       .nav-overlay {
         position: fixed;
         inset: 0;
@@ -55,7 +37,6 @@
       }
       .nav-overlay[data-open="true"] { display: block; }
 
-      /* Mobile drawer */
       .nav-drawer {
         position: fixed;
         top: 0;
@@ -126,7 +107,6 @@
         border-color: rgba(255,255,255,0.0);
       }
 
-      /* In-page form status message */
       .form-status {
         margin-top: 12px;
         padding: 12px;
@@ -139,7 +119,6 @@
       .form-status--ok { border-color: rgba(77,106,71,0.95); }
       .form-status--err { border-color: rgba(166,55,45,0.95); }
 
-      /* Respect reduced motion */
       @media (prefers-reduced-motion: reduce){
         .nav-drawer { transition: none; }
       }
@@ -147,8 +126,6 @@
     document.head.appendChild(style);
   }
 
-  // ---------- Active nav highlighting ----------
-  // Fallback only: if you already set aria-current in HTML, it will keep it.
   function setActiveNavLink() {
     const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
     $$("nav a[href]").forEach((a) => {
@@ -156,7 +133,6 @@
       if (!href || href.startsWith("#") || href.startsWith("http")) return;
       const normalized = href.split("?")[0].split("#")[0];
 
-      // Only set aria-current if none is set anywhere in this nav (avoid fighting your HTML)
       const nav = a.closest("nav");
       const alreadyHasCurrent = nav && nav.querySelector('[aria-current="page"]');
       if (alreadyHasCurrent) return;
@@ -166,7 +142,6 @@
     });
   }
 
-  // ---------- Smooth scroll for in-page anchors ----------
   function bindSmoothAnchors() {
     $$('a[href^="#"]').forEach((a) => {
       a.addEventListener("click", (e) => {
@@ -181,20 +156,16 @@
     });
   }
 
-  // ---------- Accessible mobile nav (hamburger) ----------
   function setupMobileNav() {
     injectBaseStylesOnce();
 
     const toggleBtn = $(".nav-toggle");
-    const desktopNav = $("#site-nav"); // your existing nav
-
+    const desktopNav = $("#site-nav");
     if (!toggleBtn || !desktopNav) return;
 
-    // Ensure toggle has correct ARIA
     toggleBtn.setAttribute("aria-expanded", "false");
     toggleBtn.setAttribute("type", "button");
 
-    // Build overlay + drawer once
     let overlay = $(".nav-overlay");
     if (!overlay) {
       overlay = document.createElement("div");
@@ -209,14 +180,10 @@
       drawer.className = "nav-drawer";
       drawer.setAttribute("aria-label", "Mobile");
       drawer.setAttribute("data-open", "false");
-
-      // FIX: ensure drawer can receive focus reliably for focus-trap
       drawer.tabIndex = -1;
 
-      // Clone links from desktop nav (keeps single source of truth)
       const links = $$("a", desktopNav).map((a) => a.cloneNode(true));
 
-      // Drawer top row: title + close
       const top = document.createElement("div");
       top.className = "nav-drawer__top";
 
@@ -233,16 +200,10 @@
 
       top.appendChild(title);
       top.appendChild(closeBtn);
-
       drawer.appendChild(top);
 
-      // Add links; keep Donate as CTA if it exists
       links.forEach((a) => {
-        a.removeAttribute("data-pending");
-
         const href = (a.getAttribute("href") || "").trim();
-
-        // Detect donate button by href
         const isDonate = href.toLowerCase().includes("donate.html");
         if (isDonate) {
           const ctaWrap = document.createElement("div");
@@ -257,11 +218,8 @@
 
       document.body.appendChild(drawer);
 
-      // Close handlers
       closeBtn.addEventListener("click", () => closeDrawer());
       overlay.addEventListener("click", () => closeDrawer());
-
-      // Close when clicking a link
       drawer.addEventListener("click", (e) => {
         const a = e.target.closest("a");
         if (!a) return;
@@ -269,7 +227,6 @@
       });
     }
 
-    // Focus trap
     let lastFocused = null;
 
     function getFocusable(root) {
@@ -289,9 +246,8 @@
         closeDrawer();
         return;
       }
-
-      // Trap tab inside drawer
       if (e.key !== "Tab") return;
+
       const focusables = getFocusable(drawer);
       if (focusables.length === 0) return;
 
@@ -317,7 +273,6 @@
       toggleBtn.setAttribute("aria-expanded", "true");
       document.body.classList.add("nav-open");
 
-      // Move focus into drawer
       const focusables = getFocusable(drawer);
       (focusables[0] || drawer).focus();
 
@@ -332,17 +287,14 @@
 
       document.removeEventListener("keydown", onKeyDown);
 
-      // Restore focus
       if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
-    // Toggle button
     toggleBtn.addEventListener("click", () => {
       const open = drawer.getAttribute("data-open") === "true";
       open ? closeDrawer() : openDrawer();
     });
 
-    // When resizing to desktop, ensure drawer is closed
     window.addEventListener("resize", () => {
       if (!isMobile()) {
         overlay.setAttribute("data-open", "false");
@@ -354,23 +306,8 @@
     });
   }
 
-  // ---------- Simple form handling (no backend) ----------
-  // Stores submissions locally for testing, and shows in-page status.
-  // NOTE: We will NOT use this for the signup/contact forms anymore, because those now submit to Sheets.
-  const STORAGE_KEY = "coleforok86_submissions_v2";
-
-  function loadSubmissions() {
-    return safeJsonParse(localStorage.getItem(STORAGE_KEY), []);
-  }
-
-  function saveSubmission(entry) {
-    const all = loadSubmissions();
-    all.unshift(entry);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  }
-
-  function setFormStatus(form, message, kind) {
-    if (!form) return;
+  // ---------- Shared status helper ----------
+  function ensureStatusNode(form, options) {
     let node = form.querySelector(".form-status");
     if (!node) {
       node = document.createElement("div");
@@ -379,46 +316,30 @@
       node.setAttribute("aria-live", "polite");
       form.appendChild(node);
     }
-    node.textContent = message;
-    node.classList.remove("form-status--ok", "form-status--err");
-    node.classList.add(kind === "ok" ? "form-status--ok" : "form-status--err");
+    if (options && options.hero === true) {
+      node.style.background = "rgba(255,255,255,0.10)";
+      node.style.color = "rgba(255,255,255,0.92)";
+      node.style.borderColor = "rgba(255,255,255,0.22)";
+    }
+    return node;
   }
 
-  function handleForm(form, typeLabel) {
-    if (!form) return;
+  function setStatus(form, message, ok, options) {
+    const node = ensureStatusNode(form, options);
+    node.textContent = message;
+    node.classList.remove("form-status--ok", "form-status--err");
+    node.classList.add(ok ? "form-status--ok" : "form-status--err");
+  }
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        setFormStatus(form, "Please review the highlighted fields and try again.", "err");
-        return;
-      }
-
-      const fd = new FormData(form);
-      const payload = {};
-      fd.forEach((value, key) => {
-        payload[key] = typeof value === "string" ? value.trim() : value;
-      });
-
-      saveSubmission({
-        type: typeLabel,
-        createdAt: new Date().toISOString(),
-        page: (location.pathname.split("/").pop() || "index.html"),
-        payload
-      });
-
-      form.reset();
-
-      if (typeLabel === "volunteer") {
-        setFormStatus(form, "Thank you for stepping up. A team member will follow up soon.", "ok");
-      } else if (typeLabel === "contact") {
-        setFormStatus(form, "Message received. We will respond as soon as possible.", "ok");
-      } else {
-        setFormStatus(form, "Received.", "ok");
-      }
+  async function postToSheets(payload) {
+    const res = await fetch(SIGNUP_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
     });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || "Submission failed");
+    return json;
   }
 
   // ---------- Signup form → Google Sheets ----------
@@ -426,33 +347,12 @@
     const form = document.getElementById("signup-form");
     if (!form) return;
 
-    function setStatus(message, ok) {
-      let node = form.querySelector(".form-status");
-      if (!node) {
-        node = document.createElement("div");
-        node.className = "form-status";
-        node.setAttribute("role", "status");
-        node.setAttribute("aria-live", "polite");
-
-        // Match dark hero styling (so it blends on the homepage)
-        node.style.background = "rgba(255,255,255,0.10)";
-        node.style.color = "rgba(255,255,255,0.92)";
-        node.style.borderColor = "rgba(255,255,255,0.22)";
-
-        form.appendChild(node);
-      }
-
-      node.textContent = message;
-      node.classList.remove("form-status--ok", "form-status--err");
-      node.classList.add(ok ? "form-status--ok" : "form-status--err");
-    }
-
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       if (!form.checkValidity()) {
         form.reportValidity();
-        setStatus("Please complete all required fields.", false);
+        setStatus(form, "Please complete all required fields.", false, { hero: true });
         return;
       }
 
@@ -471,30 +371,15 @@
       const originalText = btn ? btn.textContent : "";
 
       try {
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = "Sending…";
-        }
-
-        const res = await fetch(SIGNUP_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await res.json();
-        if (!json.ok) throw new Error(json.error || "Submission failed");
-
+        if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+        await postToSheets(payload);
         form.reset();
-        setStatus("Thanks! You’re signed up.", true);
+        setStatus(form, "Thanks! You’re signed up.", true, { hero: true });
       } catch (err) {
         console.error(err);
-        setStatus("Sorry—something went wrong. Please try again.", false);
+        setStatus(form, "Sorry—something went wrong. Please try again.", false, { hero: true });
       } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = originalText;
-        }
+        if (btn) { btn.disabled = false; btn.textContent = originalText; }
       }
     });
   }
@@ -504,26 +389,12 @@
     const form = document.getElementById("contact-form");
     if (!form) return;
 
-    function setStatus(message, ok) {
-      let node = form.querySelector(".form-status");
-      if (!node) {
-        node = document.createElement("div");
-        node.className = "form-status";
-        node.setAttribute("role", "status");
-        node.setAttribute("aria-live", "polite");
-        form.appendChild(node);
-      }
-      node.textContent = message;
-      node.classList.remove("form-status--ok", "form-status--err");
-      node.classList.add(ok ? "form-status--ok" : "form-status--err");
-    }
-
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       if (!form.checkValidity()) {
         form.reportValidity();
-        setStatus("Please complete the required fields and try again.", false);
+        setStatus(form, "Please complete the required fields and try again.", false);
         return;
       }
 
@@ -542,30 +413,57 @@
       const originalText = btn ? btn.textContent : "";
 
       try {
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = "Sending…";
-        }
-
-        const res = await fetch(SIGNUP_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await res.json();
-        if (!json.ok) throw new Error(json.error || "Submission failed");
-
+        if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+        await postToSheets(payload);
         form.reset();
-        setStatus("Message sent. Thank you.", true);
+        setStatus(form, "Message sent. Thank you.", true);
       } catch (err) {
         console.error(err);
-        setStatus("Sorry—something went wrong. Please try again.", false);
+        setStatus(form, "Sorry—something went wrong. Please try again.", false);
       } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = originalText;
-        }
+        if (btn) { btn.disabled = false; btn.textContent = originalText; }
+      }
+    });
+  }
+
+  // ---------- Volunteer form → Google Sheets ----------
+  function wireVolunteerForm() {
+    const form = document.getElementById("volunteer-form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        setStatus(form, "Please complete the required fields and try again.", false);
+        return;
+      }
+
+      const fd = new FormData(form);
+      const payload = {
+        type: "volunteer",
+        page: location.pathname,
+        name: (fd.get("name") || "").trim(),
+        phone: (fd.get("phone") || "").trim(),
+        email: (fd.get("email") || "").trim(),
+        zip: (fd.get("zip") || "").trim(),
+        how: (fd.get("how") || "").trim()
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn ? btn.textContent : "";
+
+      try {
+        if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+        await postToSheets(payload);
+        form.reset();
+        setStatus(form, "Thank you for stepping up. A team member will follow up soon.", true);
+      } catch (err) {
+        console.error(err);
+        setStatus(form, "Sorry—something went wrong. Please try again.", false);
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = originalText; }
       }
     });
   }
@@ -576,11 +474,8 @@
     bindSmoothAnchors();
     setupMobileNav();
 
-    // Local-only handler for volunteer (if present)
-    handleForm($("#volunteer-form"), "volunteer");
-
-    // Sends to Google Sheets (if those forms exist on the current page)
     wireSignupForm();
     wireContactForm();
+    wireVolunteerForm();
   });
 })();
