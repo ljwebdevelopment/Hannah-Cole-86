@@ -10,49 +10,20 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
 
-  <!-- PAGE-ONLY STYLES -->
+  <!-- Optional: prevent logo image from showing white box/padding (matches Get Involved fix) -->
   <style>
-    /* Header scrolls normally on this page (NOT sticky) */
-    body.page-comments .header{
-      position: static;
-      background: var(--paper);
-      border-bottom: 1px solid var(--line);
+    .brand__logo{
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
     }
-    body.page-comments .header__inner{
-      padding: 14px 0;
-      align-items: center;
-    }
-    body.page-comments .nav-toggle{
-      color: var(--ink);
-      border-color: rgba(15,23,32,0.22);
-      background: rgba(255,255,255,0.92);
-    }
+  </style>
 
-    body.page-comments main{
-      padding-top: 28px;
-    }
-
-    .comments-title{
-      margin: 0;
-      font-size: clamp(2.1rem, 3.2vw, 3rem);
-      font-weight: 900;
-      color: var(--h2-color);
-      text-align: center;
-      letter-spacing: -0.01em;
-    }
-    .comments-title::after{
-      content:"";
-      display:block;
-      width:120px;
-      height:4px;
-      background: var(--h2-rule);
-      margin: 16px auto 0;
-    }
-
-    .prompt-wrap{
-      margin-top: 28px;
-      margin-bottom: 44px;
-    }
+  <!-- PAGE-ONLY STYLES (keeps rest of site unchanged) -->
+  <style>
+    /* Keep the prompt card + widget tidy (heading now uses site-wide styles, NOT custom) */
+    .prompt-wrap{ margin-top: 18px; margin-bottom: 34px; }
 
     .prompt-card{
       max-width: 900px;
@@ -94,10 +65,7 @@
       align-items: baseline;
       flex-wrap: wrap;
     }
-    .prompt-name{
-      font-weight: 900;
-      letter-spacing: 0.02em;
-    }
+    .prompt-name{ font-weight: 900; letter-spacing: 0.02em; }
     .prompt-badge{
       display: inline-flex;
       align-items: center;
@@ -133,7 +101,7 @@
       margin: 0 auto;
     }
 
-    /* HTMLCommentBox: buttons = prompt dark red (rust) */
+    /* HTMLCommentBox buttons = your rust */
     body.page-comments #HCB_comment_box button,
     body.page-comments #HCB_comment_box input[type="submit"],
     body.page-comments #HCB_comment_box input[type="button"],
@@ -162,10 +130,8 @@
       box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
     }
 
-    /* Keep links inside the widget consistent */
-    body.page-comments #HCB_comment_box a{
-      color: var(--rust) !important;
-    }
+    /* Keep widget links consistent */
+    body.page-comments #HCB_comment_box a{ color: var(--rust) !important; }
 
     /* Hide HTMLCommentBox promo + settings links (but KEEP Email Me Replies) */
     body.page-comments #HCB_comment_box > a,
@@ -182,71 +148,44 @@
       display: none !important;
     }
 
-    /* Mobile prompt: stack cleanly, no overlaps, full width */
-    @media (max-width: 760px){
-      .prompt-card{
-        padding: 16px !important;
-        border-radius: 14px;
-      }
-
-      .prompt-row{
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-      }
-
-      .prompt-avatar{
-        width: 64px !important;
-        height: 64px !important;
-        margin: 0 auto !important;
-      }
-
-      .prompt-meta{
-        justify-content: center;
-        text-align: center;
-      }
-
-      .prompt-text{
-        font-size: 1.02rem;
-        line-height: 1.6;
-        max-width: none !important;
-      }
-
-      .prompt-foot{
-        font-size: 0.95rem;
-      }
-
-      body.page-comments main{
-        padding-top: 18px;
-      }
-    }
     /* Remove divider line between comment form and comments */
-body.page-comments #HCB_comment_box hr,
-body.page-comments #HCB_comment_box .hcb-hr,
-body.page-comments #HCB_comment_box .hcb-separator,
-body.page-comments #HCB_comment_box .hcb-comment-divider{
-  display: none !important;
-  border: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+    body.page-comments #HCB_comment_box hr,
+    body.page-comments #HCB_comment_box .hcb-hr,
+    body.page-comments #HCB_comment_box .hcb-separator,
+    body.page-comments #HCB_comment_box .hcb-comment-divider{
+      display: none !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Mobile prompt: stack cleanly */
+    @media (max-width: 760px){
+      .prompt-card{ padding: 16px !important; border-radius: 14px; }
+      .prompt-row{ grid-template-columns: 1fr !important; gap: 12px !important; }
+      .prompt-avatar{ width: 64px !important; height: 64px !important; margin: 0 auto !important; }
+      .prompt-meta{ justify-content: center; text-align: center; }
+      .prompt-text{ font-size: 1.02rem; line-height: 1.6; max-width: none !important; }
+      .prompt-foot{ font-size: 0.95rem; }
+    }
   </style>
 </head>
 
 <body class="page-comments">
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- HEADER -->
+  <!-- CANONICAL HEADER (match the other pages) -->
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
         <img class="brand__logo" src="logo.png" alt="Cole for OK 86 logo" />
       </a>
 
-      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false">
+      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
         Menu
       </button>
 
-      <nav id="site-nav" class="nav">
+      <nav id="site-nav" class="nav" aria-label="Site">
         <a href="index.html">Home</a>
         <a href="meet.html">Meet Hannah</a>
         <a href="issues.html">Issues</a>
@@ -255,6 +194,7 @@ body.page-comments #HCB_comment_box .hcb-comment-divider{
         <a href="comments.html" aria-current="page">Comments</a>
         <a href="get-involved.html">Get Involved</a>
         <a href="contact.html">Contact</a>
+
         <span class="nav__cta">
           <a class="btn btn--primary btn--wide" href="donate.html">Donate</a>
         </span>
@@ -262,18 +202,24 @@ body.page-comments #HCB_comment_box .hcb-comment-divider{
     </div>
   </header>
 
-  <!-- MAIN -->
   <main id="main">
-    <section class="section">
+    <!-- INTRO (now matches Get Involved heading style) -->
+    <section class="section" aria-label="Page intro" style="padding:110px 0 56px;">
       <div class="container">
+        <div class="section__head">
+          <h1 class="h2" style="margin:0;">Comments</h1>
+          <p class="lede" style="margin-top:14px;">
+            I want to hear from you. Share your thoughts, concerns, or ideas for District 86.
+            Comments are moderated—please keep it respectful and avoid private information.
+          </p>
+        </div>
 
-        <h1 class="comments-title">Comments</h1>
-
+        <!-- PROMPT CARD (kept, but now sits under the standardized intro) -->
         <div class="prompt-wrap">
           <div class="prompt-card">
             <div class="prompt-row">
               <div class="prompt-avatar">
-                <img src="DSC02194 - Hannah Cole.png" alt="Hannah Cole">
+                <img src="DSC02194 - Hannah Cole.png" alt="Hannah Cole" />
               </div>
               <div>
                 <div class="prompt-meta">
@@ -281,7 +227,8 @@ body.page-comments #HCB_comment_box .hcb-comment-divider{
                   <div class="prompt-badge">Campaign Prompt</div>
                 </div>
                 <p class="prompt-text">
-                  I want to hear from you. Share your thoughts, concerns, or ideas for District 86.
+                  What’s one thing you want your State Representative to fight for this year?
+                  I’m reading these, and your input helps shape our priorities.
                 </p>
                 <div class="prompt-foot">
                   Please keep comments respectful. No private information.
@@ -295,24 +242,16 @@ body.page-comments #HCB_comment_box .hcb-comment-divider{
         <div class="comments-area">
           <div id="HCB_comment_box">Loading comments…</div>
         </div>
-
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
-          Cole for OK 86
-        </div>
-        <p style="margin-top:10px; opacity:.85;">
-          Mailing address: P.O. Box 100, Rose, OK 74364
-        </p>
-        <div class="disclaimer">
-          <strong>Paid for by</strong> Cole for OK 86
-        </div>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
+        <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <div class="disclaimer"><strong>Paid for by</strong> Cole for OK 86</div>
       </div>
     </div>
   </footer>
@@ -323,57 +262,54 @@ body.page-comments #HCB_comment_box .hcb-comment-divider{
     window.hcb_user.PAGE = "cole-for-ok-86-comments";
   </script>
 
- <!-- HTMLCommentBox -->
-<link rel="stylesheet" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-<script type="text/javascript" id="hcb">
-  (function(){
-    var s=document.createElement("script"),
-        l=hcb_user.PAGE,
-        h="https://www.htmlcommentbox.com";
-    s.type="text/javascript";
-    s.src=h+"/jread?page="+encodeURIComponent(l)+
-          "&mod=%241%24wq1rdBcg%247w0t82KnGBCZaGMP2sm60%2F"+
-          "&opts=16798&num=10";
-    document.head.appendChild(s);
-  })();
-</script>
+  <!-- HTMLCommentBox -->
+  <link rel="stylesheet" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+  <script type="text/javascript" id="hcb">
+    (function(){
+      var s=document.createElement("script"),
+          l=hcb_user.PAGE,
+          h="https://www.htmlcommentbox.com";
+      s.type="text/javascript";
+      s.src=h+"/jread?page="+encodeURIComponent(l)+
+            "&mod=%241%24wq1rdBcg%247w0t82KnGBCZaGMP2sm60%2F"+
+            "&opts=16798&num=10";
+      document.head.appendChild(s);
+    })();
+  </script>
 
-<!-- SAFE CLEANUP: remove promo text, keep comments + email replies -->
-<script>
-  (function () {
-    function cleanHCB() {
-      const box = document.getElementById("HCB_comment_box");
-      if (!box) return;
+  <!-- SAFE CLEANUP: remove promo text, keep comments + email replies -->
+  <script>
+    (function () {
+      function cleanHCB() {
+        const box = document.getElementById("HCB_comment_box");
+        if (!box) return;
 
-      // Remove promo anchors only
-      box.querySelectorAll('a[href*="htmlcommentbox.com"]').forEach(a => a.remove());
+        // Remove promo anchors only
+        box.querySelectorAll('a[href*="htmlcommentbox.com"]').forEach(a => a.remove());
 
-      // Remove exact "Remove link" elements
-      box.querySelectorAll('a, span, small, div').forEach(el => {
-        const t = (el.textContent || "").replace(/\s+/g, " ").trim();
-        if (t === "Remove link") el.remove();
-      });
+        // Remove exact "Remove link" elements
+        box.querySelectorAll('a, span, small, div').forEach(el => {
+          const t = (el.textContent || "").replace(/\s+/g, " ").trim();
+          if (t === "Remove link") el.remove();
+        });
 
-      // Remove stray text nodes like "Not using yet?"
-      const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null);
-      const remove = [];
-      while (walker.nextNode()) {
-        const t = (walker.currentNode.nodeValue || "").toLowerCase();
-        if (t.includes("not using") && t.includes("yet")) {
-          remove.push(walker.currentNode);
+        // Remove stray text nodes like "Not using yet?"
+        const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null);
+        const remove = [];
+        while (walker.nextNode()) {
+          const t = (walker.currentNode.nodeValue || "").toLowerCase();
+          if (t.includes("not using") && t.includes("yet")) remove.push(walker.currentNode);
         }
+        remove.forEach(n => n.remove());
       }
-      remove.forEach(n => n.remove());
-    }
 
-    let tries = 0;
-    const timer = setInterval(() => {
-      cleanHCB();
-      if (++tries >= 30) clearInterval(timer);
-    }, 250);
-  })();
-</script>
-
+      let tries = 0;
+      const timer = setInterval(() => {
+        cleanHCB();
+        if (++tries >= 30) clearInterval(timer);
+      }, 250);
+    })();
+  </script>
 
   <script src="script.js"></script>
 </body>
