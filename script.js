@@ -3,8 +3,8 @@
    - Accessible hamburger menu (overlay + focus trap + scroll lock)
    - Consistent nav behavior across pages
    - Active link highlighting (fallback if aria-current not set)
-   - Simple form helpers (no backend): volunteer + contact
-   - Signup form sends to Google Sheets (Apps Script Web App)
+   - Simple form helpers (local-only): volunteer
+   - Signup + Contact forms send to Google Sheets (Apps Script Web App)
    - No alerts / no modal popups
    ========================================================================== */
 
@@ -12,6 +12,7 @@
   "use strict";
 
   // ---------- Google Sheets endpoint ----------
+  // (Same endpoint can accept multiple form "type" values in your Apps Script)
   const SIGNUP_ENDPOINT =
     "https://script.google.com/macros/s/AKfycbxgAcbkJ6ZXSZcYJN2NSvw8dXPzfHlNR5p3oFkwbQMfywlTH9q7TaznqMhdgA9HIYE/exec";
 
@@ -355,6 +356,7 @@
 
   // ---------- Simple form handling (no backend) ----------
   // Stores submissions locally for testing, and shows in-page status.
+  // NOTE: We will NOT use this for the signup/contact forms anymore, because those now submit to Sheets.
   const STORAGE_KEY = "coleforok86_submissions_v2";
 
   function loadSubmissions() {
@@ -456,6 +458,7 @@
 
       const fd = new FormData(form);
       const payload = {
+        type: "signup",
         page: location.pathname,
         firstName: (fd.get("firstName") || "").trim(),
         lastName: (fd.get("lastName") || "").trim(),
@@ -484,11 +487,80 @@
 
         form.reset();
         setStatus("Thanks! You’re signed up.", true);
-
       } catch (err) {
         console.error(err);
         setStatus("Sorry—something went wrong. Please try again.", false);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+    });
+  }
 
+  // ---------- Contact form → Google Sheets ----------
+  function wireContactForm() {
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+
+    function setStatus(message, ok) {
+      let node = form.querySelector(".form-status");
+      if (!node) {
+        node = document.createElement("div");
+        node.className = "form-status";
+        node.setAttribute("role", "status");
+        node.setAttribute("aria-live", "polite");
+        form.appendChild(node);
+      }
+      node.textContent = message;
+      node.classList.remove("form-status--ok", "form-status--err");
+      node.classList.add(ok ? "form-status--ok" : "form-status--err");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        setStatus("Please complete the required fields and try again.", false);
+        return;
+      }
+
+      const fd = new FormData(form);
+      const payload = {
+        type: "contact",
+        page: location.pathname,
+        name: (fd.get("name") || "").trim(),
+        email: (fd.get("email") || "").trim(),
+        phone: (fd.get("phone") || "").trim(),
+        zip: (fd.get("zip") || "").trim(),
+        message: (fd.get("message") || "").trim()
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn ? btn.textContent : "";
+
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Sending…";
+        }
+
+        const res = await fetch(SIGNUP_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || "Submission failed");
+
+        form.reset();
+        setStatus("Message sent. Thank you.", true);
+      } catch (err) {
+        console.error(err);
+        setStatus("Sorry—something went wrong. Please try again.", false);
       } finally {
         if (btn) {
           btn.disabled = false;
@@ -504,11 +576,11 @@
     bindSmoothAnchors();
     setupMobileNav();
 
-    // Forms (local-only test handlers for other pages)
+    // Local-only handler for volunteer (if present)
     handleForm($("#volunteer-form"), "volunteer");
-    handleForm($("#contact-form"), "contact");
 
-    // Home page signup → Google Sheets
+    // Sends to Google Sheets (if those forms exist on the current page)
     wireSignupForm();
+    wireContactForm();
   });
 })();
