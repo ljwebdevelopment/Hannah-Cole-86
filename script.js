@@ -4,11 +4,16 @@
    - Consistent nav behavior across pages
    - Active link highlighting (fallback if aria-current not set)
    - Simple form helpers (no backend): volunteer + contact
+   - Signup form sends to Google Sheets (Apps Script Web App)
    - No alerts / no modal popups
    ========================================================================== */
 
 (function () {
   "use strict";
+
+  // ---------- Google Sheets endpoint ----------
+  const SIGNUP_ENDPOINT =
+    "https://script.google.com/macros/s/AKfycbxgAcbkJ6ZXSZcYJN2NSvw8dXPzfHlNR5p3oFkwbQMfywlTH9q7TaznqMhdgA9HIYE/exec";
 
   // ---------- Helpers ----------
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -17,7 +22,11 @@
   const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
 
   function safeJsonParse(str, fallback) {
-    try { return JSON.parse(str); } catch { return fallback; }
+    try {
+      return JSON.parse(str);
+    } catch {
+      return fallback;
+    }
   }
 
   function injectBaseStylesOnce() {
@@ -410,15 +419,96 @@
     });
   }
 
+  // ---------- Signup form → Google Sheets ----------
+  function wireSignupForm() {
+    const form = document.getElementById("signup-form");
+    if (!form) return;
+
+    function setStatus(message, ok) {
+      let node = form.querySelector(".form-status");
+      if (!node) {
+        node = document.createElement("div");
+        node.className = "form-status";
+        node.setAttribute("role", "status");
+        node.setAttribute("aria-live", "polite");
+
+        // Match dark hero styling (so it blends on the homepage)
+        node.style.background = "rgba(255,255,255,0.10)";
+        node.style.color = "rgba(255,255,255,0.92)";
+        node.style.borderColor = "rgba(255,255,255,0.22)";
+
+        form.appendChild(node);
+      }
+
+      node.textContent = message;
+      node.classList.remove("form-status--ok", "form-status--err");
+      node.classList.add(ok ? "form-status--ok" : "form-status--err");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        setStatus("Please complete all required fields.", false);
+        return;
+      }
+
+      const fd = new FormData(form);
+      const payload = {
+        page: location.pathname,
+        firstName: (fd.get("firstName") || "").trim(),
+        lastName: (fd.get("lastName") || "").trim(),
+        email: (fd.get("email") || "").trim(),
+        phone: (fd.get("phone") || "").trim(),
+        zip: (fd.get("zip") || "").trim()
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn ? btn.textContent : "";
+
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Sending…";
+        }
+
+        const res = await fetch(SIGNUP_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || "Submission failed");
+
+        form.reset();
+        setStatus("Thanks! You’re signed up.", true);
+
+      } catch (err) {
+        console.error(err);
+        setStatus("Sorry—something went wrong. Please try again.", false);
+
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+    });
+  }
+
   // ---------- Init ----------
   document.addEventListener("DOMContentLoaded", () => {
     setActiveNavLink();
     bindSmoothAnchors();
     setupMobileNav();
 
-    // Forms
+    // Forms (local-only test handlers for other pages)
     handleForm($("#volunteer-form"), "volunteer");
     handleForm($("#contact-form"), "contact");
-  });
 
+    // Home page signup → Google Sheets
+    wireSignupForm();
+  });
 })();
