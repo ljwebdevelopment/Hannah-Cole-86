@@ -92,6 +92,7 @@
         </div>
 
         <div style="margin-top:24px; display:flex; justify-content:center;">
+  <div style="margin-top:24px; display:flex; justify-content:center;">
   <div
     style="
       border:2px solid #cc5500;
@@ -99,20 +100,35 @@
       padding:16px;
       background:#ffffff;
       box-shadow:0 10px 25px rgba(0,0,0,0.08);
-      max-width:100%;
+      width:100%;
+      max-width:800px;
     "
   >
-    <iframe 
-      src="https://calendar.google.com/calendar/embed?src=41973f2bb7b57f0dcbdb65284066a39eaaadeb69f31abc97d73d4b594216fce9%40group.calendar.google.com&ctz=America%2FChicago" 
-      style="border:0; display:block;"
-      width="800" 
-      height="600" 
-      frameborder="0" 
-      scrolling="no">
-    </iframe>
+    <div
+      style="
+        position:relative;
+        width:100%;
+        overflow:hidden;
+        padding-top:75%;
+      "
+    >
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=41973f2bb7b57f0dcbdb65284066a39eaaadeb69f31abc97d73d4b594216fce9%40group.calendar.google.com&ctz=America%2FChicago"
+        style="
+          border:0;
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          display:block;
+        "
+        frameborder="0"
+        scrolling="no">
+      </iframe>
+    </div>
   </div>
 </div>
-    </section>
 
     <!-- HOST / VOLUNTEER CTA -->
     <section class="section" aria-label="Host or help">
