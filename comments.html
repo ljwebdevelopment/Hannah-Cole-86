@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -15,169 +15,14 @@
 
   <title>Comments | Cole for OK 86</title>
   <meta name="description" content="Community comments and feedback for Hannah Cole for Oklahoma House District 86. Comments are moderated." />
+  <meta property="og:title" content="Comments | Cole for OK 86" />
+  <meta property="og:description" content="Community comments and feedback for Hannah Cole for Oklahoma House District 86." />
+  <meta property="og:image" content="images/hannah-hero.jpg" />
+  <meta property="og:type" content="website" />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="images/logo.png" />
+  <link rel="icon" href="images/logo-display.png" />
 
-  <!-- Optional: prevent logo image from showing white box/padding (matches Get Involved fix) -->
-  <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
-    }
-  </style>
-
-  <!-- PAGE-ONLY STYLES (keeps rest of site unchanged) -->
-  <style>
-    /* Keep the prompt card + widget tidy (heading now uses site-wide styles, NOT custom) */
-    .prompt-wrap{ margin-top: 18px; margin-bottom: 34px; }
-
-    .prompt-card{
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--rust);
-      color: #fff;
-      border-radius: 14px;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.16);
-      border: 1px solid rgba(255,255,255,0.18);
-      padding: 22px;
-    }
-
-    .prompt-row{
-      display: grid;
-      grid-template-columns: 70px 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-
-    .prompt-avatar{
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid rgba(255,255,255,0.85);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
-    }
-    .prompt-avatar img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 20%;
-    }
-
-    .prompt-meta{
-      display: flex;
-      gap: 10px;
-      margin-bottom: 6px;
-      align-items: baseline;
-      flex-wrap: wrap;
-    }
-    .prompt-name{ font-weight: 900; letter-spacing: 0.02em; }
-    .prompt-badge{
-      display: inline-flex;
-      align-items: center;
-      height: 24px;
-      padding: 0 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.24);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      white-space: nowrap;
-    }
-
-    .prompt-text{
-      margin: 0;
-      font-size: 1.07rem;
-      line-height: 1.65;
-      max-width: 72ch;
-    }
-
-    .prompt-foot{
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.22);
-      font-size: 0.95rem;
-      opacity: 0.95;
-    }
-
-    .comments-area{
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* HTMLCommentBox buttons = your rust */
-    body.page-comments #HCB_comment_box button,
-    body.page-comments #HCB_comment_box input[type="submit"],
-    body.page-comments #HCB_comment_box input[type="button"],
-    body.page-comments #HCB_comment_box .btn{
-      background: var(--rust) !important;
-      color: #fff !important;
-      border: 1px solid rgba(255,255,255,0.18) !important;
-      border-radius: 10px !important;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.28) !important;
-      font-weight: 800 !important;
-      letter-spacing: .10em !important;
-      text-transform: uppercase !important;
-    }
-
-    body.page-comments #HCB_comment_box button:hover,
-    body.page-comments #HCB_comment_box input[type="submit"]:hover,
-    body.page-comments #HCB_comment_box input[type="button"]:hover{
-      filter: brightness(1.06) !important;
-      transform: translateY(-1px) !important;
-    }
-
-    body.page-comments #HCB_comment_box button:active,
-    body.page-comments #HCB_comment_box input[type="submit"]:active,
-    body.page-comments #HCB_comment_box input[type="button"]:active{
-      transform: translateY(0) !important;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
-    }
-
-    /* Keep widget links consistent */
-    body.page-comments #HCB_comment_box a{ color: var(--rust) !important; }
-
-    /* Hide HTMLCommentBox promo + settings links (but KEEP Email Me Replies) */
-    body.page-comments #HCB_comment_box > a,
-    body.page-comments #HCB_comment_box a[href*="htmlcommentbox.com"],
-    body.page-comments #HCB_comment_box .hcb-link,
-    body.page-comments #HCB_comment_box .hcb-footer,
-    body.page-comments #HCB_comment_box .hcb-comment-footer,
-    body.page-comments #HCB_comment_box .hcb-comment-footer a,
-    body.page-comments #HCB_comment_box .hcb-user-settings,
-    body.page-comments #HCB_comment_box .hcb-login,
-    body.page-comments #HCB_comment_box .hcb-logout,
-    body.page-comments #HCB_comment_box .hcb-account,
-    body.page-comments #HCB_comment_box #hcb_settings{
-      display: none !important;
-    }
-
-    /* Remove divider line between comment form and comments */
-    body.page-comments #HCB_comment_box hr,
-    body.page-comments #HCB_comment_box .hcb-hr,
-    body.page-comments #HCB_comment_box .hcb-separator,
-    body.page-comments #HCB_comment_box .hcb-comment-divider{
-      display: none !important;
-      border: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    /* Mobile prompt: stack cleanly */
-    @media (max-width: 760px){
-      .prompt-card{ padding: 16px !important; border-radius: 14px; }
-      .prompt-row{ grid-template-columns: 1fr !important; gap: 12px !important; }
-      .prompt-avatar{ width: 64px !important; height: 64px !important; margin: 0 auto !important; }
-      .prompt-meta{ justify-content: center; text-align: center; }
-      .prompt-text{ font-size: 1.02rem; line-height: 1.6; max-width: none !important; }
-      .prompt-foot{ font-size: 0.95rem; }
-    }
-  </style>
 </head>
 
 <body class="page-comments">
@@ -187,7 +32,7 @@
   <header class="header" aria-label="Primary">
     <div class="container header__inner">
       <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-        <img class="brand__logo" src="images/logo.png" alt="Cole for OK 86 logo" />
+        <img class="brand__logo" src="images/logo-display.png" alt="Cole for OK 86 logo" />
       </a>
 
       <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
@@ -205,7 +50,7 @@
         <a href="contact.html">Contact</a>
 
         <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer">Donate</a>
+          <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer" aria-label="Donate securely through ActBlue">Donate</a>
         </span>
       </nav>
     </div>
@@ -218,7 +63,7 @@
         <div class="section__head">
           <h1 class="h2" style="margin:0;">Comments</h1>
           <p class="lede" style="margin-top:14px;">
-            I want to hear from you. Share your thoughts, concerns, or ideas for District 86. Comments are moderated, please keep it respectful and avoid private information.
+            I want to hear from you. Share your thoughts, concerns, or ideas for District 86. Comments are public and moderated, so please keep it respectful and avoid private information.
           </p>
         </div>
 
@@ -227,18 +72,19 @@
           <div class="prompt-card">
             <div class="prompt-row">
               <div class="prompt-avatar">
-                <img src="images/DSC02194 - Hannah Cole.png" alt="Hannah Cole" />
+                <img src="images/hannah-hero.jpg" alt="Hannah Cole" />
               </div>
               <div>
                 <div class="prompt-meta">
                   <div class="prompt-name">Hannah Cole</div>
+                  <div class="prompt-badge">Campaign Prompt</div>
                 </div>
                 <p class="prompt-text">
                   What's one thing you want your State Representative to fight for this year?
                   I'm reading and replying to these, your input helps shape our priorities.
                 </p>
                 <div class="prompt-foot">
-                  Please keep comments respectful. All personal information is private and confidential.
+                  Please keep comments respectful. Comments appear publicly after moderation, so do not include private information.
                 </div>
               </div>
             </div>
@@ -247,7 +93,7 @@
 
         <!-- COMMENTS -->
         <div class="comments-area">
-          <div id="HCB_comment_box">Loading comments</div>
+          <div id="HCB_comment_box" class="commentbox">Loading comments</div>
         </div>
       </div>
     </section>
@@ -258,7 +104,21 @@
       <div>
         <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
         <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
+        </p>
         <div class="disclaimer"><strong>Authorized and paid for by</strong> Cole for OK 86</div>
+      </div>
+
+      <div>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Links</div>
+        <p style="margin-top:10px; line-height:1.9;">
+          <a href="meet.html">Meet Hannah</a><br />
+          <a href="get-involved.html">Get involved</a><br />
+          <a href="events.html">Events</a><br />
+          <a href="contact.html">Contact</a>
+        </p>
+        <p style="opacity:.85; margin-top:10px;">Compliance: OK Ethics Commission</p>
       </div>
     </div>
   </footer>

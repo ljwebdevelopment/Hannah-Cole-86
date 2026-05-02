@@ -16,22 +16,14 @@
   <meta name="description" content="Contact Hannah Cole for Oklahoma House District 86." />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="images/logo.png" />
+  <link rel="icon" href="images/logo-display.png" />
 
   <!-- Social share -->
   <meta property="og:title" content="Contact | Cole for OK 86" />
   <meta property="og:description" content="Send a message to the campaign. No consultants. Real people." />
+  <meta property="og:image" content="images/hannah-hero.jpg" />
   <meta property="og:type" content="website" />
 
-  <!-- Page-level fix: prevent the logo from showing a white box/padding -->
-  <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
-    }
-  </style>
 </head>
 
 <body>
@@ -41,7 +33,7 @@
   <header class="header" aria-label="Primary">
   <div class="container header__inner">
     <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-      <img class="brand__logo" src="images/logo.png" alt="Cole for OK 86 logo" />
+      <img class="brand__logo" src="images/logo-display.png" alt="Cole for OK 86 logo" />
     </a>
 
     <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
@@ -59,7 +51,7 @@
       <a href="contact.html" aria-current="page">Contact</a>
 
       <span class="nav__cta">
-        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer">Donate</a>
+        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer" aria-label="Donate securely through ActBlue">Donate</a>
       </span>
     </nav>
   </div>
@@ -87,32 +79,53 @@
           <!-- FORM -->
           <div class="form">
             <form class="form__inner" id="contact-form" novalidate>
+              <div class="form-trap" aria-hidden="true">
+                <label for="contact-website">Website</label>
+                <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
               <div class="form__row">
                 <div class="field">
+                  <label class="sr-only" for="cname">Full name</label>
                   <input id="cname" name="name" type="text" autocomplete="name" placeholder="Full Name" required aria-label="Full name" />
                 </div>
                 <div class="field">
+                  <label class="sr-only" for="cemail">Email address</label>
                   <input id="cemail" name="email" type="email" autocomplete="email" placeholder="Email" required aria-label="Email address" />
                 </div>
               </div>
 
               <div class="form__row">
                 <div class="field">
+                  <label class="sr-only" for="cphone">Phone number optional</label>
                   <input id="cphone" name="phone" type="tel" autocomplete="tel" placeholder="Phone (optional)" aria-label="Phone number (optional)" />
                 </div>
                 <div class="field">
+                  <label class="sr-only" for="czip">ZIP code optional</label>
                   <input id="czip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code (optional)" aria-label="ZIP code (optional)" />
                 </div>
               </div>
 
               <div class="field">
+                <label class="sr-only" for="ctopic">Message topic</label>
+                <select id="ctopic" name="topic" required aria-label="Message topic">
+                  <option value="">Choose a topic</option>
+                  <option value="Constituent concern">Constituent concern</option>
+                  <option value="Host an event">Host an event</option>
+                  <option value="Volunteer question">Volunteer question</option>
+                  <option value="Media or press">Media or press</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="sr-only" for="cmessage">Message</label>
                 <textarea id="cmessage" name="message" required aria-label="Message"
                   placeholder="Tell me what your community needs, what you're proud of, or what's being ignored."></textarea>
               </div>
 
               <button class="btn btn--primary" type="submit">Send</button>
 
-              <p style="margin:12px 0 0; color:rgba(15,23,32,0.72); font-weight:700;">
+              <p class="form-note">
                 Note: Messages sent here go directly to the campaign.
               </p>
             </form>
@@ -140,7 +153,7 @@
                 <div>
                   <p class="issue__title" style="margin:0;">Prefer to volunteer?</p>
                   <p class="issue__desc" style="margin:6px 0 0;">
-                    If you're ready to knock doors, drive, host, call neighbors, or help coordinate events,
+                    If you're ready to knock doors, drive, host, call neighbors, or help coordinate events—
                     join the Dirt-road Collective.
                   </p>
                 </div>
@@ -162,15 +175,22 @@
     <div class="container footer__inner">
       <div>
         <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
-        <p style="margin-top:10px; opacity:.85;">
-          Mailing address: P.O. Box 100, Rose, OK 74364
+        <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
         </p>
         <div class="disclaimer"><strong>Authorized and paid for by</strong> Cole for OK 86</div>
       </div>
 
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Compliance</div>
-        <p style="opacity:.85; margin-top:10px;">OK Ethics Commission</p>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Links</div>
+        <p style="margin-top:10px; line-height:1.9;">
+          <a href="meet.html">Meet Hannah</a><br />
+          <a href="get-involved.html">Get involved</a><br />
+          <a href="events.html">Events</a><br />
+          <a href="contact.html">Contact</a>
+        </p>
+        <p style="opacity:.85; margin-top:10px;">Compliance: OK Ethics Commission</p>
       </div>
     </div>
   </footer>

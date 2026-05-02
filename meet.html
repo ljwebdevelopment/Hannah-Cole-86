@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -16,22 +16,14 @@
   <meta name="description" content="Meet Hannah Cole, candidate for Oklahoma House District 86." />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="images/logo.png" />
+  <link rel="icon" href="images/logo-display.png" />
 
   <!-- Social share -->
   <meta property="og:title" content="Meet Hannah | Cole for OK 86" />
   <meta property="og:description" content="Learn why Hannah Cole is running for Oklahoma House District 86." />
+  <meta property="og:image" content="images/hannah-hero.jpg" />
   <meta property="og:type" content="website" />
 
-  <!-- Keep doing the per-page logo fix -->
-  <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
-    }
-  </style>
 </head>
 
 <body>
@@ -41,7 +33,7 @@
   <header class="header" aria-label="Primary">
   <div class="container header__inner">
     <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-      <img class="brand__logo" src="images/logo.png" alt="Cole for OK 86 logo" />
+      <img class="brand__logo" src="images/logo-display.png" alt="Cole for OK 86 logo" />
     </a>
 
     <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
@@ -59,7 +51,7 @@
       <a href="contact.html">Contact</a>
 
       <span class="nav__cta">
-        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer">Donate</a>
+        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer" aria-label="Donate securely through ActBlue">Donate</a>
       </span>
     </nav>
   </div>
@@ -122,7 +114,7 @@ My name is Hannah Cole. I was born in Hastings and raised in Northeast Oklahoma.
           <!-- PHOTO + FACTS -->
           <aside class="card" aria-label="Photo and quick facts">
             <img
-              src="images/DSC02224%20-%20Hannah%20Cole.png"
+              src="images/hannah-meet.jpg"
               alt="Hannah Cole headshot"
               style="border-bottom:1px solid rgba(20,20,20,0.18); height:440px; width:100%; object-fit:cover;"
             />
@@ -157,13 +149,17 @@ My name is Hannah Cole. I was born in Hastings and raised in Northeast Oklahoma.
                 <a class="btn btn--secondary" href="issues.html">Read the issues</a>
               </div>
 
-              <div class="pending" style="margin-top:18px;">
-                <p style="margin:0 0 8px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;">
-                  Press kit pending
-                </p>
-                <p style="margin:0; color:rgba(15,23,32,0.76);">
-                  Photos, logos, and official boilerplate will be added soon.
-                </p>
+              <div class="issue" style="margin-top:18px;">
+                <div class="issue__mark" aria-hidden="true"></div>
+                <div>
+                  <p class="issue__title">Campaign materials</p>
+                  <p class="issue__desc">
+                    Need campaign photos, logos, or a short biography for an event or story? Contact the campaign and we'll send the right materials.
+                  </p>
+                  <div style="margin-top:14px;">
+                    <a class="btn btn--secondary" href="contact.html">Request materials</a>
+                  </div>
+                </div>
               </div>
             </div>
           </aside>
@@ -176,15 +172,22 @@ My name is Hannah Cole. I was born in Hastings and raised in Northeast Oklahoma.
     <div class="container footer__inner">
       <div>
         <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
-        <p style="margin-top:10px; opacity:.85;">
-          Mailing address: P.O. Box 100, Rose, OK 74364
+        <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
         </p>
         <div class="disclaimer"><strong>Authorized and paid for by</strong> Cole for OK 86</div>
       </div>
 
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Compliance</div>
-        <p style="opacity:.85; margin-top:10px;">OK Ethics Commission</p>
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Links</div>
+        <p style="margin-top:10px; line-height:1.9;">
+          <a href="meet.html">Meet Hannah</a><br />
+          <a href="get-involved.html">Get involved</a><br />
+          <a href="events.html">Events</a><br />
+          <a href="contact.html">Contact</a>
+        </p>
+        <p style="opacity:.85; margin-top:10px;">Compliance: OK Ethics Commission</p>
       </div>
     </div>
   </footer>

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -16,25 +16,15 @@
   <meta name="description" content="Hannah Cole for Oklahoma House District 86. Join the Dirt-road Collective. Volunteer, get updates, and stay involved." />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="images/logo.png" />
+  <link rel="icon" href="images/logo-display.png" />
 
   <!-- Social share -->
   <meta property="og:title" content="Hannah Cole for OK House 86" />
   <meta property="og:description" content="Join the Dirt-road Collective. Volunteer, get updates, and stay involved." />
-  <meta property="og:image" content="images/DSC02194%20-%20Hannah%20Cole.png" />
+  <meta property="og:image" content="images/hannah-hero.jpg" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Fix: prevent logo from rendering with a white box/padding -->
-  <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      /* keep the clean lift without blocking the hero */
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
-    }
-  </style>
 </head>
 
 <body class="home">
@@ -45,7 +35,7 @@
   <header class="header" aria-label="Primary">
   <div class="container header__inner">
     <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-      <img class="brand__logo" src="images/logo.png" alt="Cole for OK 86 logo" />
+      <img class="brand__logo" src="images/logo-display.png" alt="Cole for OK 86 logo" />
     </a>
 
     <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
@@ -63,7 +53,7 @@
       <a href="contact.html">Contact</a>
 
       <span class="nav__cta">
-        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer">Donate</a>
+        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer" aria-label="Donate securely through ActBlue">Donate</a>
       </span>
     </nav>
   </div>
@@ -94,27 +84,36 @@
           <!-- SIGNUP -->
           <div class="form" aria-label="Signup">
             <form class="form__inner" id="signup-form" novalidate>
+              <div class="form-trap" aria-hidden="true">
+                <label for="signup-website">Website</label>
+                <input id="signup-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
               <div class="form__row">
                 <div class="field">
-                  <input type="text" name="firstName" autocomplete="given-name" placeholder="First Name" required aria-label="First name" />
+                  <label class="sr-only" for="signup-first-name">First name</label>
+                  <input id="signup-first-name" type="text" name="firstName" autocomplete="given-name" placeholder="First Name" required aria-label="First name" />
                 </div>
                 <div class="field">
-                  <input type="text" name="lastName" autocomplete="family-name" placeholder="Last Name" required aria-label="Last name" />
+                  <label class="sr-only" for="signup-last-name">Last name</label>
+                  <input id="signup-last-name" type="text" name="lastName" autocomplete="family-name" placeholder="Last Name" required aria-label="Last name" />
                 </div>
               </div>
 
               <div class="form__row">
                 <div class="field">
-                  <input type="email" name="email" autocomplete="email" placeholder="Email" required aria-label="Email address" />
+                  <label class="sr-only" for="signup-email">Email address</label>
+                  <input id="signup-email" type="email" name="email" autocomplete="email" placeholder="Email" required aria-label="Email address" />
                 </div>
                 <div class="field">
-                  <input type="tel" name="phone" autocomplete="tel" placeholder="Phone" required aria-label="Phone number" />
+                  <label class="sr-only" for="signup-phone">Phone number</label>
+                  <input id="signup-phone" type="tel" name="phone" autocomplete="tel" placeholder="Phone" required aria-label="Phone number" />
                 </div>
               </div>
 
               <div class="form__row">
                 <div class="field">
-                  <input type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" aria-label="ZIP code" />
+                  <label class="sr-only" for="signup-zip">ZIP code</label>
+                  <input id="signup-zip" type="text" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="ZIP Code" aria-label="ZIP code" />
                 </div>
                 <div class="field">
                   <button class="btn btn--primary" type="submit">Submit</button>
@@ -130,7 +129,7 @@
 
         <!-- RIGHT PHOTO PANEL -->
         <div class="hero__media" aria-label="Candidate photo">
-          <img src="images/DSC02194%20-%20Hannah%20Cole.png" alt="Hannah Cole headshot" />
+          <img src="images/hannah-hero.jpg" alt="Hannah Cole headshot" />
         </div>
       </div>
     </section>

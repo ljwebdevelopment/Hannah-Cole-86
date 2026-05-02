@@ -5,29 +5,6 @@
    - Mobile: fixed header + photo-first hero (no layout fights)
    ========================================================== */
 
-/* ---------- Fonts ---------- */
-@font-face{
-  font-family:"Mont";
-  src:url("../fonts/Mont-Regular.woff2") format("woff2");
-  font-weight:400;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:"Mont";
-  src:url("../fonts/Mont-Bold.woff2") format("woff2");
-  font-weight:700;
-  font-style:normal;
-  font-display:swap;
-}
-@font-face{
-  font-family:"Nickainley";
-  src:url("../fonts/Nickainley.woff2") format("woff2");
-  font-weight:400;
-  font-style:normal;
-  font-display:swap;
-}
-
 /* ---------- Tokens ---------- */
 :root{
   /* Campaign palette */
@@ -50,7 +27,9 @@
   --max: 1180px;
   --gutter: 22px;
 
-  --sans: "Mont", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --radius: 10px;
+  --radius-sm: 8px;
 
   /* COMPONENT THEME MAPPING */
   --hero-left: var(--pine);
@@ -99,9 +78,16 @@ body{
   color:var(--ink);
   line-height:1.6;
   font-size:1.04rem;
+  min-height:100vh;
 }
 img{ display:block; max-width:100%; height:auto; }
 a{ color:inherit; text-decoration:none; }
+
+body:not(.home){
+  background:
+    linear-gradient(180deg, rgba(242,227,201,0.50) 0%, rgba(255,255,255,0.96) 180px),
+    var(--paper);
+}
 
 .container{
   width:min(var(--max), calc(100% - (var(--gutter) * 2)));
@@ -126,13 +112,25 @@ a{ color:inherit; text-decoration:none; }
    HEADER / NAV (pill buttons over hero)
    ========================================================== */
 .header{
-  position:absolute;
+  position:relative;
   top:0;
   left:0;
   right:0;
   z-index:50;
   background:transparent;
-  border-bottom:none;
+  border-bottom:0;
+  box-shadow:none;
+}
+
+body:not(.home) .header{
+  position:relative;
+  background:transparent;
+  border-bottom:0;
+  backdrop-filter:none;
+}
+
+body.home .header{
+  position:absolute;
 }
 
 .header__inner{
@@ -156,6 +154,8 @@ a{ color:inherit; text-decoration:none; }
   height:auto;
   background:transparent;
   border:0;
+  padding:0;
+  border-radius:0;
   box-shadow: 0 6px 18px rgba(0,0,0,0.10);
 }
 .brand__text{ display:none; }
@@ -175,7 +175,7 @@ a{ color:inherit; text-decoration:none; }
   justify-content:center;
   height:34px;
   padding:0 14px;
-  border-radius:10px;
+  border-radius:var(--radius);
   background:var(--pill-bg);
   color:var(--pill-text);
   text-transform:uppercase;
@@ -208,7 +208,7 @@ a{ color:inherit; text-decoration:none; }
   justify-content:center;
   padding:0 18px;
   height:44px;
-  border-radius:10px;
+  border-radius:var(--radius);
   border:0;
   text-transform:uppercase;
   letter-spacing:.14em;
@@ -223,6 +223,25 @@ a{ color:inherit; text-decoration:none; }
   color:var(--cta-text);
 }
 .btn--primary:hover{ transform:translateY(-1px); filter:brightness(1.03); }
+
+.btn:focus-visible,
+.nav a:focus-visible,
+.footer a:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline:3px solid rgba(230,180,88,0.95);
+  outline-offset:3px;
+}
+
+.footer a,
+.card__text a,
+.lede a{
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
 
 .nav__cta .btn--primary{
   background: var(--pine);
@@ -248,6 +267,13 @@ a{ color:inherit; text-decoration:none; }
   color:#fff;
 }
 
+body:not(.home) .nav-toggle,
+.nav-toggle{
+  background:rgba(255,255,255,0.12);
+  color:#fffaf3;
+  border-color:rgba(255,255,255,0.12);
+}
+
 /* Mobile menu toggle (base) */
 .nav-toggle{
   display:none;
@@ -262,6 +288,84 @@ a{ color:inherit; text-decoration:none; }
   font-weight:800;
 }
 
+.nav-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  z-index:1200;
+  display:none;
+}
+.nav-overlay[data-open="true"]{ display:block; }
+
+.nav-drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  height:100vh;
+  width:min(86vw, 360px);
+  background:var(--navy);
+  color:#fff;
+  z-index:1300;
+  transform:translateX(102%);
+  transition:transform 220ms ease;
+  padding:18px 16px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:-18px 0 44px rgba(0,0,0,0.22);
+  overscroll-behavior:contain;
+  outline:none;
+}
+.nav-drawer[data-open="true"]{ transform:translateX(0); }
+.nav-drawer__top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.nav-drawer__close{
+  height:44px;
+  padding:0 14px;
+  border-radius:var(--radius);
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.10);
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:800;
+  cursor:pointer;
+}
+.nav-drawer a{
+  width:100%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  height:44px;
+  padding:0 14px;
+  border-radius:var(--radius);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.80rem;
+  font-weight:800;
+}
+.nav-drawer a[aria-current="page"]{
+  background:rgba(230,180,88,0.95);
+  color:#2a1b10;
+  border-color:rgba(0,0,0,0);
+}
+.nav-drawer .nav-drawer__cta a{
+  justify-content:center;
+  height:50px;
+  background:rgba(89,116,140,0.95);
+  color:#061523;
+  border-color:rgba(255,255,255,0);
+}
+
+body.nav-open{ overflow:hidden; }
+
 /* ==========================================================
    HERO â€” big 50/50 split
    ========================================================== */
@@ -273,6 +377,10 @@ a{ color:inherit; text-decoration:none; }
   align-items:stretch;
   border-bottom:0;
   background:var(--paper);
+}
+
+body.home .hero{
+  margin-top:0;
 }
 
 .hero__inner{
@@ -357,14 +465,23 @@ a{ color:inherit; text-decoration:none; }
 }
 .form__inner{ padding:0; }
 
-/* (Youâ€™re using placeholders as labels; keep labels visually hidden) */
-label{ display:none; }
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
 
 input, textarea, select{
   width:100%;
   height:54px;
   padding:0 16px;
-  border-radius:10px;
+  border-radius:var(--radius);
   border:2px solid rgba(255,255,255,0.0);
   background:var(--form-field-bg);
   color:var(--form-field-text);
@@ -398,7 +515,7 @@ form button.btn,
 form button[type="submit"]{
   width:100%;
   height:54px;
-  border-radius:10px;
+  border-radius:var(--radius);
   background:var(--form-submit-bg);
   color:var(--form-submit-text);
   font-weight:900;
@@ -444,7 +561,7 @@ form button[type="submit"]{
 
 /* Cards */
 .card{
-  border-radius:14px;
+  border-radius:var(--radius);
   border:1px solid rgba(15,23,32,0.10);
   background:#fff;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
@@ -485,31 +602,279 @@ form button[type="submit"]{
 .issue__title{ margin:0 0 6px; font-weight:900; }
 .issue__desc{ margin:0; color:rgba(15,23,32,0.76); }
 
-/* Pending blocks */
-.pending{
-  border-radius:14px;
-  border:2px dashed rgba(15,23,32,0.22);
-  background:rgba(242,227,201,0.55);
-  padding:22px 18px;
+.page-intro{
+  padding:72px 0 42px;
+  background:
+    radial-gradient(circle at top center, rgba(230,180,88,0.18), rgba(230,180,88,0) 44%),
+    linear-gradient(180deg, rgba(255,255,255,0.62), rgba(242,227,201,0.52));
+  border-bottom:1px solid rgba(15,23,32,0.08);
+}
+
+.page-intro .section__head{
+  margin-bottom:0;
+}
+
+.page-intro .lede{
+  max-width:62ch;
+}
+
+.news-placeholder{
+  max-width:760px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.news-placeholder__logo{
+  max-width:220px;
+  margin:0 auto 22px;
+}
+
+.news-placeholder__eyebrow{
+  margin:0 0 8px;
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(15,23,32,0.62);
+}
+
+.news-placeholder__text{
+  margin:0 auto;
+  max-width:46ch;
+  color:rgba(15,23,32,0.74);
+}
+
+.update-list{
+  display:grid;
+  gap:18px;
+}
+
+.update-card{
+  display:grid;
+  gap:10px;
+}
+
+.update-card time{
+  color:rgba(15,23,32,0.62);
+  font-size:.92rem;
+  font-weight:800;
+}
+
+.article-card{
+  max-width:900px;
+  margin:0 auto;
+  overflow:hidden;
+}
+
+.article-cover{
+  width:100%;
+  aspect-ratio:1200 / 630;
+  object-fit:cover;
+  border-bottom:1px solid rgba(15,23,32,0.10);
+}
+
+.article-meta{
+  margin:0 0 12px;
+  color:rgba(15,23,32,0.64);
+  font-weight:800;
+}
+
+.social-section{
+  display:grid;
+  gap:24px;
+}
+
+.social-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.social-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+  gap:22px;
+  align-items:start;
+}
+
+.social-embed{
+  min-width:0;
+  overflow:hidden;
+}
+
+.social-embed iframe,
+.social-embed .tiktok-embed{
+  width:100% !important;
+  max-width:605px !important;
+  min-width:0 !important;
+  margin:0 auto !important;
+}
+
+.social-label{
+  margin:0 0 10px;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(15,23,32,0.62);
+}
+
+@media (max-width: 420px){
+  .social-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.form-note{
+  margin:12px 0 0;
+  color:rgba(15,23,32,0.72);
+  font-weight:700;
+}
+
+.form-status{
+  margin-top:12px;
+  padding:12px;
+  border-radius:var(--radius);
+  border:2px solid rgba(15,23,32,0.18);
+  background:rgba(238,242,246,0.75);
+  font-weight:700;
+  color:rgba(15,23,32,0.80);
+}
+.form-status--ok{ border-color:rgba(77,106,71,0.95); }
+.form-status--err{ border-color:rgba(166,55,45,0.95); }
+
+.form-trap{
+  position:absolute;
+  left:-10000px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.prompt-wrap{ margin-top:18px; margin-bottom:34px; }
+.prompt-card{
+  max-width:900px;
+  margin:0 auto;
+  background:var(--pine);
+  color:#fff;
+  border-radius:var(--radius);
+  box-shadow:0 14px 34px rgba(0,0,0,0.16);
+  border:3px solid rgba(230,180,88,0.88);
+  padding:22px;
+}
+.prompt-row{
+  display:grid;
+  grid-template-columns:70px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.prompt-avatar{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid rgba(255,255,255,0.85);
+  box-shadow:0 10px 24px rgba(0,0,0,0.18);
+}
+.prompt-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:50% 20%;
+}
+.prompt-meta{
+  display:flex;
+  gap:10px;
+  margin-bottom:6px;
+  align-items:baseline;
+  flex-wrap:wrap;
+}
+.prompt-name{ font-weight:900; letter-spacing:.02em; }
+.prompt-badge{
+  display:inline-flex;
+  align-items:center;
+  height:24px;
+  padding:0 10px;
+  border-radius:999px;
+  background:var(--wheat);
+  border:1px solid rgba(0,0,0,0.08);
+  color:#2a1b10;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.72rem;
+  white-space:nowrap;
+}
+.prompt-text{
+  margin:0;
+  font-size:1.07rem;
+  line-height:1.65;
+  max-width:72ch;
+}
+.prompt-foot{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid rgba(230,180,88,0.45);
+  font-size:.95rem;
+  opacity:.95;
+}
+.comments-area{
+  max-width:900px;
+  margin:0 auto;
 }
 
 /* Footer */
 .footer{
-  background:var(--footer-bg);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)),
+    var(--footer-bg);
   color:var(--footer-text);
-  padding:40px 0;
+  padding:48px 0 34px;
+  border-top:4px solid rgba(230,180,88,0.88);
 }
 .footer__inner{
   display:grid;
-  grid-template-columns:1.2fr 0.8fr;
-  gap:18px;
+  grid-template-columns:1.15fr 0.8fr 0.8fr;
+  gap:24px;
 }
 .footer a{ color:#fff; opacity:.92; }
+.footer__eyebrow{
+  margin:0 0 12px;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:.80rem;
+}
+.footer__brand{
+  font-size:1.3rem;
+  font-weight:900;
+  line-height:1.1;
+}
+.footer__copy,
+.footer__links{
+  margin:12px 0 0;
+  color:rgba(255,255,255,0.82);
+}
+.footer__links{
+  display:grid;
+  gap:10px;
+}
+.footer__links a:hover{
+  opacity:1;
+}
+.footer__meta{
+  margin-top:16px;
+  color:rgba(255,255,255,0.72);
+  font-size:.95rem;
+}
 .disclaimer{
   margin-top:14px;
   display:inline-block;
   padding:10px 12px;
-  border-radius:10px;
+  border-radius:var(--radius);
   border:1px solid rgba(255,255,255,0.22);
   background:rgba(255,255,255,0.06);
 }
@@ -520,10 +885,14 @@ form button[type="submit"]{
 @media (max-width: 980px){
 
   .header{
-    position:absolute;
+    position:relative;
     top:0; left:0; right:0;
     z-index:60;
     background:transparent;
+  }
+
+  body.home .header{
+    position:absolute;
   }
 
   .header__inner{
@@ -544,7 +913,7 @@ form button[type="submit"]{
   .hero{
     min-height:auto;
     background: var(--hero-left);
-    padding-top: 78px;
+    padding-top: 0;
   }
 
   .hero__inner{
@@ -601,7 +970,20 @@ form button[type="submit"]{
     background:var(--hero-left);
   }
 
-  .footer__inner{ grid-template-columns:1fr; }
+  body:not(.home) .header{
+    position:relative;
+  }
+
+  .footer__inner{ grid-template-columns:1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .nav-drawer,
+  .btn,
+  .nav a{
+    transition:none;
+  }
 }
 
 /* ==========================================================
@@ -609,13 +991,21 @@ form button[type="submit"]{
    ========================================================== */
 @media (max-width: 760px){
 
-  /* Fixed header so it never creates blank space */
+  /* Compact green header */
   .header{
-    position:fixed;
+    position:relative;
     top:0;
     left:0;
     right:0;
     z-index:999;
+    background:transparent;
+  }
+
+  body.home .header{
+    position:absolute;
+  }
+
+  body:not(.home) .header{
     background:transparent;
   }
 
@@ -702,15 +1092,15 @@ form button[type="submit"]{
 
   /* Hero: pad under fixed header so the photo starts immediately */
   .hero{
-    padding-top: var(--header-h);
+    padding-top: 0;
     background: var(--hero-left);
   }
 
   /* Photo crop (safe for faces) */
   .hero__media img{
-    height: 56vh;
-    min-height: 340px;
-    max-height: 560px;
+    height: clamp(300px, 48vh, 520px);
+    min-height: 0;
+    max-height: none;
     object-position: 55% 18%;
   }
 
@@ -729,6 +1119,19 @@ form button[type="submit"]{
   /* Tighter layout below */
   .form__row{ grid-template-columns:1fr; }
   .grid--2{ grid-template-columns:1fr; }
+  .page-intro{
+    padding:96px 0 38px;
+  }
+  .footer__inner{
+    grid-template-columns:1fr;
+  }
+
+  .prompt-card{ padding:16px; }
+  .prompt-row{ grid-template-columns:1fr; gap:12px; }
+  .prompt-avatar{ width:64px; height:64px; margin:0 auto; }
+  .prompt-meta{ justify-content:center; text-align:center; }
+  .prompt-text{ font-size:1.02rem; line-height:1.6; max-width:none; }
+  .prompt-foot{ font-size:.95rem; }
 
   /* Improve readability of the â€œNo spamâ€¦â€ line over dark green */
   .hero__tagline{
@@ -772,25 +1175,20 @@ form button[type="submit"]{
   }
 }
 
-/* ==========================================================
-   COMMENTS PAGE (ONLY): CommentBox theme override
-   - Keeps the rest of the site unchanged
-   - Kills the default green button styles from CommentBox
-   ========================================================== */
 body.page-comments .commentbox{
   margin-top: 28px;
+  accent-color: var(--pine);
 }
 
 body.page-comments .commentbox textarea,
 body.page-comments .commentbox input{
-  border-radius: 10px !important;
-  border: 1px solid rgba(15,23,32,0.20) !important;
+  border-radius: var(--radius) !important;
+  border: 2px solid rgba(27,46,40,0.22) !important;
   background: #fff !important;
   color: var(--ink) !important;
   font-family: var(--sans) !important;
 }
 
-/* Strong catch-all for CommentBox buttons/CTAs */
 body.page-comments .commentbox button,
 body.page-comments .commentbox [type="button"],
 body.page-comments .commentbox [type="submit"],
@@ -802,8 +1200,8 @@ body.page-comments .commentbox [class*="button"],
 body.page-comments .commentbox [class*="Button"]{
   background: var(--pine) !important;
   color: #ffffff !important;
-  border: 2px solid rgba(255,255,255,0.18) !important;
-  border-radius: 10px !important;
+  border: 2px solid rgba(230,180,88,0.55) !important;
+  border-radius: var(--radius) !important;
   box-shadow: 0 4px 0 rgba(0,0,0,0.28) !important;
   font-weight: 800 !important;
   letter-spacing: .14em !important;
@@ -825,99 +1223,27 @@ body.page-comments .commentbox a[role="button"]:active{
   box-shadow: 0 2px 0 rgba(0,0,0,0.35) !important;
 }
 
-/* Links inside comments: keep on-brand */
-body.page-comments .commentbox a{
-  color: var(--rust) !important;
-}
-
-/* Focus states */
 body.page-comments .commentbox textarea:focus,
 body.page-comments .commentbox input:focus{
   outline: 3px solid rgba(230,180,88,0.85) !important;
   outline-offset: 3px !important;
 }
 
-/* ==========================================================
-   COMMENTBOX â€” FORCE THEME (NUKE GREEN) â€” FINAL OVERRIDE
-   ========================================================== */
-
-/* Make sure these only apply on the comments page */
-body.page-comments .commentbox *{
-  accent-color: var(--pine) !important;
-}
-
-/* Most CommentBox buttons are either <button> or <a> styled like buttons */
-body.page-comments .commentbox button,
-body.page-comments .commentbox a,
-body.page-comments .commentbox input[type="submit"],
-body.page-comments .commentbox [role="button"]{
-  background-color: var(--pine) !important;
-  border-color: var(--pine) !important;
-  color: #fff !important;
-}
-
-/* Catch class-based buttons that CommentBox generates */
-body.page-comments .commentbox [class*="btn"],
-body.page-comments .commentbox [class*="Btn"],
-body.page-comments .commentbox [class*="button"],
-body.page-comments .commentbox [class*="Button"]{
-  background-color: var(--pine) !important;
-  border-color: var(--pine) !important;
-  color: #fff !important;
-}
-
-/* Kill any green SVG/icon fills in buttons */
 body.page-comments .commentbox button svg,
 body.page-comments .commentbox [role="button"] svg{
   fill: #fff !important;
   color: #fff !important;
 }
 
-/* Links inside comments (keep these rust instead of green/blue) */
-body.page-comments .commentbox a:not([role="button"]){
-  color: var(--rust) !important;
+body.page-comments .commentbox a:not([role="button"]):not([class*="btn"]):not([class*="button"]){
+  color: var(--pine) !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
 }
 
 html, body { height: 100%; }
 body { min-height: 100vh; }
 main { min-height: calc(100vh - var(--header-h, 0px) - var(--footer-h, 0px)); }
-
-.donate-embed { width: 100%; min-height: inherit; }
-.donate-embed iframe {
-  width: 100%;
-  height: calc(100vh - var(--header-h, 0px) - var(--footer-h, 0px));
-  border: 0;
-  display: block;
-}
-
-.actblue-fallback {
-  padding: 12px 16px;
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.donate-cta {
-  text-align: center;
-  padding: 80px 20px;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.donate-cta h1 {
-  margin-bottom: 16px;
-}
-
-.donate-cta p {
-  margin-bottom: 28px;
-  font-size: 16px;
-  opacity: 0.9;
-}
-
-.donate-button {
-  display: inline-block;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 6px;
-}

@@ -7,67 +7,59 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
   gtag('config', 'G-LELJ1FE73V');
 </script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Events | Cole for OK 86</title>
   <meta name="description" content="Fundraisers, town halls, and community events for Hannah Cole for OK House 86." />
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="icon" href="images/logo.png" />
+  <link rel="icon" href="images/logo-display.png" />
 
   <!-- Social share -->
   <meta property="og:title" content="Events | Cole for OK 86" />
   <meta property="og:description" content="Town halls, fundraisers, and community stops across District 86." />
+  <meta property="og:image" content="images/hannah-hero.jpg" />
   <meta property="og:type" content="website" />
 
-  <!-- Per-page logo fix -->
-  <style>
-    .brand__logo{
-      background: transparent !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
-    }
-  </style>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- HEADER -->
+  <!-- CANONICAL HEADER -->
   <header class="header" aria-label="Primary">
-    <div class="container header__inner">
-      <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
-        <img class="brand__logo" src="images/logo.png" alt="Cole for OK 86 logo" />
-      </a>
+  <div class="container header__inner">
+    <a class="brand" href="index.html" aria-label="Hannah Cole for OK 86">
+      <img class="brand__logo" src="images/logo-display.png" alt="Cole for OK 86 logo" />
+    </a>
 
-      <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
-        Menu
-      </button>
+    <button class="nav-toggle" aria-controls="site-nav" aria-expanded="false" type="button">
+      Menu
+    </button>
 
-      <nav id="site-nav" class="nav" aria-label="Site">
-        <a href="index.html">Home</a>
-        <a href="meet.html">Meet Hannah</a>
-        <a href="issues.html">Issues</a>
-        <a href="events.html" aria-current="page">Events</a>
-        <a href="news.html">News</a>
-        <a href="comments.html">Comments</a>
-        <a href="get-involved.html">Get Involved</a>
-        <a href="contact.html">Contact</a>
+    <nav id="site-nav" class="nav" aria-label="Site">
+      <a href="index.html">Home</a>
+      <a href="meet.html">Meet Hannah</a>
+      <a href="issues.html">Issues</a>
+      <a href="events.html" aria-current="page">Events</a>
+      <a href="news.html">News</a>
+      <a href="comments.html">Comments</a>
+      <a href="get-involved.html">Get Involved</a>
+      <a href="contact.html">Contact</a>
 
-        <span class="nav__cta">
-          <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer">Donate</a>
-        </span>
-      </nav>
-    </div>
-  </header>
+      <span class="nav__cta">
+        <a class="btn btn--primary btn--wide" href="https://secure.actblue.com/donate/coleforok86" target="_blank" rel="noopener noreferrer" aria-label="Donate securely through ActBlue">Donate</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
 
   <main id="main">
-
-    <!-- INTRO -->
+    <!-- PAGE INTRO -->
     <section class="section" aria-label="Events intro" style="padding:120px 0 64px;">
       <div class="container">
         <div class="section__head">
@@ -80,57 +72,49 @@
       </div>
     </section>
 
-    <!-- EVENTS / CALENDAR -->
+    <!-- EVENTS LIST / EMPTY STATE -->
     <section class="section" aria-label="Upcoming events">
       <div class="container">
         <div class="section__head">
           <h2 class="h2">Where to meet me</h2>
           <p class="lede" style="max-width:720px;">
-            View the live campaign calendar below for town halls, fundraisers, and community events across District 86.
+            The campaign is building a district-wide calendar around house parties, town halls,
+            farm-shop conversations, and community stops. Invite Hannah to your area or sign up
+            to get the next public date.
           </p>
         </div>
 
-        <div style="margin-top:24px; display:flex; justify-content:center;">
-          <div
-            style="
-              border:2px solid #cc5500;
-              border-radius:14px;
-              padding:16px;
-              background:#ffffff;
-              box-shadow:0 10px 25px rgba(0,0,0,0.08);
-              width:100%;
-              max-width:900px;
-            "
-          >
-            <div
-              style="
-                position:relative;
-                width:100%;
-                overflow:hidden;
-                padding-top:75%;
-              "
-            >
-              <iframe
-                src="https://calendar.google.com/calendar/embed?src=41973f2bb7b57f0dcbdb65284066a39eaaadeb69f31abc97d73d4b594216fce9%40group.calendar.google.com&ctz=America%2FChicago"
-                style="
-                  border:0;
-                  position:absolute;
-                  top:0;
-                  left:0;
-                  width:100%;
-                  height:100%;
-                  display:block;
-                "
-                frameborder="0"
-                scrolling="no">
-              </iframe>
+        <div class="grid grid--2" style="margin-top:24px;">
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Host Hannah</div>
+              <h3 class="card__title">Bring a conversation to your community</h3>
+              <p class="card__text">
+                Living rooms, barns, cafes, churches, shops, and community rooms all work. If you can gather neighbors, the campaign will help shape a simple event.
+              </p>
+              <div style="margin-top:14px;">
+                <a class="btn btn--secondary" href="contact.html">Invite Hannah</a>
+              </div>
             </div>
-          </div>
+          </article>
+
+          <article class="card">
+            <div class="card__inner">
+              <div class="card__kicker">Get updates</div>
+              <h3 class="card__title">Know when public events are scheduled</h3>
+              <p class="card__text">
+                Join the campaign list for town halls, meet-and-greets, volunteer days, and fundraisers across District 86.
+              </p>
+              <div style="margin-top:14px;">
+                <a class="btn btn--primary" href="index.html#signup-form">Get event updates</a>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- HOST / VOLUNTEER CTA -->
     <section class="section" aria-label="Host or help">
       <div class="container">
         <div class="grid grid--2">
@@ -166,30 +150,28 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="footer" aria-label="Footer">
     <div class="container footer__inner">
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
-          Cole for OK 86
-        </div>
-        <p style="margin-top:10px; opacity:.85;">
-          Mailing address: P.O. Box 100, Rose, OK 74364
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Cole for OK 86</div>
+        <p style="margin-top:10px; opacity:.85;">Mailing address: P.O. Box 100, Rose, OK 74364</p>
+        <p style="margin:10px 0 0; opacity:.85;">
+          TikTok: <a href="https://www.tiktok.com/@coleforok86" rel="noopener" target="_blank">@coleforok86</a>
         </p>
-        <div class="disclaimer">
-          <strong>Authorized and paid for by</strong> Cole for OK 86
-        </div>
+        <div class="disclaimer"><strong>Authorized and paid for by</strong> Cole for OK 86</div>
       </div>
 
       <div>
-        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">
-          Compliance
-        </div>
-        <p style="opacity:.85; margin-top:10px;">
-          OK Ethics Commission
+        <div style="font-weight:900; letter-spacing:.10em; text-transform:uppercase;">Links</div>
+        <p style="margin-top:10px; line-height:1.9;">
+          <a href="meet.html">Meet Hannah</a><br />
+          <a href="get-involved.html">Get involved</a><br />
+          <a href="events.html">Events</a><br />
+          <a href="contact.html">Contact</a>
         </p>
+        <p style="opacity:.85; margin-top:10px;">Compliance: OK Ethics Commission</p>
       </div>
     </div>
   </footer>
@@ -197,3 +179,6 @@
   <script src="js/script.js"></script>
 </body>
 </html>
+
+
+

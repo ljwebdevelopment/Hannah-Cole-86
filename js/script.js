@@ -3,15 +3,15 @@
    - Accessible hamburger menu (overlay + focus trap + scroll lock)
    - Consistent nav behavior across pages
    - Active link highlighting (fallback if aria-current not set)
-   - Signup + Contact + Volunteer forms send to Google Sheets (Apps Script Web App)
+   - Signup + Contact + Volunteer forms send to the campaign intake endpoint
    - No alerts / no modal popups
    ========================================================================== */
 
 (function () {
   "use strict";
 
-  // ---------- Google Sheets endpoint ----------
-  const SIGNUP_ENDPOINT =
+  // ---------- Campaign intake endpoint ----------
+  const FORM_ENDPOINT =
     "https://script.google.com/macros/s/AKfycbxgAcbkJ6ZXSZcYJN2NSvw8dXPzfHlNR5p3oFkwbQMfywlTH9q7TaznqMhdgA9HIYE/exec";
 
   // ---------- Helpers ----------
@@ -19,112 +19,6 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
-
-  function injectBaseStylesOnce() {
-    if (document.getElementById("cole-js-styles")) return;
-
-    const style = document.createElement("style");
-    style.id = "cole-js-styles";
-    style.textContent = `
-      body.nav-open { overflow: hidden; }
-
-      .nav-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
-        z-index: 1200;
-        display: none;
-      }
-      .nav-overlay[data-open="true"] { display: block; }
-
-      .nav-drawer {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: min(86vw, 360px);
-        background: var(--navy, #0b1420);
-        color: #fff;
-        z-index: 1300;
-        transform: translateX(102%);
-        transition: transform 220ms ease;
-        padding: 18px 16px 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        box-shadow: -18px 0 44px rgba(0,0,0,0.22);
-        overscroll-behavior: contain;
-        outline: none;
-      }
-      .nav-drawer[data-open="true"] { transform: translateX(0); }
-
-      .nav-drawer__top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-      .nav-drawer__close {
-        height: 44px;
-        padding: 0 14px;
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.18);
-        background: rgba(255,255,255,0.10);
-        color: #fff;
-        text-transform: uppercase;
-        letter-spacing: .14em;
-        font-weight: 800;
-        cursor: pointer;
-      }
-
-      .nav-drawer a {
-        width: 100%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-start;
-        height: 44px;
-        padding: 0 14px;
-        border-radius: 10px;
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.14);
-        text-transform: uppercase;
-        letter-spacing: .14em;
-        font-size: .80rem;
-        font-weight: 800;
-      }
-      .nav-drawer a[aria-current="page"]{
-        background: rgba(230,180,88,0.95);
-        color: #2a1b10;
-        border-color: rgba(0,0,0,0);
-      }
-
-      .nav-drawer .nav-drawer__cta a {
-        justify-content: center;
-        height: 50px;
-        background: rgba(89,116,140,0.95);
-        color: #061523;
-        border-color: rgba(255,255,255,0.0);
-      }
-
-      .form-status {
-        margin-top: 12px;
-        padding: 12px;
-        border-radius: 12px;
-        border: 2px solid rgba(15,23,32,0.18);
-        background: rgba(238,242,246,0.75);
-        font-weight: 700;
-        color: rgba(15,23,32,0.80);
-      }
-      .form-status--ok { border-color: rgba(77,106,71,0.95); }
-      .form-status--err { border-color: rgba(166,55,45,0.95); }
-
-      @media (prefers-reduced-motion: reduce){
-        .nav-drawer { transition: none; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
 
   function setActiveNavLink() {
     const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -157,8 +51,6 @@
   }
 
   function setupMobileNav() {
-    injectBaseStylesOnce();
-
     const toggleBtn = $(".nav-toggle");
     const desktopNav = $("#site-nav");
     if (!toggleBtn || !desktopNav) return;
@@ -204,7 +96,7 @@
 
       links.forEach((a) => {
         const href = (a.getAttribute("href") || "").trim();
-        const isDonate = href.toLowerCase().includes("donate.html");
+        const isDonate = href.toLowerCase().includes("donate.html") || href.toLowerCase().includes("actblue.com/donate") || a.classList.contains("btn--primary");
         if (isDonate) {
           const ctaWrap = document.createElement("div");
           ctaWrap.className = "nav-drawer__cta";
@@ -331,8 +223,32 @@
     node.classList.add(ok ? "form-status--ok" : "form-status--err");
   }
 
-  async function postToSheets(payload) {
-    const res = await fetch(SIGNUP_ENDPOINT, {
+  function validateSubmission(form) {
+    const trap = form.querySelector('[name="website"]');
+    if (trap && trap.value.trim()) {
+      return "Submission blocked.";
+    }
+
+    const started = Number(form.dataset.startedAt || 0);
+    if (started && Date.now() - started < 2500) {
+      return "Please take a moment to review your information before submitting.";
+    }
+
+    const phone = form.querySelector('input[type="tel"][required]');
+    if (phone) {
+      const digits = phone.value.replace(/\D/g, "");
+      if (digits.length < 10) return "Please enter a valid phone number.";
+    }
+
+    return "";
+  }
+
+  function markFormStarted(form) {
+    if (!form.dataset.startedAt) form.dataset.startedAt = String(Date.now());
+  }
+
+  async function postForm(payload) {
+    const res = await fetch(FORM_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
@@ -342,7 +258,7 @@
     return json;
   }
 
-  // ---------- Signup form → Google Sheets ----------
+  // ---------- Signup form ----------
   function wireSignupForm() {
     const form = document.getElementById("signup-form");
     if (!form) return;
@@ -356,10 +272,17 @@
         return;
       }
 
+      const validationMessage = validateSubmission(form);
+      if (validationMessage) {
+        setStatus(form, validationMessage, false, { hero: true });
+        return;
+      }
+
       const fd = new FormData(form);
       const payload = {
         type: "signup",
         page: location.pathname,
+        topic: "Campaign updates",
         firstName: (fd.get("firstName") || "").trim(),
         lastName: (fd.get("lastName") || "").trim(),
         email: (fd.get("email") || "").trim(),
@@ -372,7 +295,7 @@
 
       try {
         if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-        await postToSheets(payload);
+        await postForm(payload);
         form.reset();
         setStatus(form, "Thanks! You’re signed up.", true, { hero: true });
       } catch (err) {
@@ -384,7 +307,7 @@
     });
   }
 
-  // ---------- Contact form → Google Sheets ----------
+  // ---------- Contact form ----------
   function wireContactForm() {
     const form = document.getElementById("contact-form");
     if (!form) return;
@@ -398,10 +321,17 @@
         return;
       }
 
+      const validationMessage = validateSubmission(form);
+      if (validationMessage) {
+        setStatus(form, validationMessage, false);
+        return;
+      }
+
       const fd = new FormData(form);
       const payload = {
         type: "contact",
         page: location.pathname,
+        topic: (fd.get("topic") || "").trim(),
         name: (fd.get("name") || "").trim(),
         email: (fd.get("email") || "").trim(),
         phone: (fd.get("phone") || "").trim(),
@@ -414,7 +344,7 @@
 
       try {
         if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-        await postToSheets(payload);
+        await postForm(payload);
         form.reset();
         setStatus(form, "Message sent. Thank you.", true);
       } catch (err) {
@@ -426,7 +356,7 @@
     });
   }
 
-  // ---------- Volunteer form → Google Sheets ----------
+  // ---------- Volunteer form ----------
   function wireVolunteerForm() {
     const form = document.getElementById("volunteer-form");
     if (!form) return;
@@ -440,10 +370,17 @@
         return;
       }
 
+      const validationMessage = validateSubmission(form);
+      if (validationMessage) {
+        setStatus(form, validationMessage, false);
+        return;
+      }
+
       const fd = new FormData(form);
       const payload = {
         type: "volunteer",
         page: location.pathname,
+        topic: (fd.get("topic") || "Volunteer").trim(),
         name: (fd.get("name") || "").trim(),
         phone: (fd.get("phone") || "").trim(),
         email: (fd.get("email") || "").trim(),
@@ -456,7 +393,7 @@
 
       try {
         if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-        await postToSheets(payload);
+        await postForm(payload);
         form.reset();
         setStatus(form, "Thank you for stepping up. A team member will follow up soon.", true);
       } catch (err) {
@@ -474,39 +411,14 @@
     bindSmoothAnchors();
     setupMobileNav();
 
+    $$("#signup-form, #contact-form, #volunteer-form").forEach((form) => {
+      form.dataset.startedAt = String(Date.now());
+      form.addEventListener("focusin", () => markFormStarted(form), { once: true });
+      form.addEventListener("input", () => markFormStarted(form), { once: true });
+    });
+
     wireSignupForm();
     wireContactForm();
     wireVolunteerForm();
-  });
-})();
-
-(function () {
-  function setHeights() {
-    var header = document.querySelector("header");
-    var footer = document.querySelector("footer");
-    var hh = header ? header.offsetHeight : 0;
-    var fh = footer ? footer.offsetHeight : 0;
-    document.documentElement.style.setProperty("--header-h", hh + "px");
-    document.documentElement.style.setProperty("--footer-h", fh + "px");
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    setHeights();
-    window.addEventListener("resize", setHeights);
-
-    var frame = document.getElementById("actblueFrame");
-    var fallback = document.getElementById("actblueFallback");
-    if (!frame || !fallback) return;
-
-    var loaded = false;
-    frame.addEventListener("load", function () { loaded = true; });
-
-    setTimeout(function () {
-      if (!loaded) fallback.hidden = false;
-    }, 3000);
-
-    frame.addEventListener("error", function () {
-      fallback.hidden = false;
-    });
   });
 })();
