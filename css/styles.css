@@ -1,5 +1,5 @@
 ﻿/* ==========================================================
-   Hannah Cole for OK 86 â€” styles.css (CLEANED + DE-CONFLICTED)
+   Hannah Cole for OK 86 — styles.css (CLEANED + DE-CONFLICTED)
    - Split hero (left color panel + right photo panel)
    - Pill nav buttons + prominent Donate
    - Mobile: fixed header + photo-first hero (no layout fights)
@@ -367,7 +367,7 @@ body:not(.home) .nav-toggle,
 body.nav-open{ overflow:hidden; }
 
 /* ==========================================================
-   HERO â€” big 50/50 split
+   HERO — big 50/50 split
    ========================================================== */
 .hero{
   margin:0;
@@ -880,7 +880,7 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   Responsive â€” TABLET AND DOWN
+   Responsive — TABLET AND DOWN
    ========================================================== */
 @media (max-width: 980px){
 
@@ -987,7 +987,7 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   Responsive â€” SMALL MOBILE (single, consistent ruleset)
+   Responsive — SMALL MOBILE (single, consistent ruleset)
    ========================================================== */
 @media (max-width: 760px){
 
@@ -1133,15 +1133,15 @@ form button[type="submit"]{
   .prompt-text{ font-size:1.02rem; line-height:1.6; max-width:none; }
   .prompt-foot{ font-size:.95rem; }
 
-  /* Improve readability of the â€œNo spamâ€¦â€ line over dark green */
+  /* Improve readability of the "No spam…" line over dark green */
   .hero__tagline{
     color: rgba(255,255,255,0.90);
   }
 }
 
 /* ==========================================================
-   MEET PAGE â€” MOBILE PHOTO FIRST
-   Puts Hannahâ€™s image at the top on mobile
+   MEET PAGE — MOBILE PHOTO FIRST
+   Puts Hannah's image at the top on mobile
    ========================================================== */
 @media (max-width: 760px){
 
