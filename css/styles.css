@@ -1269,12 +1269,18 @@ main { min-height: calc(100vh - var(--header-h, 0px) - var(--footer-h, 0px)); }
   border:0;
 }
 
+.cal-wrap--mobile{
+  display:none;
+}
+
 @media (max-width: 980px){
   .cal-wrap iframe{ height:500px; }
 }
 
 @media (max-width: 760px){
   .cal-wrap iframe{ height:420px; }
+  .cal-wrap--desktop{ display:none; }
+  .cal-wrap--mobile{ display:block; }
 }
 
 /* Events preview CTA on homepage */
