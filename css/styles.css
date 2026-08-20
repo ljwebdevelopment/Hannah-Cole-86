@@ -1,4 +1,4 @@
-﻿/* ==========================================================
+/* ==========================================================
    Hannah Cole for OK 86 — styles.css (CLEANED + DE-CONFLICTED)
    - Split hero (left color panel + right photo panel)
    - Pill nav buttons + prominent Donate
@@ -49,7 +49,7 @@
   --cta-bg: rgba(217,121,37,0.96);
   --cta-text: #1c120b;
 
-  --h2-color: #2b3a47;
+  --h2-color: #22332C;
   --h2-rule: rgba(166,55,45,0.86);
 
   --issue-dot: rgba(77,106,71,0.96);
@@ -136,7 +136,7 @@ body.home .header{
 .header__inner{
   padding:18px 0;
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:space-between;
   gap:16px;
 }
@@ -144,9 +144,10 @@ body.home .header{
 /* Brand */
 .brand{
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   gap:14px;
-  min-width:220px;
+  min-width:0;
+  flex-shrink:0;
 }
 
 .brand__logo{
@@ -164,7 +165,7 @@ body.home .header{
 .nav{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
   justify-content:flex-end;
 }
@@ -174,13 +175,14 @@ body.home .header{
   align-items:center;
   justify-content:center;
   height:34px;
-  padding:0 14px;
+  padding:0 12px;
   border-radius:var(--radius);
   background:var(--pill-bg);
   color:var(--pill-text);
   text-transform:uppercase;
-  letter-spacing:.14em;
+  letter-spacing:.10em;
   font-size:.75rem;
+  white-space:nowrap;
   font-weight:700;
   box-shadow: 0 2px 0 var(--pill-shadow);
   border:1px solid var(--pill-border);
@@ -197,7 +199,7 @@ body.home .header{
 
 /* Donate button area */
 .nav__cta{
-  margin-left:12px;
+  margin-left:8px;
   display:inline-flex;
   align-items:center;
 }
@@ -248,6 +250,10 @@ select:focus-visible{
   color: #ffffff;
   border: 2px solid rgba(255,255,255,0.18);
   box-shadow: 0 4px 0 rgba(0,0,0,0.28);
+  height: 38px;
+  padding: 0 16px;
+  font-size: .78rem;
+  white-space: nowrap;
 }
 .nav__cta .btn--primary:hover{
   transform: translateY(-1px);
@@ -258,6 +264,8 @@ select:focus-visible{
   box-shadow: 0 2px 0 rgba(0,0,0,0.35);
 }
 
+.btn--wide{ min-width:150px; }
+
 .btn--secondary{
   background:var(--pill-active-bg);
   color:var(--pill-active-text);
@@ -267,14 +275,8 @@ select:focus-visible{
   color:#fff;
 }
 
-body:not(.home) .nav-toggle,
-.nav-toggle{
-  background:rgba(255,255,255,0.12);
-  color:#fffaf3;
-  border-color:rgba(255,255,255,0.12);
-}
-
-/* Mobile menu toggle (base) */
+/* Mobile menu toggle (base) — the hamburger appearance lives in the
+   nav-switch media query below. */
 .nav-toggle{
   display:none;
   height:44px;
@@ -282,7 +284,7 @@ body:not(.home) .nav-toggle,
   border-radius:10px;
   border:1px solid rgba(255,255,255,0.18);
   background:rgba(255,255,255,0.12);
-  color:#fff;
+  color:#fffaf3;
   text-transform:uppercase;
   letter-spacing:.14em;
   font-weight:800;
@@ -359,8 +361,8 @@ body:not(.home) .nav-toggle,
 .nav-drawer .nav-drawer__cta a{
   justify-content:center;
   height:50px;
-  background:rgba(89,116,140,0.95);
-  color:#061523;
+  background:var(--cta-bg);
+  color:var(--cta-text);
   border-color:rgba(255,255,255,0);
 }
 
@@ -397,7 +399,7 @@ body.home .hero{
 .hero__inner > div:first-child{
   background: var(--hero-left);
   color:var(--hero-text);
-  padding: 190px 60px 70px;
+  padding: 200px 60px 70px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -432,7 +434,7 @@ body.home .hero{
 
 .hero__title{
   margin:0 0 18px;
-  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  font-size: clamp(2.4rem, 3.6vw, 3.5rem);
   line-height:1.06;
   letter-spacing:-0.01em;
   font-weight:800;
@@ -565,6 +567,7 @@ form button[type="submit"]{
   border:1px solid rgba(15,23,32,0.10);
   background:#fff;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  overflow:hidden;
 }
 .card__inner{ padding:22px; }
 .card__kicker{
@@ -587,7 +590,7 @@ form button[type="submit"]{
 /* Issues rows */
 .issue{
   display:grid;
-  grid-template-columns:22px 1fr;
+  grid-template-columns:16px 1fr;
   gap:12px;
   padding:16px 0;
   border-top:1px solid rgba(15,23,32,0.10);
@@ -602,19 +605,16 @@ form button[type="submit"]{
 .issue__title{ margin:0 0 6px; font-weight:900; }
 .issue__desc{ margin:0; color:rgba(15,23,32,0.76); }
 
-.page-intro{
-  padding:72px 0 42px;
-  background:
-    radial-gradient(circle at top center, rgba(230,180,88,0.18), rgba(230,180,88,0) 44%),
-    linear-gradient(180deg, rgba(255,255,255,0.62), rgba(242,227,201,0.52));
-  border-bottom:1px solid rgba(15,23,32,0.08);
+/* Intro band at the top of interior pages */
+.section--intro{
+  padding:56px 0 48px;
 }
 
-.page-intro .section__head{
+.section--intro .section__head{
   margin-bottom:0;
 }
 
-.page-intro .lede{
+.section--intro .lede{
   max-width:62ch;
 }
 
@@ -682,6 +682,11 @@ form button[type="submit"]{
 .social-section{
   display:grid;
   gap:24px;
+}
+
+.social-head .h2::after{
+  margin-left:0;
+  margin-right:auto;
 }
 
 .social-head{
@@ -987,52 +992,21 @@ form button[type="submit"]{
 }
 
 /* ==========================================================
-   Responsive — SMALL MOBILE (single, consistent ruleset)
+   Responsive — NAV SWITCH (pills -> drawer)
+   The pill row needs ~1020px; below that the drawer takes over.
+   Keep this width in sync with isMobile() in js/script.js.
    ========================================================== */
-@media (max-width: 760px){
+@media (max-width: 1340px){
+  .nav{ gap:6px; }
+  .nav a{ padding:0 11px; letter-spacing:.08em; }
+  .nav__cta{ margin-left:6px; }
+  .nav__cta .btn--primary{ padding:0 14px; }
+}
 
-  /* Compact green header */
-  .header{
-    position:relative;
-    top:0;
-    left:0;
-    right:0;
-    z-index:999;
-    background:transparent;
-  }
-
-  body.home .header{
-    position:absolute;
-  }
-
-  body:not(.home) .header{
-    background:transparent;
-  }
-
-  .header__inner{
-    padding:10px 0;
-    min-height: var(--header-h);
-    align-items:center;
-    justify-content:space-between;
-  }
-
+@media (max-width: 1200px){
   /* Hide desktop pills; show hamburger */
   .nav{ display:none; }
   .nav-toggle{ display:inline-flex; }
-
-  .brand{
-    min-width:0;
-    gap:10px;
-    align-items:center;
-  }
-
-  .brand__logo{
-    width:78px;
-    max-width:78px;
-    height:auto;
-    flex-shrink:0;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-  }
 
   /* Hamburger icon (3 lines) */
   .nav-toggle{
@@ -1043,7 +1017,7 @@ form button[type="submit"]{
     padding: 0;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.18);
-    background: rgba(27,46,40,0.55); /* better contrast over photo */
+    background: rgba(27,46,40,0.82); /* readable over both the hero photo and light pages */
     backdrop-filter: blur(6px);
     cursor: pointer;
 
@@ -1089,6 +1063,52 @@ form button[type="submit"]{
     top: 21px;
     transform: rotate(-45deg);
   }
+}
+
+/* ==========================================================
+   Responsive — SMALL MOBILE (single, consistent ruleset)
+   ========================================================== */
+@media (max-width: 760px){
+
+  /* Compact green header */
+  .header{
+    position:relative;
+    top:0;
+    left:0;
+    right:0;
+    z-index:999;
+    background:transparent;
+  }
+
+  body.home .header{
+    position:absolute;
+  }
+
+  body:not(.home) .header{
+    background:transparent;
+  }
+
+  .header__inner{
+    padding:10px 0;
+    min-height: var(--header-h);
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .brand{
+    min-width:0;
+    gap:10px;
+    align-items:center;
+  }
+
+  .brand__logo{
+    width:78px;
+    max-width:78px;
+    height:auto;
+    flex-shrink:0;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  }
+
 
   /* Hero: pad under fixed header so the photo starts immediately */
   .hero{
@@ -1119,8 +1139,8 @@ form button[type="submit"]{
   /* Tighter layout below */
   .form__row{ grid-template-columns:1fr; }
   .grid--2{ grid-template-columns:1fr; }
-  .page-intro{
-    padding:96px 0 38px;
+  .section--intro{
+    padding:34px 0 30px;
   }
   .footer__inner{
     grid-template-columns:1fr;
@@ -1244,9 +1264,20 @@ body.page-comments .commentbox a:not([role="button"]):not([class*="btn"]):not([c
   text-underline-offset: 3px !important;
 }
 
-html, body { height: 100%; }
-body { min-height: 100vh; }
-main { min-height: calc(100vh - var(--header-h, 0px) - var(--footer-h, 0px)); }
+/* Sticky footer: the last section absorbs any leftover height, so short
+   pages no longer show a blank band between content and footer. */
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+main{
+  flex:1 0 auto;
+  display:flex;
+  flex-direction:column;
+}
+main > .section:last-child{ flex:1 0 auto; }
+.footer{ flex-shrink:0; }
 
 /* ==========================================================
    CALENDAR EMBED – responsive wrapper
