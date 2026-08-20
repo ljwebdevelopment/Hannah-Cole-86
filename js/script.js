@@ -18,7 +18,7 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+  const isMobile = () => window.matchMedia("(max-width: 1200px)").matches;
 
   function setActiveNavLink() {
     const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
